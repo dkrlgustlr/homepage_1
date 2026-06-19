@@ -935,11 +935,14 @@
     .knowledge-left {
       background: #1e1e1e;
       color: #fff;
-      padding: calc(var(--header-h) + clamp(44px, 6vh, 74px)) 58px 0 var(--side-pad);
+      padding: calc(var(--header-h) + clamp(44px, 5.8vh, 68px)) 58px clamp(58px, 7vh, 92px) var(--side-pad);
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
     }
 
     .knowledge-left h2 {
-      margin: 0 0 24px;
+      margin: 0 0 clamp(28px, 4vh, 44px);
       font-size: 40px;
       font-weight: 800;
       letter-spacing: -0.07em;
@@ -953,11 +956,11 @@
     }
 
     .knowledge-left .mini-menu {
-      margin-top: clamp(28px, 5vh, 58px);
+      margin-top: clamp(50px, 7.2vh, 86px);
     }
 
     .knowledge-left .mini-menu li {
-      height: clamp(38px, 6.2vh, 52px);
+      height: clamp(56px, 7.6vh, 74px);
       color: #aaa;
       font-size: 19px;
       display: flex;
