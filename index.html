@@ -361,10 +361,11 @@
     .search-ani {
       position: absolute;
       z-index: 6;
-      left: 50%;
+      right: var(--safe-right-pad);
+      left: auto;
       bottom: clamp(76px, 15vh, 155px);
-      transform: translateX(-50%);
-      width: 650px;
+      transform: none;
+      width: min(650px, calc(100vw - var(--safe-right-pad) - var(--side-pad)));
       height: 58px;
       background: rgba(0, 0, 0, 0.42);
       border: 1px solid rgba(255, 255, 255, 0.22);
@@ -463,37 +464,39 @@
     .lawyer-card .txt {
       position: relative;
       z-index: 1;
-      padding: 46px 34px 34px;
+      padding: 48px 36px 36px;
     }
 
     .lawyer-card .card-tag {
       display: block;
-      margin-bottom: 16px;
-      color: rgba(31,39,51,0.62);
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
+      margin-bottom: 18px;
+      color: rgba(31,39,51,0.7);
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: -0.035em;
     }
 
     .lawyer-card dt {
-      margin: 0 0 13px;
+      margin: 0 0 16px;
       color: #111827;
-      font-size: 25px;
-      font-weight: 800;
-      letter-spacing: -0.06em;
+      font-size: 30px;
+      line-height: 1.12;
+      font-weight: 900;
+      letter-spacing: -0.065em;
     }
 
     .lawyer-card dt span {
-      color: rgba(31,39,51,0.62);
-      font-size: 14px;
-      font-weight: 700;
+      color: rgba(31,39,51,0.68);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.045em;
     }
 
     .lawyer-card dd {
       margin: 0;
-      color: rgba(31,39,51,0.72);
-      font-size: 15px;
-      line-height: 1.75;
+      color: rgba(31,39,51,0.82);
+      font-size: 16px;
+      line-height: 1.78;
       letter-spacing: -0.04em;
     }
 
@@ -1920,6 +1923,7 @@
       .search-ani {
         position: relative;
         left: auto;
+        right: auto;
         bottom: auto;
         transform: none;
         width: 100%;
