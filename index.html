@@ -1,0 +1,2196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>법무사 권선기 사무소 메인페이지 목업</title>
+  <style>
+    :root {
+      --primary: #1769d1;
+      --primary-hover: #0f56b5;
+      --bar: #30343b;
+      --black: #0d0d0d;
+      --gray-900: #221e1f;
+      --gray-800: #333;
+      --gray-700: #545454;
+      --gray-400: #a8a8a8;
+      --line: #cccccc;
+      --white: #fff;
+      --soft: #f3f3f3;
+      --section-h: 100dvh;
+      --section-min: 720px;
+      --header-h: 126px;
+      --side-pad: clamp(42px, 4.9vw, 70px);
+      --float-safe: clamp(132px, 8.5vw, 170px);
+      --safe-right-pad: calc(var(--side-pad) + var(--float-safe));
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      overscroll-behavior-y: none;
+    }
+    body {
+      font-family: "Pretendard", "Noto Sans KR", "Malgun Gothic", Arial, sans-serif;
+      color: var(--gray-900);
+      background: #fff;
+      letter-spacing: -0.02em;
+    }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; padding: 0; margin: 0; }
+
+    .page {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+    }
+
+    .header {
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 158px;
+      pointer-events: none;
+    }
+
+    .header-bar {
+      position: absolute;
+      top: 34px;
+      left: 50%;
+      height: 42px;
+      transform: translateX(-50%);
+      background: rgba(48, 52, 59, 0.97);
+      color: #fff;
+      border-radius: 999px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+      overflow: hidden;
+      pointer-events: auto;
+    }
+
+    .header-bar-inner {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+    }
+
+    .consult-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      height: 100%;
+      padding: 0 23px;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+      box-shadow: none;
+    }
+
+    .consult-btn .pointer {
+      width: 15px;
+      height: 15px;
+      border: 2px solid #fff;
+      transform: rotate(45deg);
+      border-left: 0;
+      border-bottom: 0;
+      display: inline-block;
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      height: 100%;
+      padding: 0 22px 0 28px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .top-nav .divider {
+      margin: 0 17px;
+      opacity: 0.55;
+    }
+
+    .header-top {
+      position: absolute;
+      inset: 0;
+      height: 158px;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+      pointer-events: none;
+    }
+
+    .hamburger {
+      position: absolute;
+      right: clamp(38px, 2.3vw, 48px);
+      top: 30px;
+      width: 58px;
+      height: 48px;
+      color: #1f2733;
+      text-align: center;
+      font-size: 12px;
+      text-transform: lowercase;
+      pointer-events: auto;
+      text-shadow: 0 1px 10px rgba(255,255,255,0.5);
+      transition: color 0.25s ease, transform 0.45s cubic-bezier(.16, 1, .3, 1), opacity 0.35s ease;
+    }
+
+    .hamburger.is-over-dark {
+      color: #fff;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.42);
+    }
+
+    .hamburger .line {
+      display: block;
+      width: 36px;
+      height: 2px;
+      background: currentColor;
+      margin: 7px auto;
+      box-shadow: 0 0 8px rgba(255,255,255,0.36);
+    }
+
+    .fixed-side {
+      position: fixed;
+      z-index: 35;
+      right: 35px;
+      top: 262px;
+      width: 92px;
+      pointer-events: auto;
+      text-align: center;
+    }
+
+    .side-word {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      letter-spacing: 0.2em;
+      font-weight: 800;
+      font-size: 23px;
+      color: rgba(8, 14, 24, 0.96);
+      margin: 0 auto 18px;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.72), 0 0 14px rgba(8,14,24,0.24), 0 0 28px rgba(8,14,24,0.16);
+      transition: color 0.25s ease, text-shadow 0.25s ease;
+    }
+
+    .side-word.is-over-dark {
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.44), 0 0 18px rgba(255,255,255,0.52), 0 0 34px rgba(23,105,209,0.18);
+    }
+
+    .quick-btn {
+      background: rgba(0, 0, 0, 0.47);
+      padding: 14px 8px 16px;
+      color: #fff;
+    }
+
+    .quick-title {
+      font-size: 13px;
+      font-weight: 700;
+      padding-bottom: 13px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+      margin-bottom: 9px;
+    }
+
+    .quick-item {
+      height: 84px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .quick-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #111;
+      background: #fff;
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .quick-icon.kakao { background: #fee500; }
+    .quick-icon.naver { background: #00ef60; color: #fff; }
+    .quick-icon.red { background: var(--primary); color: #fff; }
+
+    .main-pagination {
+      position: absolute;
+      z-index: 5;
+      left: 72px;
+      top: 510px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font-weight: 600;
+    }
+
+    .progress-label {
+      width: 44px;
+      font-size: 18px;
+    }
+
+    .progress-bar {
+      width: 116px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.42);
+      position: relative;
+    }
+
+    .progress-bar::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 2px;
+      width: 28%;
+      background: var(--primary);
+    }
+
+    .main-label {
+      font-size: 18px;
+      margin-left: 6px;
+    }
+
+    .hero {
+      height: var(--section-h);
+      min-height: var(--section-min);
+      position: relative;
+      color: #fff;
+      background: #0d0d0d;
+      overflow: hidden;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(100deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.08) 38%, rgba(0, 0, 0, 0.04) 72%, rgba(0, 0, 0, 0.22) 100%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0 7%, rgba(255,255,255,0.05) 7.1% 8.3%, transparent 8.5% 19%, rgba(255,255,255,0.05) 19.2% 20.5%, transparent 20.7% 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.12), transparent 28%),
+        radial-gradient(circle at 77% 44%, rgba(255,255,255,0.38), transparent 9%),
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 74px);
+      opacity: 0.22;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 51%;
+      height: 100%;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.12) 0 1px, transparent 1px 18px),
+        linear-gradient(90deg, rgba(255,255,255,0.07), transparent 46%),
+        radial-gradient(ellipse at 47% 56%, rgba(255,255,255,0.2), transparent 38%);
+      filter: blur(0.2px);
+      opacity: 0.16;
+    }
+
+    .main-title-box {
+      position: absolute;
+      z-index: 4;
+      left: clamp(96px, 8vw, 154px);
+      top: clamp(235px, 30vh, 313px);
+      width: min(690px, 46vw);
+      opacity: 1;
+      transform: translateY(0);
+      filter: none;
+    }
+
+    .main-title-box .kicker {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.74);
+      letter-spacing: 0.1em;
+      margin-bottom: 28px;
+    }
+
+    .main-title-box h1 {
+      margin: 0;
+      font-size: clamp(44px, 3.75vw, 58px);
+      line-height: 1.28;
+      letter-spacing: -0.07em;
+      font-weight: 500;
+    }
+
+    .main-title-box h1 strong {
+      font-weight: 800;
+    }
+
+    .main-title-box .light {
+      font-weight: 300;
+    }
+
+    .search-ani {
+      position: absolute;
+      z-index: 6;
+      left: 50%;
+      bottom: clamp(76px, 15vh, 155px);
+      transform: translateX(-50%);
+      width: 650px;
+      height: 58px;
+      background: rgba(0, 0, 0, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      display: flex;
+      align-items: center;
+      padding: 0 26px;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 16px;
+    }
+
+    .search-ani .glass {
+      margin-left: auto;
+      width: 21px;
+      height: 21px;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .search-ani .glass::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 2px;
+      background: #fff;
+      transform: rotate(45deg);
+      right: -7px;
+      bottom: -3px;
+    }
+
+    .scroll-down {
+      position: absolute;
+      z-index: 5;
+      left: 72px;
+      bottom: clamp(48px, 8vh, 82px);
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      writing-mode: vertical-rl;
+    }
+
+    .lawyer-right {
+      position: absolute;
+      z-index: 6;
+      right: var(--safe-right-pad);
+      bottom: clamp(170px, 22vh, 238px);
+      width: min(900px, calc(54vw - 40px));
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      overflow: hidden;
+      background: rgba(255,255,255,0.58);
+      border: 0;
+      box-shadow: 0 34px 72px rgba(0,0,0,0.34), 0 10px 22px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.62);
+      backdrop-filter: blur(18px) saturate(1.14);
+      transform: translateY(-8px);
+    }
+
+    .lawyer-card {
+      position: relative;
+      min-height: 178px;
+      color: #1f2733;
+      background: transparent;
+      overflow: hidden;
+      border: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .lawyer-card + .lawyer-card {
+      border-left: 1px solid rgba(13,35,64,0.08);
+    }
+
+    .lawyer-card::before {
+      content: "";
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      top: 24px;
+      height: 1px;
+      background: rgba(13,35,64,0.13);
+    }
+
+    .lawyer-card::after {
+      content: "";
+      position: absolute;
+      right: 24px;
+      bottom: 22px;
+      width: 26px;
+      height: 26px;
+      border-right: 1px solid rgba(13,35,64,0.18);
+      border-bottom: 1px solid rgba(13,35,64,0.18);
+      pointer-events: none;
+    }
+
+    .lawyer-card .txt {
+      position: relative;
+      z-index: 1;
+      padding: 42px 28px 30px;
+    }
+
+    .lawyer-card .card-tag {
+      display: block;
+      margin-bottom: 16px;
+      color: rgba(31,39,51,0.62);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .lawyer-card dt {
+      margin: 0 0 13px;
+      color: #111827;
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -0.06em;
+    }
+
+    .lawyer-card dt span {
+      color: rgba(31,39,51,0.62);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .lawyer-card dd {
+      margin: 0;
+      color: rgba(31,39,51,0.72);
+      font-size: 14px;
+      line-height: 1.75;
+      letter-spacing: -0.04em;
+    }
+
+    .section {
+      min-height: 1040px;
+      position: relative;
+    }
+
+    .case-section {
+      position: relative;
+      height: var(--section-h);
+      min-height: var(--section-min);
+      background: #111;
+      padding: calc(var(--header-h) + clamp(48px, 6vh, 76px)) var(--safe-right-pad) clamp(48px, 6vh, 76px) var(--side-pad);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .case-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.96;
+      z-index: 0;
+    }
+
+    .case-inner {
+      position: relative;
+      z-index: 2;
+      height: min(calc(var(--section-h) - var(--header-h) - 110px), 820px);
+      min-height: min(560px, calc(var(--section-h) - var(--header-h) - 110px));
+      width: 100%;
+      display: grid;
+      grid-template-columns: 31.5% 68.5%;
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .case-left {
+      background:
+        repeating-linear-gradient(90deg, rgba(255,255,255,0.035) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(0deg, rgba(255,255,255,0.026) 0 1px, transparent 1px 82px),
+        linear-gradient(180deg, rgba(21, 22, 24, 0.86), rgba(35, 36, 38, 0.84));
+      padding: clamp(58px, 7vh, 86px) clamp(28px, 3vw, 46px) clamp(58px, 7vh, 86px) clamp(58px, 5.6vw, 88px);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .case-left::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(115deg, rgba(23,105,209,0.12), transparent 34%),
+        linear-gradient(90deg, rgba(0,0,0,0.14), transparent 54%);
+      pointer-events: none;
+    }
+
+    .case-left::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.16);
+      pointer-events: none;
+    }
+
+    .case-left .line {
+      display: none;
+    }
+
+    .case-menu {
+      --item-h: 58px;
+      position: relative;
+      padding-left: 38px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .case-menu::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: rgba(255,255,255,0.38);
+      z-index: 0;
+    }
+
+    .case-menu::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: var(--marker-y, calc(var(--item-h) / 2));
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #fff;
+      border: 3px solid rgba(255,255,255,0.28);
+      box-shadow: 0 0 0 7px rgba(255,255,255,0.1), 0 8px 24px rgba(23,105,209,0.24);
+      transform: translate(-50%, -50%);
+      transition: top 0.72s cubic-bezier(.18, 1.18, .32, 1), box-shadow 0.32s ease, transform 0.32s ease;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .case-menu li {
+      position: relative;
+      height: var(--item-h);
+      flex: 0 0 var(--item-h);
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    .case-menu li::before {
+      display: none;
+    }
+
+    .case-menu li.active::before {
+      display: none;
+    }
+
+    .case-tab {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      width: 100%;
+      min-height: 44px;
+      padding: 0 clamp(20px, 2.4vw, 34px) 0 0;
+      margin: 0;
+      cursor: pointer;
+      text-align: left;
+      font-family: inherit;
+      font-size: 20px;
+      color: #aaa;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+      line-height: 1.25;
+      transition: color 0.24s ease, transform 0.24s ease;
+    }
+
+    .case-tab:hover,
+    .case-tab:focus-visible {
+      color: #fff;
+      transform: translateX(4px);
+      outline: none;
+    }
+
+    .case-menu li.active .case-tab {
+      color: #fff;
+      font-weight: 800;
+      cursor: default;
+      transform: translateX(0);
+    }
+
+    .case-right {
+      position: relative;
+      padding: clamp(72px, 8vh, 102px) clamp(54px, 5.5vw, 80px) clamp(52px, 6vh, 76px);
+      background:
+        linear-gradient(90deg, rgba(23, 105, 209, 0.06) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,249,250,0.94));
+      background-size: 42px 100%, auto;
+      overflow: hidden;
+    }
+
+    .case-right::before {
+      content: "";
+      position: absolute;
+      inset: clamp(34px, 4vh, 48px);
+      border: 1px solid rgba(13, 35, 64, 0.1);
+      pointer-events: none;
+    }
+
+    .case-right > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .case-board-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 112px) 128px;
+      gap: 10px;
+    }
+
+    .case-board-summary span {
+      height: 62px;
+      border-left: 2px solid var(--primary);
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: 0 12px 28px rgba(13, 35, 64, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 14px;
+      color: #1f2b3b;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .case-board-summary strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--primary);
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .case-board-date {
+      border-left-color: #1d2d44;
+    }
+
+    .case-board-date strong {
+      color: #1d2d44;
+      font-size: 18px;
+    }
+
+    .box-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: clamp(26px, 4vh, 38px);
+    }
+
+    .page-title h2 {
+      margin: 0 0 14px;
+      font-size: 40px;
+      font-weight: 800;
+      color: #222;
+      letter-spacing: -0.08em;
+    }
+
+    .page-title h1 {
+      margin: 0;
+      white-space: pre-line;
+      font-size: 32px;
+      line-height: 1.35;
+      font-weight: 400;
+      color: #222;
+      letter-spacing: -0.06em;
+    }
+
+    .page-title h1 strong {
+      font-weight: 800;
+    }
+
+    .more {
+      padding-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-transform: lowercase;
+      color: var(--primary);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .add-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #222;
+      font-size: 26px;
+    }
+
+    .case-doc-meta {
+      display: grid;
+      grid-template-columns: 104px minmax(220px, 1fr) minmax(128px, 0.56fr) 98px 92px;
+      gap: 18px;
+      padding: 0 22px;
+      border-top: 2px solid #1d2d44;
+      border-left: 0;
+      border-right: 0;
+      border-bottom: 0;
+      background: rgba(13, 35, 64, 0.045);
+    }
+
+    .case-doc-meta span {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      color: #25364c;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .case-list-window {
+      --case-row-h: clamp(60px, 7.1vh, 70px);
+      --case-visible-rows: 5;
+      height: calc(var(--case-row-h) * var(--case-visible-rows));
+      overflow: hidden;
+      position: relative;
+      border-bottom: 1px solid rgba(13, 35, 64, 0.16);
+    }
+
+    .case-list-window:hover .case-list {
+      animation-play-state: paused;
+    }
+
+    .case-list {
+      animation: caseLoop 44s cubic-bezier(.76, 0, .24, 1) infinite;
+      will-change: transform;
+    }
+
+    .case-list li {
+      height: var(--case-row-h);
+      border-bottom: 1px solid rgba(13, 35, 64, 0.16);
+      position: relative;
+      background: rgba(255, 255, 255, 0.66);
+      transition: transform 0.35s cubic-bezier(.16, 1, .3, 1), background-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .case-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 18px;
+      bottom: 18px;
+      width: 3px;
+      background: transparent;
+      transition: background-color 0.35s ease;
+    }
+
+    .case-list li:first-child { border-top: 0; }
+
+    .case-list a {
+      height: 100%;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 104px minmax(220px, 1fr) minmax(128px, 0.56fr) 98px 92px;
+      align-items: center;
+      gap: 18px;
+      font-size: 17px;
+      padding: 0 22px;
+    }
+
+    .case-type {
+      color: var(--primary);
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .case-title {
+      font-weight: 700;
+      color: #222;
+      line-height: 1.45;
+    }
+
+    .case-step {
+      color: #657080;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .case-date {
+      color: #7b8490;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .case-result {
+      justify-self: end;
+      min-width: 74px;
+      padding: 7px 10px;
+      border: 1px solid rgba(13, 35, 64, 0.14);
+      border-radius: 0;
+      color: #25364c;
+      background: rgba(255, 255, 255, 0.72);
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .case-result.status-wait {
+      color: #39485d;
+      border-color: rgba(13, 35, 64, 0.18);
+      background: rgba(255,255,255,0.78);
+    }
+
+    .case-result.status-progress {
+      color: #1769d1;
+      border-color: rgba(23, 105, 209, 0.42);
+      background: rgba(23, 105, 209, 0.08);
+    }
+
+    .case-result.status-done {
+      color: #1d2d44;
+      border-color: rgba(29, 45, 68, 0.3);
+      background: rgba(29, 45, 68, 0.06);
+    }
+
+    @keyframes caseLoop {
+      0%, 4% { transform: translateY(0); }
+      7%, 13% { transform: translateY(calc(var(--case-row-h) * -1)); }
+      16%, 22% { transform: translateY(calc(var(--case-row-h) * -2)); }
+      25%, 31% { transform: translateY(calc(var(--case-row-h) * -3)); }
+      34%, 40% { transform: translateY(calc(var(--case-row-h) * -4)); }
+      43%, 49% { transform: translateY(calc(var(--case-row-h) * -5)); }
+      52%, 58% { transform: translateY(calc(var(--case-row-h) * -6)); }
+      61%, 67% { transform: translateY(calc(var(--case-row-h) * -7)); }
+      70%, 76% { transform: translateY(calc(var(--case-row-h) * -8)); }
+      79%, 85% { transform: translateY(calc(var(--case-row-h) * -9)); }
+      88%, 94% { transform: translateY(calc(var(--case-row-h) * -10)); }
+      97%, 100% { transform: translateY(calc(var(--case-row-h) * -11)); }
+    }
+
+    .knowledge-row {
+      height: var(--section-h);
+      min-height: 0;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 31.5% 68.5%;
+      border-top: 0;
+      overflow: hidden;
+    }
+
+    .knowledge-left {
+      background: #1e1e1e;
+      color: #fff;
+      padding: calc(var(--header-h) + clamp(44px, 6vh, 74px)) 58px 0 var(--side-pad);
+    }
+
+    .knowledge-left h2 {
+      margin: 0 0 24px;
+      font-size: 40px;
+      font-weight: 800;
+      letter-spacing: -0.07em;
+    }
+
+    .knowledge-left p {
+      margin: 0;
+      color: #c6c6c6;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .knowledge-left .mini-menu {
+      margin-top: clamp(28px, 5vh, 58px);
+    }
+
+    .knowledge-left .mini-menu li {
+      height: clamp(38px, 6.2vh, 52px);
+      color: #aaa;
+      font-size: 19px;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .knowledge-left .mini-menu li:first-child {
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .knowledge-right {
+      --knowledge-pad-y: clamp(44px, 6vh, 74px);
+      padding: calc(var(--header-h) + var(--knowledge-pad-y)) calc(clamp(54px, 5.5vw, 80px) + var(--float-safe)) var(--knowledge-pad-y) clamp(54px, 5.5vw, 80px);
+      background: #fafafa;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      row-gap: clamp(18px, 3vh, 36px);
+    }
+
+    .knowledge-right .box-top {
+      margin-bottom: 0;
+    }
+
+    .column-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: clamp(14px, 2.2vh, 24px);
+      min-height: 0;
+    }
+
+    .column-card {
+      min-height: 0;
+      background: #fff;
+      border: 1px solid #ddd;
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: minmax(78px, 48%) 1fr;
+    }
+
+    .thumb {
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .thumb::after {
+      display: none;
+    }
+
+    .column-text {
+      padding: clamp(12px, 2vh, 18px) 20px 0;
+    }
+
+    .column-text .cat {
+      color: var(--primary);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: clamp(6px, 1.4vh, 10px);
+    }
+
+    .column-text .title {
+      font-size: clamp(15px, 1.7vh, 18px);
+      line-height: 1.4;
+      font-weight: 700;
+      color: #222;
+      letter-spacing: -0.06em;
+    }
+
+    .consult-section {
+      height: var(--section-h);
+      min-height: var(--section-min);
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.94), rgba(255,255,255,0.94)),
+        linear-gradient(135deg, #4a4a4a, #e4e4e4);
+      display: grid;
+      grid-template-columns: 50% 50%;
+      padding: calc(var(--header-h) + clamp(44px, 6vh, 76px)) var(--safe-right-pad) clamp(44px, 6vh, 76px) var(--side-pad);
+    }
+
+    .consult-left {
+      padding: 35px 90px 0 10px;
+    }
+
+    .consult-left .page-title h2 {
+      font-size: 42px;
+    }
+
+    .process-list {
+      margin-top: clamp(42px, 6.5vh, 68px);
+    }
+
+    .process-list li {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 28px;
+      min-height: clamp(82px, 10vh, 105px);
+      border-bottom: 1px solid #ccc;
+      align-items: center;
+    }
+
+    .process-list .count {
+      font-size: 54px;
+      color: #222;
+      font-weight: 300;
+    }
+
+    .process-list p {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.06em;
+    }
+
+    .consult-right {
+      position: relative;
+      overflow: hidden;
+      background: #142033;
+      color: #fff;
+      padding: clamp(42px, 5.5vh, 58px) clamp(46px, 5vw, 72px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .consult-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.54;
+      z-index: 0;
+    }
+
+    .consult-right::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(9, 22, 38, 0.92), rgba(9, 22, 38, 0.76));
+      z-index: 1;
+    }
+
+    .consult-right > *:not(.consult-photo) {
+      position: relative;
+      z-index: 2;
+    }
+
+    .consult-right h2 {
+      margin: 0 0 14px;
+      font-size: 34px;
+      letter-spacing: -0.07em;
+    }
+
+    .consult-right .desc {
+      color: #d4d4d4;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .consult-form {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      gap: 11px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 20px;
+      align-items: center;
+      min-height: 54px;
+      border-bottom: 1px solid rgba(255,255,255,0.24);
+      color: #eee;
+      font-size: 17px;
+    }
+
+    .form-row span {
+      color: #eee;
+      font-weight: 800;
+    }
+
+    .form-row input,
+    .form-row select,
+    .form-row textarea {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font: inherit;
+      border-radius: 2px;
+      padding: 13px 16px;
+      min-height: 44px;
+    }
+
+    .form-row select {
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.7) 50%), linear-gradient(135deg, rgba(255,255,255,0.7) 50%, transparent 50%);
+      background-position: calc(100% - 18px) 20px, calc(100% - 12px) 20px;
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+    }
+
+    .form-row select option {
+      color: #1f2733;
+    }
+
+    .form-row textarea {
+      min-height: 86px;
+      resize: vertical;
+      line-height: 1.55;
+    }
+
+    .form-row.area {
+      align-items: start;
+      padding-top: 4px;
+    }
+
+    .form-row.area span {
+      padding-top: 12px;
+    }
+
+    .form-row input::placeholder,
+    .form-row textarea::placeholder {
+      color: rgba(255,255,255,0.55);
+    }
+
+    .form-row input:focus,
+    .form-row select:focus,
+    .form-row textarea:focus {
+      background: rgba(255, 255, 255, 0.16);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.32);
+    }
+
+    .field-placeholder {
+      color: rgba(255,255,255,0.5);
+    }
+
+    .form-button {
+      margin-top: 18px;
+      height: 58px;
+      border: 0;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    .location-section {
+      height: var(--section-h);
+      min-height: var(--section-min);
+      background: #fff;
+      padding: calc(var(--header-h) + clamp(40px, 6vh, 72px)) var(--safe-right-pad) clamp(44px, 6vh, 76px) var(--side-pad);
+      display: flex;
+      align-items: center;
+    }
+
+    .location-inner {
+      display: grid;
+      grid-template-columns: 41% 59%;
+      height: min(calc(var(--section-h) - var(--header-h) - 120px), 680px);
+      min-height: 0;
+      width: 100%;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .location-left {
+      padding: clamp(54px, 7vh, 78px) 70px 0 0;
+    }
+
+    .location-left h2 {
+      margin: 0 0 18px;
+      font-size: 42px;
+      letter-spacing: -0.08em;
+    }
+
+    .location-left p {
+      margin: 0;
+      color: #666;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .office-list {
+      margin-top: 52px;
+      border-top: 1px solid #ddd;
+    }
+
+    .office-list li {
+      height: 76px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .office-list small {
+      color: #777;
+      font-weight: 400;
+      font-size: 14px;
+      text-align: right;
+      line-height: 1.55;
+    }
+
+    .map {
+      position: relative;
+      margin-top: clamp(46px, 6.5vh, 62px);
+      height: min(61vh, 590px);
+      min-height: 430px;
+      border: 1px solid #d7d7d7;
+      overflow: hidden;
+      background: #eef1f2;
+      box-shadow: 0 28px 55px rgba(0, 0, 0, 0.12);
+    }
+
+    .map-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .map::before {
+      display: none;
+    }
+
+    .map-address {
+      position: absolute;
+      left: 28px;
+      bottom: 28px;
+      z-index: 2;
+      width: min(430px, calc(100% - 56px));
+      padding: 22px 24px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid rgba(23, 105, 209, 0.18);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.16);
+      color: #172334;
+    }
+
+    .map-address strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--primary);
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: -0.05em;
+    }
+
+    .map-address span {
+      display: block;
+      color: #3d4653;
+      font-size: 15px;
+      line-height: 1.65;
+      font-weight: 700;
+    }
+
+    .pin {
+      display: none;
+      position: absolute;
+      width: 82px;
+      height: 82px;
+      background: var(--primary);
+      color: #fff;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      box-shadow: 0 14px 28px rgba(0,0,0,0.18);
+    }
+
+    .pin.suwon { left: 280px; top: 268px; }
+    .pin.hwasung { left: 370px; top: 350px; background: #555; }
+    .pin.dongtan { left: 480px; top: 305px; background: #222; }
+
+    .footer {
+      height: var(--section-h);
+      min-height: var(--section-min);
+      position: relative;
+      overflow: hidden;
+      background: #0c1522;
+      color: #fff;
+      padding: calc(var(--header-h) + clamp(54px, 8vh, 84px)) var(--safe-right-pad) clamp(54px, 7vh, 82px) var(--side-pad);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 520px);
+      align-items: center;
+      gap: clamp(60px, 8vw, 130px);
+      border-top: 0;
+    }
+
+    .footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(12, 21, 34, 0.97) 0%, rgba(12, 21, 34, 0.9) 46%, rgba(12, 21, 34, 0.76) 100%),
+        url("mockup_assets/beommusa_office_photo_v2.png") right center / cover no-repeat;
+      z-index: 0;
+    }
+
+    .footer::after {
+      content: "";
+      position: absolute;
+      left: var(--side-pad);
+      right: var(--safe-right-pad);
+      top: 118px;
+      height: 1px;
+      background: rgba(255,255,255,0.16);
+      z-index: 1;
+    }
+
+    .footer > * {
+      position: relative;
+      z-index: 2;
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+
+    .footer-eyebrow {
+      display: block;
+      margin-bottom: 20px;
+      color: #8fbdff;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+    }
+
+    .footer h2 {
+      margin: 0 0 26px;
+      font-size: clamp(42px, 4.1vw, 64px);
+      line-height: 1.14;
+      letter-spacing: -0.07em;
+    }
+
+    .footer p {
+      margin: 0;
+      max-width: 650px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.85;
+      font-size: 18px;
+    }
+
+    .footer-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 42px;
+    }
+
+    .footer-action {
+      height: 58px;
+      padding: 0 34px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .footer-action.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      box-shadow: 0 18px 42px rgba(23, 105, 209, 0.28);
+    }
+
+    .footer-contact {
+      border-top: 1px solid rgba(255,255,255,0.22);
+      border-bottom: 1px solid rgba(255,255,255,0.22);
+      padding: 34px 0;
+    }
+
+    .footer .call {
+      margin-bottom: 32px;
+      font-size: clamp(34px, 3vw, 48px);
+      font-weight: 800;
+      color: #fff;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .footer .call span {
+      display: block;
+      margin-top: 12px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.66);
+      font-weight: 400;
+    }
+
+    .footer-info {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .footer-info li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 62px;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      color: rgba(255,255,255,0.74);
+      font-size: 16px;
+    }
+
+    .footer-info strong {
+      color: #fff;
+      font-size: 18px;
+    }
+
+    @keyframes headerDrop {
+      from { opacity: 1; transform: translateY(-24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes heroDrift {
+      0% { transform: scale(1.03) translate3d(0, 0, 0); }
+      50% { transform: scale(1.08) translate3d(-1.2%, -0.8%, 0); }
+      100% { transform: scale(1.03) translate3d(0, 0, 0); }
+    }
+
+    @keyframes titleRise {
+      from { opacity: 1; transform: translateY(32px); filter: none; }
+      to { opacity: 1; transform: translateY(0); filter: none; }
+    }
+
+    @keyframes lineGrow {
+      from { transform: scaleX(0); transform-origin: left center; }
+      to { transform: scaleX(1); transform-origin: left center; }
+    }
+
+    @keyframes sideFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes scrollHint {
+      0%, 100% { transform: translateY(0); opacity: 0.55; }
+      50% { transform: translateY(12px); opacity: 1; }
+    }
+
+    @keyframes searchGlow {
+      0%, 100% { box-shadow: 0 0 0 rgba(23, 105, 209, 0); border-color: rgba(255, 255, 255, 0.22); }
+      50% { box-shadow: 0 0 36px rgba(23, 105, 209, 0.24); border-color: rgba(255, 255, 255, 0.42); }
+    }
+
+    .header-bar,
+    .header-top {
+      animation: headerDrop 0.8s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    .header-top {
+      animation-delay: 0.08s;
+    }
+
+    .hero-bg-img {
+      animation: heroDrift 18s ease-in-out infinite;
+      will-change: transform;
+    }
+
+    .main-pagination,
+    .search-ani,
+    .lawyer-card {
+      animation: titleRise 1s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    .main-pagination { animation-delay: 0.2s; }
+    .main-title-box .kicker,
+    .main-title-box h1 {
+      animation: titleRise 1s cubic-bezier(.16, 1, .3, 1) both;
+    }
+
+    .main-title-box .kicker { animation-delay: 0.32s; }
+    .main-title-box h1 { animation-delay: 0.42s; }
+    .lawyer-card:nth-child(1) { animation-delay: 0.58s; }
+    .lawyer-card:nth-child(2) { animation-delay: 0.72s; }
+    .lawyer-card:nth-child(3) { animation-delay: 0.86s; }
+    .search-ani {
+      animation-name: titleRise, searchGlow;
+      animation-duration: 1s, 4.6s;
+      animation-delay: 1.05s, 2.2s;
+      animation-timing-function: cubic-bezier(.16, 1, .3, 1), ease-in-out;
+      animation-fill-mode: both, none;
+      animation-iteration-count: 1, infinite;
+    }
+
+    .progress-bar::before { animation: lineGrow 1.2s 0.55s cubic-bezier(.16, 1, .3, 1) both; }
+    .fixed-side { animation: titleRise 0.9s 0.9s cubic-bezier(.16, 1, .3, 1) both, sideFloat 5.5s 2s ease-in-out infinite; }
+    .scroll-down { animation: scrollHint 2.4s ease-in-out infinite; }
+
+    .consult-btn,
+    .top-nav a,
+    .hamburger,
+    .quick-item,
+    .lawyer-card,
+    .case-list li,
+    .column-card,
+    .form-button,
+    .office-list li,
+    .map,
+    .more,
+    .add-btn {
+      transition: transform 0.45s cubic-bezier(.16, 1, .3, 1), box-shadow 0.45s cubic-bezier(.16, 1, .3, 1), opacity 0.35s ease, background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    }
+
+    .consult-btn:hover,
+    .form-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .top-nav a:hover,
+    .more:hover {
+      color: #fff;
+      opacity: 0.72;
+    }
+
+    .hamburger:hover .line:nth-child(1) { transform: translateX(-6px); }
+    .hamburger:hover .line:nth-child(2) { transform: translateX(6px); }
+    .hamburger:hover .line:nth-child(3) { transform: translateX(-3px); }
+
+    .quick-item:hover {
+      transform: translateY(-5px);
+    }
+
+    .quick-item:hover .quick-icon {
+      box-shadow: 0 10px 24px rgba(255, 255, 255, 0.16);
+      transform: scale(1.06);
+    }
+
+    .add-btn:hover {
+      transform: translateY(-3px) rotate(90deg);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+    }
+
+    .lawyer-card:hover,
+    .column-card:hover,
+    .map:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 28px 54px rgba(0, 0, 0, 0.23);
+    }
+
+    .column-card:hover .thumb img,
+    .map:hover .map-img {
+      transform: scale(1.06);
+    }
+
+    .thumb img,
+    .map-img,
+    .case-bg-img,
+    .consult-photo {
+      transition: transform 1.1s cubic-bezier(.16, 1, .3, 1), opacity 0.5s ease;
+      will-change: transform;
+    }
+
+    .case-list li:hover {
+      transform: translateX(14px);
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 14px 34px rgba(13, 35, 64, 0.08);
+    }
+
+    .case-list li:hover::before {
+      background: var(--primary);
+    }
+
+    .case-list li.is-targeted {
+      transform: translateX(14px);
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 14px 34px rgba(13, 35, 64, 0.08);
+    }
+
+    .case-list li.is-targeted::before {
+      background: var(--primary);
+    }
+
+    .office-list li:hover {
+      transform: translateX(10px);
+      color: var(--primary);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(58px);
+      filter: blur(7px);
+      transition: opacity 0.9s ease, transform 1s cubic-bezier(.16, 1, .3, 1), filter 0.9s ease;
+      transition-delay: var(--reveal-delay, 0s);
+      will-change: opacity, transform, filter;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    .case-menu li,
+    .case-list li,
+    .column-card,
+    .process-list li,
+    .office-list li {
+      transition-delay: var(--stagger-delay, 0s);
+    }
+
+    .hero.is-scrolled .hero-bg-img {
+      transform: scale(1.08) translateY(var(--hero-shift, 0px));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        filter: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div class="header-bar">
+        <div class="header-bar-inner">
+          <a class="consult-btn" href="tel:0312115230">
+            <span class="pointer"></span>
+            <span>법무사 상담 접수 031-211-5230</span>
+          </a>
+          <nav class="top-nav">
+            <a href="#cases">실제사례</a>
+            <span class="divider">|</span>
+            <a href="#consult">법무사소개</a>
+            <span class="divider">|</span>
+            <a href="#knowledge">지식센터</a>
+          </nav>
+        </div>
+      </div>
+      <div class="header-top">
+        <div class="hamburger">
+          <span class="line"></span><span class="line"></span><span class="line"></span>
+          <div>menu</div>
+        </div>
+      </div>
+    </header>
+
+    <aside class="fixed-side">
+      <div class="side-word">KWONSEONKI</div>
+      <div class="quick-btn">
+        <div class="quick-title">Menu</div>
+        <div class="quick-item"><div class="quick-icon kakao">K</div><div>카카오톡</div></div>
+        <div class="quick-item"><div class="quick-icon naver">N</div><div>예약</div></div>
+        <div class="quick-item"><div class="quick-icon">☎</div><div>전화상담</div></div>
+        <div class="quick-item"><div class="quick-icon red">↑</div></div>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" id="hero">
+        <img class="hero-bg-img" src="mockup_assets/hero_reference_law_office.png" alt="법무사 권선기 사무소 메인 배경 이미지">
+        <div class="hero-overlay"></div>
+        <div class="main-pagination">
+          <div class="progress-label">01</div>
+          <div class="progress-bar"></div>
+          <div class="main-label">Main</div>
+        </div>
+        <div class="main-title-box">
+          <div class="kicker">HWASEONG · BANWOL-DONG · YEONGTONG-RO</div>
+          <h1>채무 앞에 내 편이 필요할 때<br><strong>법무사 권선기 사무소</strong><span class="light">입니다</span></h1>
+        </div>
+        <div class="lawyer-right">
+          <div class="lawyer-card">
+            <div class="txt"><span class="card-tag">주요 상담</span><dl><dt>권선기 <span>대표 법무사</span></dt><dd>개인회생·파산 상담<br>금지명령·압류 대응<br>채무 상황별 절차 안내</dd></dl></div>
+          </div>
+          <div class="lawyer-card">
+            <div class="txt"><span class="card-tag">상담 접수</span><dl><dt>김순국 <span>사무장</span></dt><dd>방문 상담 접수<br>사건 서류 안내<br>010-6550-9628</dd></dl></div>
+          </div>
+          <div class="lawyer-card">
+            <div class="txt"><span class="card-tag">사무소 안내</span><dl><dt>화성 사무소 <span>위치</span></dt><dd>화성시 영통로 59<br>현대프라자 205호<br>TEL 031-211-5230</dd></dl></div>
+          </div>
+        </div>
+        <div class="search-ani">
+          법무사 권선기 사무소의 해결사례를 검색해 보세요.
+          <span class="glass"></span>
+        </div>
+        <div class="scroll-down">SCROLL DOWN</div>
+      </section>
+
+      <section class="case-section" id="cases">
+        <img class="case-bg-img" src="mockup_assets/beommusa_case_bg_v2.png" alt="상담·사건 진행 현황 섹션 배경 이미지">
+        <div class="case-inner">
+          <div class="case-left">
+            <div class="line"></div>
+            <ul class="case-menu">
+              <li class="active" data-case-target="recovery"><button class="case-tab" type="button">개인회생</button></li>
+              <li data-case-target="bankruptcy"><button class="case-tab" type="button">개인파산</button></li>
+              <li data-case-target="seizure"><button class="case-tab" type="button">압류·추심 대응</button></li>
+              <li data-case-target="worker"><button class="case-tab" type="button">직장인 채무</button></li>
+              <li data-case-target="business"><button class="case-tab" type="button">자영업자 채무</button></li>
+              <li data-case-target="immunity"><button class="case-tab" type="button">면책 검토</button></li>
+              <li data-case-target="correction"><button class="case-tab" type="button">보정권고 대응</button></li>
+            </ul>
+          </div>
+          <div class="case-right">
+            <div class="box-top">
+              <div class="page-title">
+                <h2>상담·사건 진행 현황</h2>
+                <h1>현재 접수된 채무 사건을<br><strong>절차별로 정리하고 있습니다.</strong></h1>
+              </div>
+              <div class="case-board-summary">
+                <span>상담·준비<strong>05</strong></span>
+                <span>진행중<strong>04</strong></span>
+                <span>완료<strong>02</strong></span>
+                <span class="case-board-date">2026.06.19 기준<strong>총 11건</strong></span>
+              </div>
+            </div>
+            <div class="case-doc-meta">
+              <span>업무유형</span>
+              <span>의뢰 상황</span>
+              <span>현재 단계</span>
+              <span>일자</span>
+              <span>상태</span>
+            </div>
+            <div class="case-list-window" aria-label="상담 사건 진행 현황 자동 순환 목록">
+              <ul class="case-list">
+                <li data-case-key="recovery"><a><span class="case-type">개인회생</span><span class="case-title">급여압류 전 금지명령과 변제계획 상담</span><span class="case-step">신청요건 검토</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">상담중</span></a></li>
+                <li data-case-key="business"><a><span class="case-type">자영업자</span><span class="case-title">폐업 후 카드채무·대출채무 정리 문의</span><span class="case-step">채무자료 확인</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">서류준비</span></a></li>
+                <li data-case-key="seizure"><a><span class="case-type">압류대응</span><span class="case-title">통장압류 예정 상태의 긴급 대응 상담</span><span class="case-step">압류 대응 안내</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
+                <li data-case-key="worker"><a><span class="case-type">직장인 채무</span><span class="case-title">장기연체 후 월 변제금 조정 검토</span><span class="case-step">소득자료 정리</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
+                <li data-case-key="bankruptcy immunity"><a><span class="case-type">개인파산</span><span class="case-title">고령·질병 사유가 있는 면책 가능성 검토</span><span class="case-step">면책요건 확인</span><span class="case-date">2026.06.17</span><span class="case-result status-wait">상담중</span></a></li>
+                <li data-case-key="correction"><a><span class="case-type">보정권고</span><span class="case-title">누락 소득자료 보완 후 사건 재정리</span><span class="case-step">법원 제출 보완</span><span class="case-date">2026.06.16</span><span class="case-result status-done">완료</span></a></li>
+                <li data-case-key="recovery worker"><a><span class="case-type">개인회생</span><span class="case-title">급여소득자의 카드·대출채무 변제계획 상담</span><span class="case-step">소득자료 확인</span><span class="case-date">2026.06.15</span><span class="case-result status-progress">진행중</span></a></li>
+                <li data-case-key="immunity bankruptcy"><a><span class="case-type">면책검토</span><span class="case-title">장기연체 채무자의 파산·면책 가능성 문의</span><span class="case-step">재산자료 정리</span><span class="case-date">2026.06.14</span><span class="case-result status-wait">상담중</span></a></li>
+                <li data-case-key="seizure"><a><span class="case-type">추심대응</span><span class="case-title">채권추심 연락이 계속되는 상황의 대응 안내</span><span class="case-step">금지명령 검토</span><span class="case-date">2026.06.13</span><span class="case-result status-progress">진행중</span></a></li>
+                <li data-case-key="business"><a><span class="case-type">자영업자</span><span class="case-title">매장 폐업 후 남은 보증채무 정리 상담</span><span class="case-step">채무내역 취합</span><span class="case-date">2026.06.12</span><span class="case-result status-wait">서류준비</span></a></li>
+                <li data-case-key="correction"><a><span class="case-type">보정권고</span><span class="case-title">법원 보정권고 수령 후 제출자료 보완</span><span class="case-step">보완 제출</span><span class="case-date">2026.06.11</span><span class="case-result status-done">완료</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">개인회생</span><span class="case-title">급여압류 전 금지명령과 변제계획 상담</span><span class="case-step">신청요건 검토</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">상담중</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">자영업자</span><span class="case-title">폐업 후 카드채무·대출채무 정리 문의</span><span class="case-step">채무자료 확인</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">서류준비</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">압류대응</span><span class="case-title">통장압류 예정 상태의 긴급 대응 상담</span><span class="case-step">압류 대응 안내</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">직장인 채무</span><span class="case-title">장기연체 후 월 변제금 조정 검토</span><span class="case-step">소득자료 정리</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">개인파산</span><span class="case-title">고령·질병 사유가 있는 면책 가능성 검토</span><span class="case-step">면책요건 확인</span><span class="case-date">2026.06.17</span><span class="case-result status-wait">상담중</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="knowledge-row" id="knowledge">
+        <div class="knowledge-left">
+          <h2>지식센터</h2>
+          <p>개인회생과 파산 절차에서 의뢰인이 가장 궁금해하는 내용을 쉽게 정리합니다.</p>
+          <ul class="mini-menu">
+            <li>회생·파산 가이드</li>
+            <li>압류·추심 대응</li>
+            <li>서류 준비</li>
+            <li>상담 전 체크사항</li>
+            <li>법원 절차 안내</li>
+          </ul>
+        </div>
+        <div class="knowledge-right">
+          <div class="box-top">
+            <div class="page-title">
+              <h2>법률정보</h2>
+              <h1>어려운 절차를<br><strong>읽기 쉬운 기준으로 정리합니다.</strong></h1>
+            </div>
+            <div class="more"><span>more</span><span class="add-btn">+</span></div>
+          </div>
+          <div class="column-grid">
+            <div class="column-card"><div class="thumb"><img src="mockup_assets/knowledge_thumb_1_v2.png" alt="개인회생 지식센터 썸네일"></div><div class="column-text"><div class="cat">개인회생</div><div class="title">개인회생 신청 전 반드시 확인할 소득 기준</div></div></div>
+            <div class="column-card"><div class="thumb"><img src="mockup_assets/knowledge_thumb_2_v2.png" alt="압류대응 지식센터 썸네일"></div><div class="column-text"><div class="cat">압류대응</div><div class="title">급여압류와 통장압류가 걱정될 때 보는 순서</div></div></div>
+            <div class="column-card"><div class="thumb"><img src="mockup_assets/knowledge_thumb_3_v2.png" alt="개인파산 지식센터 썸네일"></div><div class="column-text"><div class="cat">개인파산</div><div class="title">파산과 면책을 함께 검토해야 하는 이유</div></div></div>
+            <div class="column-card"><div class="thumb"><img src="mockup_assets/knowledge_thumb_4_v2.png" alt="자영업자 지식센터 썸네일"></div><div class="column-text"><div class="cat">자영업자</div><div class="title">폐업 후 남은 채무를 정리할 때 필요한 자료</div></div></div>
+            <div class="column-card"><div class="thumb"><img src="mockup_assets/knowledge_thumb_5_v2.png" alt="서류준비 지식센터 썸네일"></div><div class="column-text"><div class="cat">서류준비</div><div class="title">상담 전 준비하면 좋은 채무·재산·소득 자료</div></div></div>
+            <div class="column-card"><div class="thumb"><img src="mockup_assets/knowledge_thumb_6_v2.png" alt="보정권고 지식센터 썸네일"></div><div class="column-text"><div class="cat">보정권고</div><div class="title">법원 보정권고가 나왔을 때 당황하지 않는 방법</div></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="consult-section" id="consult">
+        <div class="consult-left">
+          <div class="page-title">
+            <h2>상담 진행</h2>
+            <h1>지금 필요한 절차를<br><strong>순서대로 안내합니다.</strong></h1>
+          </div>
+          <ul class="process-list">
+            <li><span class="count">01</span><p>채무·소득·재산 현황 확인</p></li>
+            <li><span class="count">02</span><p>개인회생 또는 파산 가능성 검토</p></li>
+            <li><span class="count">03</span><p>서류 준비와 법원 제출 일정 안내</p></li>
+            <li><span class="count">04</span><p>금지명령·압류·추심 대응 방향 정리</p></li>
+          </ul>
+        </div>
+        <div class="consult-right">
+          <img class="consult-photo" src="mockup_assets/beommusa_office_photo_v2.png" alt="상담 신청 배경 이미지">
+          <h2>상담 신청</h2>
+          <div class="desc">비공개 상담으로 현재 상황을 먼저 확인합니다. 접수 후 담당자가 순차적으로 연락드립니다.</div>
+          <form class="consult-form">
+            <label class="form-row">
+              <span>상담 분야</span>
+              <select aria-label="상담 분야">
+                <option>개인회생 / 개인파산 / 압류대응</option>
+              </select>
+            </label>
+            <label class="form-row">
+              <span>이름</span>
+              <input type="text" placeholder="성함을 입력해주세요">
+            </label>
+            <label class="form-row">
+              <span>전화번호</span>
+              <input type="tel" placeholder="연락 가능한 번호">
+            </label>
+            <label class="form-row">
+              <span>지역</span>
+              <input type="text" placeholder="화성 · 반월동 · 동탄">
+            </label>
+            <label class="form-row area">
+              <span>문의내용</span>
+              <textarea placeholder="채무 상황과 압류 여부를 간단히 적어주세요"></textarea>
+            </label>
+            <button class="form-button" type="button">상담 신청</button>
+          </form>
+        </div>
+      </section>
+
+      <section class="location-section" id="location">
+        <div class="location-inner">
+          <div class="location-left">
+            <h2>오시는 길</h2>
+            <p>경기도 화성시 반월동 현대프라자 205호에서 방문 상담을 안내합니다.</p>
+            <ul class="office-list">
+              <li><span>주소</span><small>경기도 화성시 영통로 59, 205호</small></li>
+              <li><span>건물</span><small>반월동, 현대프라자</small></li>
+              <li><span>전화</span><small>TEL. 031-211-5230 / FAX. 031-211-5233</small></li>
+              <li><span>담당</span><small>김순국 사무장 010-6550-9628<br>kkkk9628@nate.com</small></li>
+            </ul>
+          </div>
+          <div class="map">
+            <img class="map-img" src="mockup_assets/beommusa_map_blue.png" alt="화성 반월동 사무소 위치 및 상담권역 지도 이미지">
+            <div class="map-address">
+              <strong>법무사 권선기 사무소</strong>
+              <span>경기도 화성시 영통로 59, 205호<br>반월동, 현대프라자</span>
+            </div>
+            <div class="pin suwon">수원</div>
+            <div class="pin hwasung">화성</div>
+            <div class="pin dongtan">동탄</div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer" id="footer">
+        <div class="footer-copy">
+          <span class="footer-eyebrow">HWASEONG · BANWOL-DONG · HYUNDAI PLAZA</span>
+          <h2>법무사 권선기 사무소</h2>
+          <p>개인회생, 개인파산, 면책, 압류·추심 대응까지 현재 상황에 맞는 절차를 차분하게 검토합니다. 경기도 화성시 영통로 59, 현대프라자 205호에서 방문 상담을 안내합니다.</p>
+          <div class="footer-actions">
+            <a class="footer-action primary" href="#consult">상담 신청하기</a>
+            <a class="footer-action" href="#location">오시는 길</a>
+          </div>
+        </div>
+        <div class="footer-contact">
+          <div class="call">031-211-5230<span>FAX. 031-211-5233 / 김순국 사무장 010-6550-9628</span></div>
+          <ul class="footer-info">
+            <li><strong>주요 업무</strong><span>개인회생 · 개인파산 · 면책</span></li>
+            <li><strong>대응 분야</strong><span>압류 · 추심 · 보정권고</span></li>
+            <li><strong>상담 권역</strong><span>화성 · 반월동 · 동탄</span></li>
+            <li><strong>메일</strong><span>kkkk9628@nate.com</span></li>
+          </ul>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <script>
+    (() => {
+      const setViewportHeight = () => {
+        document.documentElement.style.setProperty("--section-h", `${window.innerHeight}px`);
+      };
+
+      setViewportHeight();
+      window.addEventListener("resize", setViewportHeight);
+
+      const revealSelectors = [
+        ".case-inner",
+        ".knowledge-left",
+        ".knowledge-right",
+        ".consult-left",
+        ".consult-right",
+        ".location-inner",
+        ".case-menu li",
+        ".column-card",
+        ".process-list li",
+        ".office-list li"
+      ];
+
+      const revealTargets = document.querySelectorAll(revealSelectors.join(","));
+      revealTargets.forEach((el, index) => {
+        el.classList.add("reveal");
+        const localIndex = Array.from(el.parentElement?.children || []).indexOf(el);
+        const delay = Math.max(0, localIndex) * 0.055;
+        el.style.setProperty("--reveal-delay", `${Math.min(delay, 0.38)}s`);
+        el.style.setProperty("--stagger-delay", `${Math.min(delay, 0.38)}s`);
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      }, {
+        threshold: 0.14,
+        rootMargin: "0px 0px -12% 0px"
+      });
+
+      revealTargets.forEach((el) => observer.observe(el));
+
+      const hero = document.querySelector(".hero");
+      const hamburgerButton = document.querySelector(".hamburger");
+      const sideWord = document.querySelector(".side-word");
+      let ticking = false;
+
+      const isDarkSectionAt = (viewportY) => {
+        const sections = Array.from(document.querySelectorAll(".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer"));
+        const currentSection = sections.find((section) => {
+          const rect = section.getBoundingClientRect();
+          return rect.top <= viewportY && rect.bottom >= viewportY;
+        });
+        return currentSection?.classList.contains("hero") || currentSection?.classList.contains("case-section") || currentSection?.classList.contains("footer");
+      };
+
+      const updateHeaderContrast = () => {
+        if (hamburgerButton) {
+          hamburgerButton.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(54)));
+        }
+        if (sideWord) {
+          const rect = sideWord.getBoundingClientRect();
+          const pointY = rect.top + rect.height / 2;
+          sideWord.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(pointY)));
+        }
+      };
+
+      const updateScrollEffects = () => {
+        const y = window.scrollY || 0;
+        const shift = Math.min(y * 0.08, 46);
+        if (hero) {
+          hero.style.setProperty("--hero-shift", `${shift}px`);
+          hero.classList.toggle("is-scrolled", y > 8);
+        }
+        updateHeaderContrast();
+        ticking = false;
+      };
+
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateScrollEffects);
+      }, { passive: true });
+
+      updateScrollEffects();
+      updateHeaderContrast();
+
+      const caseMenuItems = Array.from(document.querySelectorAll(".case-menu li[data-case-target]"));
+      const caseListItems = Array.from(document.querySelectorAll(".case-list li[data-case-key]"));
+      const caseMenu = document.querySelector(".case-menu");
+
+      const moveCaseMarker = (item) => {
+        if (!caseMenu || !item) return;
+        const markerY = item.offsetTop + item.offsetHeight / 2;
+        caseMenu.style.setProperty("--marker-y", `${markerY}px`);
+      };
+
+      const activateCaseMenu = (item) => {
+        const target = item.dataset.caseTarget;
+        caseMenuItems.forEach((menuItem) => menuItem.classList.toggle("active", menuItem === item));
+        moveCaseMarker(item);
+        caseListItems.forEach((caseItem) => caseItem.classList.remove("is-targeted"));
+
+        const targetCase = caseListItems.find((caseItem) => {
+          const keys = (caseItem.dataset.caseKey || "").split(/\s+/);
+          return keys.includes(target);
+        });
+
+        if (!targetCase) return;
+        targetCase.classList.add("is-targeted");
+      };
+
+      caseMenuItems.forEach((item) => {
+        const button = item.querySelector(".case-tab");
+        if (!button) return;
+        button.addEventListener("click", () => activateCaseMenu(item));
+      });
+
+      const syncCaseMarker = () => {
+        const activeItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
+        moveCaseMarker(activeItem);
+      };
+
+      requestAnimationFrame(syncCaseMarker);
+
+      let markerTicking = false;
+      window.addEventListener("resize", () => {
+        if (markerTicking) return;
+        markerTicking = true;
+        requestAnimationFrame(() => {
+          syncCaseMarker();
+          markerTicking = false;
+        });
+      });
+
+      const snapSections = Array.from(document.querySelectorAll(
+        ".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer"
+      ));
+
+      let snapLocked = false;
+      let pointerStartY = null;
+      let pointerStartX = null;
+      let touchStartY = null;
+      let touchStartX = null;
+
+      const maxScrollTop = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+
+      const sectionTop = (section) => Math.min(section.offsetTop, maxScrollTop());
+
+      const currentSectionIndex = () => {
+        const viewportPoint = window.scrollY + window.innerHeight * 0.38;
+        let bestIndex = 0;
+        let bestDistance = Infinity;
+
+        snapSections.forEach((section, index) => {
+          const distance = Math.abs(section.offsetTop - viewportPoint);
+          if (distance < bestDistance) {
+            bestDistance = distance;
+            bestIndex = index;
+          }
+        });
+
+        return bestIndex;
+      };
+
+      const snapToSection = (direction) => {
+        if (snapLocked || snapSections.length === 0) return;
+
+        const current = currentSectionIndex();
+        const next = Math.min(Math.max(current + direction, 0), snapSections.length - 1);
+        if (next === current) return;
+
+        snapLocked = true;
+        window.scrollTo({
+          top: sectionTop(snapSections[next]),
+          behavior: "smooth"
+        });
+
+        window.setTimeout(() => {
+          snapLocked = false;
+        }, 920);
+      };
+
+      window.addEventListener("wheel", (event) => {
+        if (event.ctrlKey || Math.abs(event.deltaY) < 14) return;
+        event.preventDefault();
+        snapToSection(event.deltaY > 0 ? 1 : -1);
+      }, { passive: false });
+
+      window.addEventListener("keydown", (event) => {
+        const downKeys = ["ArrowDown", "PageDown", "Space"];
+        const upKeys = ["ArrowUp", "PageUp"];
+        if (![...downKeys, ...upKeys].includes(event.code)) return;
+        event.preventDefault();
+        snapToSection(downKeys.includes(event.code) ? 1 : -1);
+      });
+
+      window.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "mouse" && event.button !== 0) return;
+        pointerStartY = event.clientY;
+        pointerStartX = event.clientX;
+      });
+
+      window.addEventListener("pointerup", (event) => {
+        if (pointerStartY === null || pointerStartX === null) return;
+        const deltaY = pointerStartY - event.clientY;
+        const deltaX = pointerStartX - event.clientX;
+        pointerStartY = null;
+        pointerStartX = null;
+        if (Math.abs(deltaY) < 72 || Math.abs(deltaY) < Math.abs(deltaX) * 1.15) return;
+        snapToSection(deltaY > 0 ? 1 : -1);
+      });
+
+      window.addEventListener("touchstart", (event) => {
+        const touch = event.touches[0];
+        if (!touch) return;
+        touchStartY = touch.clientY;
+        touchStartX = touch.clientX;
+      }, { passive: true });
+
+      window.addEventListener("touchend", (event) => {
+        if (touchStartY === null || touchStartX === null) return;
+        const touch = event.changedTouches[0];
+        if (!touch) return;
+        const deltaY = touchStartY - touch.clientY;
+        const deltaX = touchStartX - touch.clientX;
+        touchStartY = null;
+        touchStartX = null;
+        if (Math.abs(deltaY) < 58 || Math.abs(deltaY) < Math.abs(deltaX) * 1.15) return;
+        snapToSection(deltaY > 0 ? 1 : -1);
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
