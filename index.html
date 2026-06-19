@@ -700,19 +700,20 @@
 
     .case-board-summary {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.15fr);
+      gap: 12px;
     }
 
     .case-board-summary span {
-      min-height: 58px;
+      min-height: 64px;
       border-left: 2px solid var(--primary);
       background: rgba(255, 255, 255, 0.72);
       box-shadow: 0 12px 28px rgba(13, 35, 64, 0.06);
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-left: 14px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 14px 0 16px;
       color: #1f2b3b;
       font-size: var(--type-body);
       font-weight: 800;
@@ -721,16 +722,18 @@
 
     .case-board-summary strong {
       display: block;
-      margin-top: 5px;
+      margin-top: 0;
       color: var(--primary);
       font-size: var(--type-subtitle);
       line-height: 1;
       letter-spacing: 0;
+      white-space: nowrap;
     }
 
     .case-board-summary .case-board-date {
       border-left-color: #1d2d44;
-      padding-left: 5px;
+      justify-content: flex-start;
+      padding: 0 10px 0 12px;
       white-space: nowrap;
     }
 
@@ -2670,7 +2673,7 @@
                 <span>상담·준비<strong>05</strong></span>
                 <span>진행중<strong>04</strong></span>
                 <span>완료<strong>02</strong></span>
-                <span class="case-board-date">2026.06.19 기준<strong>총 11건</strong></span>
+                <span class="case-board-date">2026.06.19 기준</span>
               </div>
             </div>
             <div class="case-doc-meta">
