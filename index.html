@@ -835,6 +835,7 @@
       padding-right: 0;
     }
 
+    .case-doc-meta span:nth-child(2),
     .case-doc-meta span:nth-child(3),
     .case-doc-meta span:nth-child(4),
     .case-doc-meta span:nth-child(5) {
@@ -904,6 +905,11 @@
     }
 
     .case-title {
+      justify-self: stretch;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
       font-weight: 700;
       color: #222;
       line-height: 1.45;
@@ -2053,7 +2059,7 @@
       }
 
       .case-type { grid-area: type; }
-      .case-title { grid-area: title; }
+      .case-title { grid-area: title; display: block; justify-self: start; text-align: left; }
       .case-step { grid-area: step; display: block; justify-self: start; text-align: left; }
       .case-date { grid-area: date; display: block; justify-self: end; text-align: right; }
       .case-result { grid-area: result; display: block; align-self: center; justify-self: end; text-align: right; }
