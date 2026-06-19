@@ -675,7 +675,7 @@
     }
 
     .case-right {
-      --case-table-cols: minmax(82px, 0.78fr) minmax(220px, 2.24fr) minmax(118px, 1.08fr) minmax(86px, 0.8fr) minmax(56px, 0.58fr);
+      --case-table-cols: minmax(96px, 0.9fr) minmax(206px, 2.08fr) minmax(118px, 1.08fr) minmax(86px, 0.8fr) minmax(56px, 0.58fr);
       position: relative;
       padding: clamp(72px, 8vh, 102px) clamp(54px, 5.5vw, 80px) clamp(52px, 6vh, 76px);
       background:
@@ -728,8 +728,10 @@
       letter-spacing: 0;
     }
 
-    .case-board-date {
+    .case-board-summary .case-board-date {
       border-left-color: #1d2d44;
+      padding-left: 5px;
+      white-space: nowrap;
     }
 
     .case-board-date strong {
@@ -746,8 +748,8 @@
 
     .case-right .box-top {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(198px, 220px);
-      gap: clamp(16px, 1.6vw, 22px);
+      grid-template-columns: minmax(0, 1fr) minmax(248px, 256px);
+      gap: 4px;
       align-items: start;
     }
 
@@ -902,6 +904,7 @@
       font-size: var(--type-body);
       font-weight: 900;
       letter-spacing: -0.04em;
+      white-space: nowrap;
     }
 
     .case-title {
