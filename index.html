@@ -698,50 +698,6 @@
       z-index: 1;
     }
 
-    .case-board-summary {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(0, 1.15fr);
-      gap: 12px;
-    }
-
-    .case-board-summary span {
-      min-height: 64px;
-      border-left: 2px solid var(--primary);
-      background: rgba(255, 255, 255, 0.72);
-      box-shadow: 0 12px 28px rgba(13, 35, 64, 0.06);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 0 14px 0 16px;
-      color: #1f2b3b;
-      font-size: var(--type-body);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-    }
-
-    .case-board-summary strong {
-      display: block;
-      margin-top: 0;
-      color: var(--primary);
-      font-size: var(--type-subtitle);
-      line-height: 1;
-      letter-spacing: 0;
-      white-space: nowrap;
-    }
-
-    .case-board-summary .case-board-date {
-      border-left-color: #1d2d44;
-      justify-content: flex-start;
-      padding: 0 10px 0 12px;
-      white-space: nowrap;
-    }
-
-    .case-board-date strong {
-      color: #1d2d44;
-      font-size: var(--type-subtitle);
-    }
-
     .box-top {
       display: flex;
       align-items: flex-start;
@@ -2035,10 +1991,6 @@
         inset: 18px;
       }
 
-      .case-board-summary {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
       .case-doc-meta {
         display: none;
       }
@@ -2308,16 +2260,6 @@
         padding: 28px 18px 30px;
       }
 
-      .case-board-summary {
-        grid-template-columns: 1fr 1fr;
-        gap: 8px;
-      }
-
-      .case-board-summary span {
-        height: 58px;
-        padding-left: 12px;
-      }
-
       .case-list-window {
         --case-row-h: 128px;
         --case-visible-rows: 3;
@@ -2534,7 +2476,6 @@
       .page-title h1,
       .more,
       .case-menu button,
-      .case-board-summary strong,
       .knowledge-left .mini-menu li,
       .process-list p,
       .office-list li,
@@ -2555,7 +2496,6 @@
       .lawyer-card .card-tag,
       .lawyer-card dt span,
       .lawyer-card dd,
-      .case-board-summary span,
       .case-doc-meta span,
       .case-list a,
       .case-type,
@@ -2668,12 +2608,6 @@
               <div class="page-title">
                 <h2>상담·사건 진행 현황</h2>
                 <h1>현재 접수된 채무 사건을<br><strong>절차별로 정리하고 있습니다.</strong></h1>
-              </div>
-              <div class="case-board-summary">
-                <span>상담·준비<strong>05</strong></span>
-                <span>진행중<strong>04</strong></span>
-                <span>완료<strong>02</strong></span>
-                <span class="case-board-date">2026.06.19 기준</span>
               </div>
             </div>
             <div class="case-doc-meta">
