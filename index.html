@@ -1401,8 +1401,11 @@
 
     .knowledge-board {
       position: absolute;
-      z-index: 90;
-      inset: calc(var(--header-h) + var(--knowledge-pad-y)) calc(clamp(54px, 5.5vw, 80px) + var(--float-safe)) var(--section-bottom-gap) clamp(54px, 5.5vw, 80px);
+      z-index: 110;
+      top: calc(var(--header-h) + 12px);
+      right: calc(var(--float-safe) + var(--side-pad));
+      bottom: 18px;
+      left: calc(-45.985% + var(--side-pad));
       display: none;
       min-height: 0;
     }
@@ -1414,6 +1417,13 @@
 
     .knowledge-right.is-board-open {
       z-index: 80;
+      overflow: visible;
+    }
+
+    .knowledge-row.is-board-open .knowledge-left {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.28s ease;
     }
 
     .knowledge-right.is-board-open .box-top,
@@ -1430,21 +1440,28 @@
       grid-template-rows: auto auto minmax(0, 1fr);
       background: rgba(255, 255, 255, 0.985);
       border: 1px solid rgba(20, 32, 51, 0.14);
-      box-shadow: 0 30px 76px rgba(17, 24, 39, 0.18);
+      box-shadow: 0 34px 92px rgba(17, 24, 39, 0.22);
       backdrop-filter: blur(12px);
     }
 
     .board-head {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: space-between;
       gap: 22px;
-      padding: clamp(26px, 3vh, 34px) clamp(30px, 3vw, 42px) clamp(22px, 2.4vh, 28px);
+      padding: 14px clamp(30px, 3vw, 42px);
       border-bottom: 1px solid rgba(20, 32, 51, 0.12);
     }
 
+    .board-head > div {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      min-width: 0;
+    }
+
     .board-eyebrow {
-      margin: 0 0 8px;
+      margin: 0;
       color: var(--primary);
       font-size: var(--type-body);
       font-weight: 900;
@@ -1454,15 +1471,16 @@
     .board-title {
       margin: 0;
       color: #192536;
-      font-size: clamp(38px, 3.15vw, 54px);
+      font-size: clamp(24px, 1.9vw, 32px);
       line-height: 1.2;
       letter-spacing: -0.07em;
+      white-space: nowrap;
     }
 
     .board-close {
       flex: 0 0 auto;
-      width: 52px;
-      height: 52px;
+      width: 44px;
+      height: 44px;
       border: 1px solid rgba(20, 32, 51, 0.18);
       background: #fff;
       color: #172334;
@@ -1475,7 +1493,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 16px clamp(30px, 3vw, 42px);
+      padding: 10px clamp(30px, 3vw, 42px);
       border-bottom: 1px solid rgba(20, 32, 51, 0.1);
       overflow-x: auto;
       background: rgba(250, 251, 253, 0.72);
@@ -1486,8 +1504,8 @@
       border: 1px solid rgba(23, 105, 209, 0.22);
       background: rgba(255, 255, 255, 0.8);
       color: #27364a;
-      min-height: 40px;
-      padding: 0 16px;
+      min-height: 36px;
+      padding: 0 14px;
       font: inherit;
       font-size: var(--type-body);
       font-weight: 800;
@@ -1504,21 +1522,35 @@
     .board-body {
       min-height: 0;
       display: grid;
-      grid-template-columns: minmax(300px, 0.85fr) minmax(430px, 1.15fr);
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr) auto;
+      grid-template-areas:
+        "detail"
+        "related";
     }
 
     .board-list {
       min-height: 0;
-      overflow: auto;
-      border-right: 1px solid rgba(20, 32, 51, 0.12);
+      grid-area: related;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(210px, 1fr);
+      overflow-x: auto;
+      overflow-y: hidden;
+      border-top: 1px solid rgba(20, 32, 51, 0.12);
+      border-right: 0;
+      background: rgba(248, 250, 253, 0.94);
+      scrollbar-width: thin;
     }
 
     .board-item {
       display: block;
       width: 100%;
-      padding: clamp(22px, 2.3vh, 28px) clamp(22px, 2.4vw, 32px);
+      min-height: 96px;
+      padding: 14px 20px;
       border: 0;
-      border-bottom: 1px solid rgba(20, 32, 51, 0.1);
+      border-right: 1px solid rgba(20, 32, 51, 0.1);
+      border-bottom: 0;
       background: transparent;
       text-align: left;
       font-family: inherit;
@@ -1526,32 +1558,36 @@
     }
 
     .board-item.is-active {
-      background: linear-gradient(90deg, rgba(23,105,209,0.12), rgba(255,255,255,0.24));
-      box-shadow: inset 4px 0 0 var(--primary);
+      background: #fff;
+      box-shadow: inset 0 4px 0 var(--primary);
     }
 
     .board-item .cat {
       display: block;
-      margin-bottom: 8px;
+      margin-bottom: 5px;
       color: var(--primary);
-      font-size: var(--type-body);
+      font-size: 14px;
       font-weight: 900;
     }
 
     .board-item .title {
       display: block;
       color: #202936;
-      font-size: var(--type-subtitle);
-      line-height: 1.45;
+      font-size: 16px;
+      line-height: 1.42;
       font-weight: 850;
       letter-spacing: -0.05em;
       word-break: keep-all;
       overflow-wrap: break-word;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .board-item .date {
       display: block;
-      margin-top: 10px;
+      margin-top: 7px;
       color: #798392;
       font-size: var(--type-body);
       font-weight: 800;
@@ -1561,7 +1597,8 @@
     .board-detail {
       min-height: 0;
       overflow: auto;
-      padding: clamp(34px, 4vh, 54px) clamp(34px, 4vw, 58px);
+      grid-area: detail;
+      padding: clamp(28px, 3.4vh, 42px) clamp(54px, 5.8vw, 86px);
       background:
         linear-gradient(90deg, rgba(23,105,209,0.03) 0 1px, transparent 1px 100%),
         linear-gradient(180deg, #fff, #f8fafc);
@@ -1569,11 +1606,11 @@
     }
 
     .board-article {
-      max-width: 760px;
+      max-width: 920px;
     }
 
     .board-article-head {
-      padding-bottom: clamp(22px, 2.8vh, 30px);
+      padding-bottom: clamp(18px, 2.2vh, 24px);
       border-bottom: 1px solid rgba(20,32,51,0.14);
     }
 
@@ -1584,10 +1621,10 @@
     }
 
     .board-detail h3 {
-      margin: 14px 0 18px;
+      margin: 12px 0 16px;
       color: #182436;
-      font-size: clamp(34px, 2.5vw, 46px);
-      line-height: 1.24;
+      font-size: clamp(32px, 2.45vw, 44px);
+      line-height: 1.2;
       letter-spacing: -0.07em;
       word-break: keep-all;
       overflow-wrap: break-word;
@@ -1605,10 +1642,10 @@
 
     .board-detail dl {
       display: grid;
-      grid-template-columns: 96px 1fr;
-      gap: 12px 22px;
+      grid-template-columns: 76px minmax(140px, 1fr) 76px minmax(140px, 1fr);
+      gap: 10px 18px;
       margin: 0;
-      padding: 22px 0;
+      padding: 18px 0;
       border-bottom: 1px solid rgba(20,32,51,0.12);
       color: #2c3747;
       font-size: var(--type-body);
@@ -1632,7 +1669,7 @@
     }
 
     .board-content {
-      padding-top: clamp(24px, 3vh, 34px);
+      padding-top: clamp(42px, 5vh, 56px);
     }
 
     .board-content h4 {
@@ -3174,6 +3211,10 @@
         font-size: var(--type-subtitle);
       }
 
+      .board-content {
+        padding-top: 24px;
+      }
+
       .column-grid {
         grid-auto-flow: row;
         grid-auto-columns: initial;
@@ -3401,6 +3442,16 @@
       font-size: var(--type-body);
       line-height: var(--leading-body);
       letter-spacing: var(--tracking-body);
+    }
+
+    @media (max-width: 1024px) {
+      .knowledge-row.is-board-open .knowledge-left {
+        display: none;
+      }
+
+      .knowledge-row.is-board-open .knowledge-right {
+        padding-top: calc(var(--header-h) + 16px);
+      }
     }
   </style>
 </head>
@@ -3963,6 +4014,7 @@
       ];
 
       const knowledgeRight = document.querySelector(".knowledge-right");
+      const knowledgeSection = document.querySelector(".knowledge-row");
       const knowledgeBoard = document.querySelector(".knowledge-board");
       const boardList = document.querySelector(".board-list");
       const boardDetail = document.querySelector(".board-detail");
@@ -4051,9 +4103,11 @@
 
       const openKnowledgeBoard = (filter = "all", postId = null) => {
         if (!knowledgeRight || !knowledgeBoard) return;
+        knowledgeSection?.scrollIntoView({ behavior: "smooth", block: "start" });
         const selectedFilter = filter || "all";
         setFilterState(selectedFilter);
         renderBoardList(selectedFilter, postId || currentPostId);
+        knowledgeSection?.classList.add("is-board-open");
         knowledgeRight.classList.add("is-board-open");
         knowledgeBoard.setAttribute("aria-hidden", "false");
         boardOpenButton?.setAttribute("aria-expanded", "true");
@@ -4061,6 +4115,7 @@
 
       const closeKnowledgeBoard = () => {
         if (!knowledgeRight || !knowledgeBoard) return;
+        knowledgeSection?.classList.remove("is-board-open");
         knowledgeRight.classList.remove("is-board-open");
         knowledgeBoard.setAttribute("aria-hidden", "true");
         boardOpenButton?.setAttribute("aria-expanded", "false");
