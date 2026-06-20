@@ -813,7 +813,7 @@
     }
 
     .case-right {
-      --case-table-cols: minmax(104px, 140px) minmax(0, 1fr) minmax(58px, 82px);
+      --case-table-cols: minmax(104px, 140px) minmax(0, 1fr) minmax(92px, 122px) minmax(58px, 82px);
       --case-frame-bottom: clamp(10px, 1.6vh, 16px);
       position: relative;
       padding: var(--fit-pad-md) clamp(54px, 5.5vw, 80px) var(--section-bottom-gap);
@@ -967,7 +967,7 @@
     }
 
     .case-list {
-      animation: caseLoop 44s cubic-bezier(.76, 0, .24, 1) infinite;
+      animation: caseLoop 56s cubic-bezier(.76, 0, .24, 1) infinite;
       will-change: transform;
     }
 
@@ -1043,7 +1043,7 @@
 
     .case-date {
       justify-self: stretch;
-      display: none;
+      display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -1090,18 +1090,21 @@
     }
 
     @keyframes caseLoop {
-      0%, 4% { transform: translateY(0); }
-      7%, 13% { transform: translateY(calc(var(--case-row-h) * -1)); }
-      16%, 22% { transform: translateY(calc(var(--case-row-h) * -2)); }
-      25%, 31% { transform: translateY(calc(var(--case-row-h) * -3)); }
-      34%, 40% { transform: translateY(calc(var(--case-row-h) * -4)); }
-      43%, 49% { transform: translateY(calc(var(--case-row-h) * -5)); }
-      52%, 58% { transform: translateY(calc(var(--case-row-h) * -6)); }
-      61%, 67% { transform: translateY(calc(var(--case-row-h) * -7)); }
-      70%, 76% { transform: translateY(calc(var(--case-row-h) * -8)); }
-      79%, 85% { transform: translateY(calc(var(--case-row-h) * -9)); }
-      88%, 94% { transform: translateY(calc(var(--case-row-h) * -10)); }
-      97%, 100% { transform: translateY(calc(var(--case-row-h) * -11)); }
+      0%, 3.2% { transform: translateY(0); }
+      6.9%, 10.1% { transform: translateY(calc(var(--case-row-h) * -1)); }
+      13.7%, 16.9% { transform: translateY(calc(var(--case-row-h) * -2)); }
+      20.6%, 23.8% { transform: translateY(calc(var(--case-row-h) * -3)); }
+      27.4%, 30.6% { transform: translateY(calc(var(--case-row-h) * -4)); }
+      34.3%, 37.5% { transform: translateY(calc(var(--case-row-h) * -5)); }
+      41.1%, 44.3% { transform: translateY(calc(var(--case-row-h) * -6)); }
+      48%, 51.2% { transform: translateY(calc(var(--case-row-h) * -7)); }
+      54.9%, 58.1% { transform: translateY(calc(var(--case-row-h) * -8)); }
+      61.7%, 64.9% { transform: translateY(calc(var(--case-row-h) * -9)); }
+      68.6%, 71.8% { transform: translateY(calc(var(--case-row-h) * -10)); }
+      75.4%, 78.6% { transform: translateY(calc(var(--case-row-h) * -11)); }
+      82.3%, 85.5% { transform: translateY(calc(var(--case-row-h) * -12)); }
+      89.1%, 92.3% { transform: translateY(calc(var(--case-row-h) * -13)); }
+      96%, 100% { transform: translateY(calc(var(--case-row-h) * -14)); }
     }
 
     .knowledge-row {
@@ -3478,19 +3481,22 @@
                 <li data-case-key="recovery"><a><span class="case-type">개인회생</span><span class="case-title">급여압류 전 금지명령과 변제계획 상담</span><span class="case-step">신청요건 검토</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">상담중</span></a></li>
                 <li data-case-key="business"><a><span class="case-type">자영업자</span><span class="case-title">폐업 후 카드채무·대출채무 정리 문의</span><span class="case-step">채무자료 확인</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">서류준비</span></a></li>
                 <li data-case-key="seizure"><a><span class="case-type">압류대응</span><span class="case-title">통장압류 예정 상태의 긴급 대응 상담</span><span class="case-step">압류 대응 안내</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
+                <li data-case-key="correction"><a><span class="case-type">보정권고</span><span class="case-title">누락 소득자료 보완 후 사건 재정리</span><span class="case-step">법원 제출 보완</span><span class="case-date">2026.06.16</span><span class="case-result status-done">완료</span></a></li>
+                <li data-case-key="correction"><a><span class="case-type">보정권고</span><span class="case-title">법원 보정권고 수령 후 제출자료 보완</span><span class="case-step">보완 제출</span><span class="case-date">2026.06.11</span><span class="case-result status-done">완료</span></a></li>
+                <li data-case-key="bankruptcy immunity"><a><span class="case-type">개인파산</span><span class="case-title">면책 결정 후 채무 정리 절차 안내</span><span class="case-step">면책 확정</span><span class="case-date">2026.06.10</span><span class="case-result status-done">완료</span></a></li>
+                <li data-case-key="recovery"><a><span class="case-type">개인회생</span><span class="case-title">변제계획 인가 후 월 납부 일정 안내</span><span class="case-step">인가 결정</span><span class="case-date">2026.06.09</span><span class="case-result status-done">완료</span></a></li>
+                <li data-case-key="seizure"><a><span class="case-type">압류대응</span><span class="case-title">금지명령 인용 후 채권추심 중단 안내</span><span class="case-step">금지명령 인용</span><span class="case-date">2026.06.08</span><span class="case-result status-done">완료</span></a></li>
                 <li data-case-key="worker"><a><span class="case-type">직장인 채무</span><span class="case-title">장기연체 후 월 변제금 조정 검토</span><span class="case-step">소득자료 정리</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
                 <li data-case-key="bankruptcy immunity"><a><span class="case-type">개인파산</span><span class="case-title">고령·질병 사유가 있는 면책 가능성 검토</span><span class="case-step">면책요건 확인</span><span class="case-date">2026.06.17</span><span class="case-result status-wait">상담중</span></a></li>
-                <li data-case-key="correction"><a><span class="case-type">보정권고</span><span class="case-title">누락 소득자료 보완 후 사건 재정리</span><span class="case-step">법원 제출 보완</span><span class="case-date">2026.06.16</span><span class="case-result status-done">완료</span></a></li>
                 <li data-case-key="recovery worker"><a><span class="case-type">개인회생</span><span class="case-title">급여소득자의 카드·대출채무 변제계획 상담</span><span class="case-step">소득자료 확인</span><span class="case-date">2026.06.15</span><span class="case-result status-progress">진행중</span></a></li>
                 <li data-case-key="immunity bankruptcy"><a><span class="case-type">면책검토</span><span class="case-title">장기연체 채무자의 파산·면책 가능성 문의</span><span class="case-step">재산자료 정리</span><span class="case-date">2026.06.14</span><span class="case-result status-wait">상담중</span></a></li>
                 <li data-case-key="seizure"><a><span class="case-type">추심대응</span><span class="case-title">채권추심 연락이 계속되는 상황의 대응 안내</span><span class="case-step">금지명령 검토</span><span class="case-date">2026.06.13</span><span class="case-result status-progress">진행중</span></a></li>
                 <li data-case-key="business"><a><span class="case-type">자영업자</span><span class="case-title">매장 폐업 후 남은 보증채무 정리 상담</span><span class="case-step">채무내역 취합</span><span class="case-date">2026.06.12</span><span class="case-result status-wait">서류준비</span></a></li>
-                <li data-case-key="correction"><a><span class="case-type">보정권고</span><span class="case-title">법원 보정권고 수령 후 제출자료 보완</span><span class="case-step">보완 제출</span><span class="case-date">2026.06.11</span><span class="case-result status-done">완료</span></a></li>
                 <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">개인회생</span><span class="case-title">급여압류 전 금지명령과 변제계획 상담</span><span class="case-step">신청요건 검토</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">상담중</span></a></li>
                 <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">자영업자</span><span class="case-title">폐업 후 카드채무·대출채무 정리 문의</span><span class="case-step">채무자료 확인</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">서류준비</span></a></li>
                 <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">압류대응</span><span class="case-title">통장압류 예정 상태의 긴급 대응 상담</span><span class="case-step">압류 대응 안내</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
-                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">직장인 채무</span><span class="case-title">장기연체 후 월 변제금 조정 검토</span><span class="case-step">소득자료 정리</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
-                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">개인파산</span><span class="case-title">고령·질병 사유가 있는 면책 가능성 검토</span><span class="case-step">면책요건 확인</span><span class="case-date">2026.06.17</span><span class="case-result status-wait">상담중</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">보정권고</span><span class="case-title">누락 소득자료 보완 후 사건 재정리</span><span class="case-step">법원 제출 보완</span><span class="case-date">2026.06.16</span><span class="case-result status-done">완료</span></a></li>
+                <li class="is-clone" aria-hidden="true"><a tabindex="-1"><span class="case-type">보정권고</span><span class="case-title">법원 보정권고 수령 후 제출자료 보완</span><span class="case-step">보완 제출</span><span class="case-date">2026.06.11</span><span class="case-result status-done">완료</span></a></li>
               </ul>
             </div>
           </div>
