@@ -948,7 +948,7 @@
     }
 
     .case-list-window {
-      --case-row-h: clamp(46px, 5.8vh, 62px);
+      --case-row-h: clamp(66px, 9.2vh, 88px);
       --case-visible-rows: 5;
       height: calc(var(--case-row-h) * var(--case-visible-rows));
       margin-bottom: 0;
@@ -2256,6 +2256,10 @@
         width: min(560px, calc(100vw - var(--safe-right-pad) - var(--side-pad)));
       }
 
+      .case-list-window {
+        --case-row-h: clamp(52px, 7.5vh, 58px);
+      }
+
       .consult-left,
       .consult-right {
         min-height: 0;
@@ -2315,6 +2319,12 @@
 
       .bottom-consult-agree span {
         display: none;
+      }
+    }
+
+    @media (min-width: 1501px) and (min-height: 1000px) {
+      .case-list-window {
+        --case-visible-rows: 6;
       }
     }
 
