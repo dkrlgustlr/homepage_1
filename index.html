@@ -1291,7 +1291,7 @@
       box-shadow: 0 18px 42px rgba(17, 24, 39, 0.07);
       overflow: hidden;
       display: grid;
-      grid-template-rows: minmax(78px, 48%) 1fr;
+      grid-template-rows: minmax(72px, 43%) 1fr;
       cursor: pointer;
     }
 
@@ -1334,10 +1334,23 @@
 
     .column-text .title {
       font-size: var(--type-subtitle);
-      line-height: 1.4;
+      line-height: 1.32;
       font-weight: 700;
       color: #222;
       letter-spacing: -0.06em;
+    }
+
+    .column-text .summary {
+      margin-top: 8px;
+      color: rgba(34, 34, 34, 0.58);
+      font-size: var(--type-body);
+      line-height: 1.48;
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .knowledge-board {
@@ -3805,6 +3818,15 @@
       const boardOpenButton = document.querySelector("[data-board-open]");
       const boardCloseButton = document.querySelector(".board-close");
       const knowledgeCards = Array.from(document.querySelectorAll(".column-card[data-post-id]"));
+      knowledgeCards.forEach((card) => {
+        const post = knowledgePosts.find((item) => item.id === card.dataset.postId);
+        const text = card.querySelector(".column-text");
+        if (!post?.summary || !text || text.querySelector(".summary")) return;
+        const summary = document.createElement("div");
+        summary.className = "summary";
+        summary.textContent = post.summary;
+        text.appendChild(summary);
+      });
       const knowledgeFilters = Array.from(document.querySelectorAll(".knowledge-filter[data-board-filter]"));
       let currentBoardFilter = "all";
       let currentPostId = knowledgePosts[0]?.id;
