@@ -3160,7 +3160,7 @@
           const rect = section.getBoundingClientRect();
           return rect.top <= viewportY && rect.bottom >= viewportY;
         });
-        return currentSection?.classList.contains("hero") || currentSection?.classList.contains("case-section") || currentSection?.classList.contains("footer");
+        return currentSection?.classList.contains("hero") || currentSection?.classList.contains("case-section") || currentSection?.classList.contains("consult-section") || currentSection?.classList.contains("footer");
       };
 
       const updateHeaderContrast = () => {
