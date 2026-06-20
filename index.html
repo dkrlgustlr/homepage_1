@@ -814,20 +814,22 @@
 
     .case-right {
       --case-table-cols: minmax(96px, 0.9fr) minmax(206px, 2.08fr) minmax(118px, 1.08fr) minmax(86px, 0.8fr) minmax(56px, 0.58fr);
+      --case-frame-bottom: clamp(10px, 1.6vh, 16px);
       position: relative;
       padding: var(--fit-pad-md) clamp(54px, 5.5vw, 80px) var(--section-bottom-gap);
-      background:
-        linear-gradient(90deg, rgba(23, 105, 209, 0.06) 0 1px, transparent 1px 100%),
-        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,249,250,0.94));
-      background-size: 42px 100%, auto;
+      background: rgba(248,249,250,0.94);
       overflow: hidden;
     }
 
     .case-right::before {
       content: "";
       position: absolute;
-      inset: var(--section-frame-inset);
+      inset: var(--section-frame-inset) var(--section-frame-inset) var(--case-frame-bottom);
       border: 1px solid rgba(13, 35, 64, 0.1);
+      background:
+        repeating-linear-gradient(90deg, rgba(23, 105, 209, 0.055) 0 1px, transparent 1px 42px),
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(248,249,250,0.94));
+      background-size: 42px 100%, auto;
       pointer-events: none;
     }
 
