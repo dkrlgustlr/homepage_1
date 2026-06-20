@@ -1877,6 +1877,20 @@
       display: none;
     }
 
+    .map::after {
+      content: "지도 삽입 영역";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      color: rgba(23, 35, 52, 0.36);
+      font-size: var(--type-body);
+      line-height: 1.5;
+      font-weight: 700;
+      letter-spacing: 0;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
     .map-address {
       display: none;
       position: absolute;
