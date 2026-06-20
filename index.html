@@ -1272,29 +1272,58 @@
     }
 
     .column-grid {
+      --knowledge-card-gap: clamp(18px, 1.8vw, 28px);
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, minmax(0, 1fr));
-      gap: clamp(14px, 1.3vw, 22px);
+      grid-auto-flow: column;
+      grid-auto-columns: calc((100% - var(--knowledge-card-gap) - var(--knowledge-card-gap)) / 3);
+      grid-template-columns: none;
+      grid-template-rows: minmax(0, 1fr);
+      gap: var(--knowledge-card-gap);
+      height: clamp(340px, calc(var(--section-h) - var(--header-h) - 270px), 430px);
       min-height: 0;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .column-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .column-card {
       appearance: none;
+      position: relative;
       width: 100%;
+      height: 100%;
       padding: 0;
       margin: 0;
       text-align: left;
       font-family: inherit;
-      color: inherit;
+      color: #fff;
       min-height: 0;
-      background: #fff;
-      border: 1px solid rgba(20, 32, 51, 0.12);
-      box-shadow: 0 18px 42px rgba(17, 24, 39, 0.07);
+      background: #111;
+      border: 0;
+      box-shadow: 0 24px 54px rgba(17, 24, 39, 0.18);
       overflow: hidden;
-      display: grid;
-      grid-template-rows: minmax(78px, 42%) 1fr;
+      display: block;
       cursor: pointer;
+      scroll-snap-align: start;
+      isolation: isolate;
+    }
+
+    .column-card::before {
+      content: "\2665\00a0" attr(data-like);
+      position: absolute;
+      z-index: 3;
+      top: 26px;
+      right: 28px;
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 850;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
     }
 
     .column-card.is-hidden {
@@ -1307,8 +1336,9 @@
     }
 
     .thumb {
-      min-height: 0;
-      position: relative;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
       overflow: hidden;
     }
 
@@ -1317,52 +1347,50 @@
       height: 100%;
       display: block;
       object-fit: cover;
+      filter: grayscale(1);
+      transform: scale(1.02);
     }
 
     .thumb::after {
-      display: none;
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.16) 0%, rgba(0,0,0,0.25) 42%, rgba(0,0,0,0.76) 100%),
+        rgba(25, 25, 25, 0.24);
+      pointer-events: none;
     }
 
     .column-text {
-      padding: clamp(14px, 1.5vh, 18px) clamp(16px, 1.45vw, 22px) 14px;
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: clamp(28px, 3.2vw, 38px);
     }
 
     .column-text .cat {
-      color: var(--primary);
-      font-size: clamp(14px, 0.86vw, 16px);
-      line-height: 1.25;
-      font-weight: 850;
-      margin-bottom: 8px;
-      letter-spacing: -0.035em;
+      display: none;
     }
 
     .column-text .title {
-      font-size: clamp(17px, 0.98vw, 18px);
-      line-height: 1.46;
-      font-weight: 800;
-      color: #222;
+      font-size: clamp(23px, 1.75vw, 31px);
+      line-height: 1.38;
+      font-weight: 900;
+      color: #fff;
       letter-spacing: -0.045em;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
       word-break: keep-all;
       overflow-wrap: break-word;
+      text-shadow: 0 3px 16px rgba(0, 0, 0, 0.32);
     }
 
     .column-text .summary {
-      margin-top: 8px;
-      color: rgba(34, 34, 34, 0.58);
-      font-size: clamp(14px, 0.82vw, 15px);
-      line-height: 1.55;
-      font-weight: 600;
-      letter-spacing: -0.035em;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      word-break: keep-all;
-      overflow-wrap: break-word;
+      display: none;
     }
 
     .knowledge-board {
@@ -2305,15 +2333,16 @@
       }
 
       .column-grid {
-        gap: clamp(12px, 1.5vh, 16px);
+        --knowledge-card-gap: clamp(14px, 1.4vw, 20px);
+        height: clamp(315px, calc(var(--section-h) - var(--header-h) - 250px), 390px);
       }
 
       .column-card {
-        grid-template-rows: minmax(70px, 40%) 1fr;
+        min-height: 0;
       }
 
       .column-text {
-        padding: clamp(12px, 1.55vh, 15px) 16px 12px;
+        padding: clamp(24px, 2.4vw, 32px);
       }
 
       .column-text .cat {
@@ -2322,8 +2351,8 @@
       }
 
       .column-text .title {
-        font-size: 16px;
-        line-height: 1.45;
+        font-size: clamp(21px, 1.55vw, 26px);
+        line-height: 1.38;
       }
 
       .column-text .summary {
@@ -2824,13 +2853,17 @@
       }
 
       .column-grid {
+        grid-auto-flow: row;
+        grid-auto-columns: initial;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-rows: none;
+        height: auto;
+        overflow: visible;
       }
 
       .column-card {
-        min-height: 270px;
-        grid-template-rows: 150px 1fr;
+        height: auto;
+        min-height: 320px;
       }
 
       .consult-section {
@@ -3090,17 +3123,21 @@
       }
 
       .column-grid {
+        grid-auto-flow: row;
+        grid-auto-columns: initial;
         grid-template-columns: 1fr;
         gap: 16px;
+        height: auto;
+        overflow: visible;
       }
 
       .column-card {
-        min-height: 260px;
-        grid-template-rows: 154px 1fr;
+        height: auto;
+        min-height: 300px;
       }
 
       .column-text {
-        padding: 16px 18px 18px;
+        padding: 28px 24px;
       }
 
       .consult-left .page-title h2 {
@@ -3473,17 +3510,17 @@
           <div class="box-top">
             <div class="page-title">
               <h2>법률정보</h2>
-              <h1>어려운 절차를<br><strong>읽기 쉬운 기준으로 정리합니다.</strong></h1>
+              <h1>의뢰인에게 필요한<br><strong>법률 정보를 공유합니다.</strong></h1>
             </div>
             <button class="more" type="button" data-board-open aria-controls="knowledge-board" aria-expanded="false"><span>more</span><span class="add-btn">+</span></button>
           </div>
           <div class="column-grid">
-            <button class="column-card" type="button" data-post-id="income-standard" data-board-filter="guide"><div class="thumb"><img src="mockup_assets/knowledge_thumb_1_v2.png" alt="개인회생 지식센터 썸네일"></div><div class="column-text"><div class="cat">개인회생</div><div class="title">개인회생 신청 전 반드시 확인할 소득 기준</div></div></button>
-            <button class="column-card" type="button" data-post-id="seizure-order" data-board-filter="seizure"><div class="thumb"><img src="mockup_assets/knowledge_thumb_2_v2.png" alt="압류대응 지식센터 썸네일"></div><div class="column-text"><div class="cat">압류대응</div><div class="title">급여압류와 통장압류가 걱정될 때 보는 순서</div></div></button>
-            <button class="column-card" type="button" data-post-id="bankruptcy-discharge" data-board-filter="guide"><div class="thumb"><img src="mockup_assets/knowledge_thumb_3_v2.png" alt="개인파산 지식센터 썸네일"></div><div class="column-text"><div class="cat">개인파산</div><div class="title">파산과 면책을 함께 검토해야 하는 이유</div></div></button>
-            <button class="column-card" type="button" data-post-id="business-debt" data-board-filter="guide"><div class="thumb"><img src="mockup_assets/knowledge_thumb_4_v2.png" alt="자영업자 지식센터 썸네일"></div><div class="column-text"><div class="cat">자영업자</div><div class="title">폐업 후 남은 채무를 정리할 때 필요한 자료</div></div></button>
-            <button class="column-card" type="button" data-post-id="document-ready" data-board-filter="docs"><div class="thumb"><img src="mockup_assets/knowledge_thumb_5_v2.png" alt="서류준비 지식센터 썸네일"></div><div class="column-text"><div class="cat">서류준비</div><div class="title">상담 전 준비하면 좋은 채무·재산·소득 자료</div></div></button>
-            <button class="column-card" type="button" data-post-id="correction-order" data-board-filter="court"><div class="thumb"><img src="mockup_assets/knowledge_thumb_6_v2.png" alt="보정권고 지식센터 썸네일"></div><div class="column-text"><div class="cat">보정권고</div><div class="title">법원 보정권고가 나왔을 때 당황하지 않는 방법</div></div></button>
+            <button class="column-card" type="button" data-post-id="income-standard" data-board-filter="guide" data-like="18"><div class="thumb"><img src="mockup_assets/knowledge_thumb_1_v2.png" alt="개인회생 지식센터 썸네일"></div><div class="column-text"><div class="cat">개인회생</div><div class="title">개인회생 신청 전 반드시 확인할 소득 기준</div></div></button>
+            <button class="column-card" type="button" data-post-id="seizure-order" data-board-filter="seizure" data-like="26"><div class="thumb"><img src="mockup_assets/knowledge_thumb_2_v2.png" alt="압류대응 지식센터 썸네일"></div><div class="column-text"><div class="cat">압류대응</div><div class="title">급여압류와 통장압류가 걱정될 때 보는 순서</div></div></button>
+            <button class="column-card" type="button" data-post-id="bankruptcy-discharge" data-board-filter="guide" data-like="21"><div class="thumb"><img src="mockup_assets/knowledge_thumb_3_v2.png" alt="개인파산 지식센터 썸네일"></div><div class="column-text"><div class="cat">개인파산</div><div class="title">파산과 면책을 함께 검토해야 하는 이유</div></div></button>
+            <button class="column-card" type="button" data-post-id="business-debt" data-board-filter="guide" data-like="14"><div class="thumb"><img src="mockup_assets/knowledge_thumb_4_v2.png" alt="자영업자 지식센터 썸네일"></div><div class="column-text"><div class="cat">자영업자</div><div class="title">폐업 후 남은 채무를 정리할 때 필요한 자료</div></div></button>
+            <button class="column-card" type="button" data-post-id="document-ready" data-board-filter="docs" data-like="32"><div class="thumb"><img src="mockup_assets/knowledge_thumb_5_v2.png" alt="서류준비 지식센터 썸네일"></div><div class="column-text"><div class="cat">서류준비</div><div class="title">상담 전 준비하면 좋은 채무·재산·소득 자료</div></div></button>
+            <button class="column-card" type="button" data-post-id="correction-order" data-board-filter="court" data-like="15"><div class="thumb"><img src="mockup_assets/knowledge_thumb_6_v2.png" alt="보정권고 지식센터 썸네일"></div><div class="column-text"><div class="cat">보정권고</div><div class="title">법원 보정권고가 나왔을 때 당황하지 않는 방법</div></div></button>
           </div>
           <div class="knowledge-board" id="knowledge-board" aria-hidden="true">
             <div class="knowledge-board-shell" role="region" aria-labelledby="board-title">
