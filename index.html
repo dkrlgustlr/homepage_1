@@ -66,6 +66,7 @@
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; padding: 0; margin: 0; }
     main { padding-bottom: var(--sticky-consult-h); }
+    .text-nowrap { white-space: nowrap; }
 
     .page {
       width: 100%;
@@ -1593,6 +1594,8 @@
       color: rgba(255,255,255,0.7);
       line-height: 1.85;
       font-size: var(--type-subtitle);
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
 
     .footer-actions {
@@ -3035,7 +3038,7 @@
         <div class="location-inner">
           <div class="location-left">
             <h2>오시는 길</h2>
-            <p>경기도 화성시 반월동 현대프라자 205호에서 방문 상담을 안내합니다.</p>
+            <p>경기도 화성시 반월동 <span class="text-nowrap">현대프라자 205호</span>에서 방문 상담을 안내합니다.</p>
             <ul class="office-list">
               <li><span>주소</span><small>경기도 화성시 영통로 59, 205호</small></li>
               <li><span>건물</span><small>반월동, 현대프라자</small></li>
@@ -3059,7 +3062,7 @@
         <div class="footer-copy">
           <span class="footer-eyebrow">HWASEONG · BANWOL-DONG · HYUNDAI PLAZA</span>
           <h2>법무사 권선기 사무소</h2>
-          <p>개인회생, 개인파산, 면책, 압류·추심 대응까지 현재 상황에 맞는 절차를 차분하게 검토합니다. 경기도 화성시 영통로 59, 현대프라자 205호에서 방문 상담을 안내합니다.</p>
+          <p>개인회생, 개인파산, 면책, 압류·추심 대응까지 현재 상황에 맞는 절차를 차분하게 검토합니다. 경기도 화성시 영통로 59, <span class="text-nowrap">현대프라자 205호</span>에서 방문 상담을 안내합니다.</p>
           <div class="footer-actions">
             <a class="footer-action primary" href="#consult">상담 신청하기</a>
             <a class="footer-action" href="#location">오시는 길</a>
