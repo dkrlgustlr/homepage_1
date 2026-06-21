@@ -92,6 +92,13 @@ assert(indexHtml.includes("renderKakaoRoughMap"), "Main page should render the K
 assert(!/"mapWidth"\s*:\s*"640"/.test(indexHtml) && !/"mapHeight"\s*:\s*"360"/.test(indexHtml), "Kakao roughmap should not keep the original fixed 640x360 size.");
 assert(css.includes(".kakao-map"), "Styles should size the Kakao map container.");
 assert(!indexHtml.includes("beommusa_map_hyundai_plaza.png"), "Main page should not keep the old placeholder map image.");
+const mapBlock = getBlock(css, ".map");
+const mapTransitionBlock = css.match(/\.map,\s*\n\s*\.more,\s*\n\s*\.add-btn\s*{/)?.[0] || "";
+assert(/height:\s*min\(calc\(var\(--section-h\)\s*-\s*var\(--header-h\)\s*-\s*var\(--fit-content-offset\)\s*-\s*70px\),\s*520px\)/.test(mapBlock), "Desktop map height should be reduced by about 70px.");
+assert(!mapTransitionBlock, "Map should not be included in the shared hover transition group.");
+assert(!/\.map:hover\s*{[\s\S]*?transform:/.test(css), "Map should not move on hover.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.map\s*{[\s\S]*?height:\s*360px/.test(css), "Tablet map height should be reduced to 360px.");
+assert(/@media \(max-width:\s*640px\)[\s\S]*?\.map\s*{[\s\S]*?height:\s*290px/.test(css), "Mobile map height should be reduced to 290px.");
 
 pages.forEach(([file, html]) => {
   const imageTags = html.match(/<img\b[^>]*>/g) || [];
