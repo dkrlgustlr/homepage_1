@@ -679,6 +679,7 @@
     }
 
     .case-inner {
+      --case-inner-lift: -30px;
       position: relative;
       z-index: 2;
       height: min(calc(var(--section-h) - var(--header-h) - var(--fit-pad-xs)), 820px);
@@ -687,6 +688,7 @@
       display: grid;
       grid-template-columns: 31.5% 68.5%;
       background: rgba(255, 255, 255, 0.85);
+      translate: 0 var(--case-inner-lift);
     }
 
     .case-left {
@@ -2975,6 +2977,7 @@
         height: auto;
         min-height: 0;
         grid-template-columns: 1fr;
+        translate: none;
       }
 
       .case-left {
