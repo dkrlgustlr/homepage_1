@@ -14,6 +14,8 @@
         <span>법무사 상담 접수 031-211-5230</span>
       </a>
       <nav class="top-nav" aria-label="주요 메뉴">
+        <a href="index.html">메인</a>
+        <span class="divider">|</span>
         <a href="about.html">법무사소개</a>
         <span class="divider">|</span>
         <a href="cases.html">실제사례</a>
