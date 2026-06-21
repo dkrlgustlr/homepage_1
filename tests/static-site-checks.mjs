@@ -121,7 +121,7 @@ assert(/--case-inner-lift:\s*-30px/.test(caseInnerBlock) && /translate:\s*0\s+va
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-inner\s*{[\s\S]*?translate:\s*none/.test(css), "Stacked case layout should reset the desktop 30px lift on tablet/mobile.");
 const caseRightBlock = getBlock(css, ".case-right");
 const caseRightChildrenBlock = getBlock(css, ".case-right > *");
-assert(/--case-content-drop:\s*15px/.test(caseRightBlock) && /translate:\s*0\s+var\(--case-content-drop\)/.test(caseRightChildrenBlock), "Desktop case right text and table content should move down by 15px.");
+assert(/--case-content-drop:\s*30px/.test(caseRightBlock) && /translate:\s*0\s+var\(--case-content-drop\)/.test(caseRightChildrenBlock), "Desktop case right text and table content should move down by 30px.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-right\s*{[\s\S]*?--case-content-drop:\s*0px/.test(css), "Stacked case layout should reset the desktop case content drop.");
 
 pages.forEach(([file, html]) => {
