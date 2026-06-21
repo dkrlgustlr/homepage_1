@@ -72,10 +72,15 @@ assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml)
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 
 assert(/<div class="site-intro" aria-hidden="true">[\s\S]*?<img[^>]*class="site-intro__logo"[^>]*kwonseongi_logo_sharp_sides_same_size_transparent_trimmed_4x\.png/.test(indexHtml), "Main page should include the logo intro overlay with the transparent high-resolution logo.");
-assert(/\.site-intro\s*{[\s\S]*?position:\s*fixed;[\s\S]*?background:[\s\S]*?#030405[\s\S]*?animation:\s*introCurtain/.test(css), "Logo intro should be a fixed black opening overlay.");
+const siteIntroBlock = getBlock(css, ".site-intro");
+const siteIntroAuraBlock = getBlock(css, ".site-intro__logo-shell::before");
+assert(/position:\s*fixed/.test(siteIntroBlock) && /background:[\s\S]*?#030405/.test(siteIntroBlock), "Logo intro should use a fixed black background overlay.");
+assert(!/animation\s*:/.test(siteIntroBlock), "Logo intro background should stay on immediately without its own animation.");
 assert(/\.site-intro__logo\s*{[\s\S]*?animation:\s*introLogoRise/.test(css), "Logo intro should animate the logo dramatically.");
-assert(/\.site-intro__logo-shell::before\s*{[\s\S]*?radial-gradient/.test(css), "Logo intro should include a soft light aura behind the logo.");
-assert(/@keyframes introCurtain/.test(css) && /@keyframes introLogoRise/.test(css) && /@keyframes introAura/.test(css), "Logo intro should define curtain, logo, and aura animations.");
+assert(/radial-gradient/.test(siteIntroAuraBlock) && !/animation\s*:/.test(siteIntroAuraBlock), "Logo intro aura should be static so only the logo animates.");
+assert(!/@keyframes introCurtain/.test(css) && !/@keyframes introAura/.test(css) && !/@keyframes introCrossLine/.test(css), "Logo intro should not keep separate background or aura animations.");
+assert(/\.site-intro\.is-finished\s*{[\s\S]*?display:\s*none/.test(css), "Logo intro should hide the static background after the logo animation finishes.");
+assert(indexHtml.includes('classList.add("is-finished")') && indexHtml.includes("animationend"), "Main page should remove the intro overlay after the logo animation ends.");
 assert(/@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.site-intro\s*{[\s\S]*?display:\s*none/.test(css), "Logo intro should be disabled when reduced motion is requested.");
 
 assert(layoutJs.includes("initConsultForms"), "layout.js should initialize consultation forms.");

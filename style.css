@@ -94,34 +94,10 @@
       pointer-events: none;
       background:
         radial-gradient(circle at 50% 50%, rgba(29, 32, 38, 0.96) 0 18%, rgba(3, 4, 5, 0.99) 58%, #030405 100%);
-      animation: introCurtain 2.8s cubic-bezier(.16, 1, .3, 1) 0.08s both;
     }
 
-    .site-intro::before,
-    .site-intro::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    .site-intro::before {
-      background:
-        linear-gradient(90deg, transparent 0 18%, rgba(255,255,255,0.08) 50%, transparent 82%),
-        radial-gradient(circle at 50% 54%, rgba(255,255,255,0.18), transparent 38%),
-        radial-gradient(circle at 50% 58%, rgba(174, 132, 42, 0.24), transparent 46%);
-      opacity: 0;
-      transform: scale(0.74);
-      animation: introAura 2.5s cubic-bezier(.16, 1, .3, 1) 0.16s both;
-    }
-
-    .site-intro::after {
-      background:
-        linear-gradient(90deg, transparent 0 49.8%, rgba(255,255,255,0.18) 50%, transparent 50.2%),
-        linear-gradient(0deg, transparent 0 49.8%, rgba(255,255,255,0.1) 50%, transparent 50.2%);
-      opacity: 0.18;
-      transform: scaleX(0);
-      animation: introCrossLine 2.2s cubic-bezier(.16, 1, .3, 1) 0.24s both;
+    .site-intro.is-finished {
+      display: none;
     }
 
     .site-intro__logo-shell {
@@ -142,9 +118,8 @@
       background:
         radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0 18%, rgba(255,255,255,0.44) 36%, rgba(176, 135, 44, 0.28) 50%, transparent 72%);
       filter: blur(18px);
-      opacity: 0;
-      transform: scale(0.72);
-      animation: introAura 2.55s cubic-bezier(.16, 1, .3, 1) 0.18s both;
+      opacity: 0.72;
+      transform: scale(1);
     }
 
     .site-intro__logo {
@@ -2446,50 +2421,6 @@
     @keyframes searchGlow {
       0%, 100% { box-shadow: 0 0 0 rgba(23, 105, 209, 0); border-color: rgba(255, 255, 255, 0.22); }
       50% { box-shadow: 0 0 36px rgba(23, 105, 209, 0.24); border-color: rgba(255, 255, 255, 0.42); }
-    }
-
-    @keyframes introCurtain {
-      0%, 70% {
-        opacity: 1;
-        visibility: visible;
-      }
-      100% {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    @keyframes introAura {
-      0% {
-        opacity: 0;
-        transform: scale(0.62);
-      }
-      34% {
-        opacity: 0.96;
-      }
-      72% {
-        opacity: 0.78;
-        transform: scale(1.05);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(1.24);
-      }
-    }
-
-    @keyframes introCrossLine {
-      0% {
-        opacity: 0;
-        transform: scaleX(0);
-      }
-      42% {
-        opacity: 0.22;
-        transform: scaleX(1);
-      }
-      100% {
-        opacity: 0;
-        transform: scaleX(1.06);
-      }
     }
 
     @keyframes introLogoRise {
