@@ -2075,6 +2075,10 @@
       box-shadow: 0 18px 48px rgba(15, 35, 64, 0.06);
     }
 
+    .sub-heading + .sub-table {
+      border-top: 0;
+    }
+
     .sub-table th,
     .sub-table td {
       min-height: 68px;

@@ -106,6 +106,7 @@ assert(!mapTransitionBlock, "Map should not be included in the shared hover tran
 assert(!/\.map:hover\s*{[\s\S]*?transform:/.test(css), "Map should not move on hover.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.map\s*{[\s\S]*?height:\s*360px/.test(css), "Tablet map height should be reduced to 360px.");
 assert(/@media \(max-width:\s*640px\)[\s\S]*?\.map\s*{[\s\S]*?height:\s*240px/.test(css), "Mobile map height should use the provided 240px map height.");
+assert(/\.sub-heading\s*\+\s*\.sub-table\s*{[\s\S]*?border-top:\s*0/.test(css), "Tables immediately after section headings should remove their top border to avoid double horizontal lines.");
 
 pages.forEach(([file, html]) => {
   const imageTags = html.match(/<img\b[^>]*>/g) || [];
