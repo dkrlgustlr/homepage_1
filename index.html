@@ -339,7 +339,8 @@
             </ul>
           </div>
           <div class="map">
-            <div id="daumRoughmapContainer1782029506097" class="root_daum_roughmap root_daum_roughmap_landing kakao-map" aria-label="법무사 권선기 사무소 카카오맵 약도"></div>
+            <div id="daumRoughmapContainer1782029506097" class="root_daum_roughmap root_daum_roughmap_landing kakao-map kakao-map-desktop" aria-label="법무사 권선기 사무소 카카오맵 약도"></div>
+            <div id="daumRoughmapContainer1782035826357" class="root_daum_roughmap root_daum_roughmap_landing kakao-map kakao-map-mobile" aria-label="법무사 권선기 사무소 모바일 카카오맵 약도"></div>
             <noscript>
               <p class="map-fallback">경기도 화성시 영통로 59, 현대프라자 205호</p>
             </noscript>
@@ -391,27 +392,44 @@
       setViewportHeight();
       window.addEventListener("resize", setViewportHeight);
 
-      const renderKakaoRoughMap = () => {
-        const container = document.getElementById("daumRoughmapContainer1782029506097");
+      const renderRoughMap = (containerId, options) => {
+        const container = document.getElementById(containerId);
         if (!container || container.dataset.rendered === "true" || !window.daum?.roughmap?.Lander) return;
 
-        const mapFrame = container.closest(".map") || container;
-        const rect = mapFrame.getBoundingClientRect();
-        const mapWidth = Math.max(320, Math.floor(rect.width || 640));
-        const mapHeight = Math.max(300, Math.floor(rect.height || 360));
-
-        new daum.roughmap.Lander({
-          "timestamp" : "1782029506097",
-          "key" : "pw7oq2qig7i",
-          "mapWidth" : String(mapWidth),
-          "mapHeight" : String(mapHeight)
-        }).render();
+        new daum.roughmap.Lander(options).render();
 
         container.dataset.rendered = "true";
       };
 
+      const renderKakaoRoughMap = () => {
+        const isMobileMap = window.matchMedia("(max-width: 640px)").matches;
+        if (isMobileMap) {
+          renderRoughMap("daumRoughmapContainer1782035826357", {
+            "timestamp" : "1782035826357",
+            "key" : "2rcohv5rv8fz",
+            "mapWidth" : "360",
+            "mapHeight" : "240"
+          });
+          return;
+        }
+
+        const desktopContainer = document.getElementById("daumRoughmapContainer1782029506097");
+        const mapFrame = desktopContainer?.closest(".map") || desktopContainer;
+        const rect = mapFrame?.getBoundingClientRect() || { width: 640, height: 360 };
+        const mapWidth = Math.max(320, Math.floor(rect.width || 640));
+        const mapHeight = Math.max(300, Math.floor(rect.height || 360));
+
+        renderRoughMap("daumRoughmapContainer1782029506097", {
+          "timestamp" : "1782029506097",
+          "key" : "pw7oq2qig7i",
+          "mapWidth" : String(mapWidth),
+          "mapHeight" : String(mapHeight)
+        });
+      };
+
       renderKakaoRoughMap();
       window.addEventListener("load", renderKakaoRoughMap, { once: true });
+      window.addEventListener("resize", renderKakaoRoughMap);
 
       const revealSelectors = [
         ".case-inner",
