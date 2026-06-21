@@ -1550,12 +1550,12 @@
     }
 
     .form-row.area {
-      align-items: start;
-      padding-top: 4px;
+      align-items: center;
+      padding-top: 0;
     }
 
     .form-row.area span {
-      padding-top: 12px;
+      padding-top: 0;
     }
 
     .form-row input::placeholder,
