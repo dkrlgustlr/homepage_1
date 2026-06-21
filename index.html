@@ -214,7 +214,7 @@
             <div class="box-top">
               <div class="page-title">
                 <h2>상담·사건 진행 현황</h2>
-                <h1>현재 접수된 채무 사건을<br><strong>절차별로 정리하고 있습니다.</strong></h1>
+                <p class="section-headline">현재 접수된 채무 사건을<br><strong>절차별로 정리하고 있습니다.</strong></p>
               </div>
             </div>
             <div class="case-doc-meta">
@@ -267,7 +267,7 @@
           <div class="box-top">
             <div class="page-title">
               <h2>법률정보</h2>
-              <h1>의뢰인에게 필요한<br><strong>법률 정보를 공유합니다.</strong></h1>
+              <p class="section-headline">의뢰인에게 필요한<br><strong>법률 정보를 공유합니다.</strong></p>
             </div>
             <button class="more" type="button"><span>more</span><span class="add-btn">+</span></button>
           </div>
@@ -286,7 +286,7 @@
         <div class="consult-left">
           <div class="page-title">
             <h2>상담 진행</h2>
-            <h1>지금 필요한 절차를<br><strong>순서대로 안내합니다.</strong></h1>
+            <p class="section-headline">지금 필요한 절차를<br><strong>순서대로 안내합니다.</strong></p>
           </div>
           <ul class="process-list">
             <li><span class="count">01</span><p>채무·소득·재산 현황 확인</p></li>
@@ -299,7 +299,7 @@
           <img class="consult-photo" src="mockup_assets/beommusa_office_photo_v2.png" alt="상담 신청 배경 이미지">
           <h2>상담 신청</h2>
           <div class="desc">비공개 상담으로 현재 상황을 먼저 확인합니다. 접수 후 담당자가 순차적으로 연락드립니다.</div>
-          <form class="consult-form">
+          <form class="consult-form" id="main-consult-form" data-consult-form>
             <label class="form-row">
               <span>상담 분야</span>
               <select name="case_type" aria-label="상담 분야">
@@ -322,7 +322,7 @@
               <span>문의내용</span>
               <textarea name="message" placeholder="채무 상황과 압류 여부를 간단히 적어주세요"></textarea>
             </label>
-            <button class="form-button" type="button">상담 신청</button>
+            <button class="form-button" type="submit">상담 신청</button>
           </form>
         </div>
       </section>

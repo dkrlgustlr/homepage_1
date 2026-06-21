@@ -88,7 +88,8 @@
       top: 34px;
       left: 50%;
       height: 42px;
-      transform: translateX(-50%);
+      translate: -50% 0;
+      transform: none;
       background: rgba(48, 52, 59, 0.97);
       color: #fff;
       border-radius: 999px;
@@ -848,7 +849,7 @@
     }
 
     .case-right .page-title h2,
-    .case-right .page-title h1 {
+    .case-right .page-title .section-headline {
       max-width: none;
     }
 
@@ -860,7 +861,7 @@
       letter-spacing: -0.08em;
     }
 
-    .page-title h1 {
+    .page-title .section-headline {
       margin: 0;
       white-space: pre-line;
       font-size: var(--type-title);
@@ -870,7 +871,7 @@
       letter-spacing: -0.06em;
     }
 
-    .page-title h1 strong {
+    .page-title .section-headline strong {
       font-weight: 800;
     }
 
@@ -2659,6 +2660,7 @@
         right: 78px;
         width: auto;
         height: 42px;
+        translate: none;
         transform: none;
       }
 
@@ -2969,7 +2971,7 @@
       }
 
       .case-right .page-title h2,
-      .case-right .page-title h1 {
+      .case-right .page-title .section-headline {
         max-width: none;
       }
 
@@ -2977,7 +2979,7 @@
         font-size: var(--type-title);
       }
 
-      .page-title h1 {
+      .page-title .section-headline {
         font-size: var(--type-subtitle);
       }
 
@@ -3240,7 +3242,7 @@
         font-size: var(--type-title);
       }
 
-      .page-title h1 {
+      .page-title .section-headline {
         font-size: var(--type-subtitle);
       }
 
@@ -3521,7 +3523,7 @@
     .page :is(
       .main-title-box .kicker,
       .main-label,
-      .page-title h1,
+      .page-title .section-headline,
       .more,
       .case-menu button,
       .knowledge-left .mini-menu li,
