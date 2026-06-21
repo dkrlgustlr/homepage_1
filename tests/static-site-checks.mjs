@@ -74,8 +74,8 @@ assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footer
 assert(/<div class="site-intro" aria-hidden="true">[\s\S]*?<img[^>]*class="site-intro__logo"[^>]*kwonseongi_logo_sharp_sides_same_size_transparent_trimmed_4x\.png/.test(indexHtml), "Main page should include the logo intro overlay with the transparent high-resolution logo.");
 const siteIntroBlock = getBlock(css, ".site-intro");
 const siteIntroAuraBlock = getBlock(css, ".site-intro__logo-shell::before");
-assert(/position:\s*fixed/.test(siteIntroBlock) && /background:[\s\S]*?#030405/.test(siteIntroBlock), "Logo intro should use a fixed black background overlay.");
-assert(!/animation\s*:/.test(siteIntroBlock), "Logo intro background should stay on immediately without its own animation.");
+assert(/position:\s*fixed/.test(siteIntroBlock) && /background-color:\s*#02050b/.test(siteIntroBlock) && /#1769d1/.test(siteIntroBlock), "Logo intro should use a fixed opaque blue-black background overlay.");
+assert(!/rgba\(/.test(siteIntroBlock) && !/animation\s*:/.test(siteIntroBlock), "Logo intro background should be opaque and stay on immediately without its own animation.");
 assert(/\.site-intro__logo\s*{[\s\S]*?animation:\s*introLogoRise/.test(css), "Logo intro should animate the logo dramatically.");
 assert(/radial-gradient/.test(siteIntroAuraBlock) && !/animation\s*:/.test(siteIntroAuraBlock), "Logo intro aura should be static so only the logo animates.");
 assert(!/@keyframes introCurtain/.test(css) && !/@keyframes introAura/.test(css) && !/@keyframes introCrossLine/.test(css), "Logo intro should not keep separate background or aura animations.");

@@ -92,8 +92,11 @@
       place-items: center;
       overflow: hidden;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(29, 32, 38, 0.96) 0 18%, rgba(3, 4, 5, 0.99) 58%, #030405 100%);
+      background-color: #02050b;
+      background-image:
+        radial-gradient(ellipse at 50% 38%, #1769d1 0%, #0a3578 22%, #041936 44%, #020814 68%, #010205 100%),
+        linear-gradient(135deg, #06162b 0%, #02050b 52%, #000103 100%);
+      background-blend-mode: screen, normal;
     }
 
     .site-intro.is-finished {
@@ -116,9 +119,9 @@
       inset: 6% -4%;
       border-radius: 999px;
       background:
-        radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0 18%, rgba(255,255,255,0.44) 36%, rgba(176, 135, 44, 0.28) 50%, transparent 72%);
-      filter: blur(18px);
-      opacity: 0.72;
+        radial-gradient(ellipse at center, rgba(82, 154, 255, 0.62) 0 18%, rgba(20, 96, 202, 0.34) 42%, rgba(1, 10, 27, 0) 74%);
+      filter: blur(26px);
+      opacity: 0.9;
       transform: scale(1);
     }
 
