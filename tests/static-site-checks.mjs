@@ -71,6 +71,13 @@ assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Co
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 
+assert(/<div class="site-intro" aria-hidden="true">[\s\S]*?<img[^>]*class="site-intro__logo"[^>]*kwonseongi_logo_sharp_sides_same_size_transparent_trimmed_4x\.png/.test(indexHtml), "Main page should include the logo intro overlay with the transparent high-resolution logo.");
+assert(/\.site-intro\s*{[\s\S]*?position:\s*fixed;[\s\S]*?background:[\s\S]*?#030405[\s\S]*?animation:\s*introCurtain/.test(css), "Logo intro should be a fixed black opening overlay.");
+assert(/\.site-intro__logo\s*{[\s\S]*?animation:\s*introLogoRise/.test(css), "Logo intro should animate the logo dramatically.");
+assert(/\.site-intro__logo-shell::before\s*{[\s\S]*?radial-gradient/.test(css), "Logo intro should include a soft light aura behind the logo.");
+assert(/@keyframes introCurtain/.test(css) && /@keyframes introLogoRise/.test(css) && /@keyframes introAura/.test(css), "Logo intro should define curtain, logo, and aura animations.");
+assert(/@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.site-intro\s*{[\s\S]*?display:\s*none/.test(css), "Logo intro should be disabled when reduced motion is requested.");
+
 assert(layoutJs.includes("initConsultForms"), "layout.js should initialize consultation forms.");
 assert(layoutJs.includes("mailto:") && layoutJs.includes("sms:"), "Consultation submit should support mailto and sms fallbacks.");
 assert(layoutJs.includes("HEADER_FALLBACK_HTML") && layoutJs.includes("FOOTER_FALLBACK_HTML"), "layout.js should provide fallback HTML when shared includes cannot be fetched.");
