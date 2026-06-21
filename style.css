@@ -1659,6 +1659,36 @@
       box-shadow: 0 22px 44px rgba(0, 0, 0, 0.06);
     }
 
+    .kakao-map,
+    .kakao-map .wrap_map,
+    .kakao-map .wrap_controllers {
+      width: 100% !important;
+    }
+
+    .kakao-map,
+    .kakao-map .wrap_map {
+      height: 100% !important;
+    }
+
+    .kakao-map {
+      position: relative;
+      z-index: 1;
+    }
+
+    .map-fallback {
+      position: absolute;
+      inset: auto 24px 24px;
+      z-index: 2;
+      margin: 0;
+      padding: 16px 18px;
+      background: rgba(255,255,255,0.94);
+      color: #172334;
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      font-weight: 800;
+      box-shadow: 0 12px 28px rgba(15, 35, 64, 0.12);
+    }
+
     .map-img {
       width: 100%;
       height: 100%;
@@ -1672,17 +1702,7 @@
     }
 
     .map::after {
-      content: "지도 삽입 영역";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      color: rgba(23, 35, 52, 0.36);
-      font-size: var(--type-body);
-      line-height: 1.5;
-      font-weight: 700;
-      letter-spacing: 0;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
+      display: none;
     }
 
     .map-address {

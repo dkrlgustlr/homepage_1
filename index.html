@@ -339,14 +339,10 @@
             </ul>
           </div>
           <div class="map">
-            <img class="map-img" src="mockup_assets/beommusa_map_hyundai_plaza.png" alt="경기도 화성시 영통로 59 현대프라자 205호 위치 안내 지도 이미지" loading="lazy" decoding="async">
-            <div class="map-address">
-              <strong>법무사 권선기 사무소</strong>
-              <span>경기도 화성시 영통로 59, 205호<br>반월동, 현대프라자</span>
-            </div>
-            <div class="pin suwon">수원</div>
-            <div class="pin hwasung">화성</div>
-            <div class="pin dongtan">동탄</div>
+            <div id="daumRoughmapContainer1782029506097" class="root_daum_roughmap root_daum_roughmap_landing kakao-map" aria-label="법무사 권선기 사무소 카카오맵 약도"></div>
+            <noscript>
+              <p class="map-fallback">경기도 화성시 영통로 59, 현대프라자 205호</p>
+            </noscript>
           </div>
         </div>
       </section>
@@ -354,6 +350,7 @@
       <div data-include="footer"></div>
     </main>
   </div>
+  <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
   <script src="layout.js"></script>
   <script>
     (async () => {
@@ -393,6 +390,28 @@
 
       setViewportHeight();
       window.addEventListener("resize", setViewportHeight);
+
+      const renderKakaoRoughMap = () => {
+        const container = document.getElementById("daumRoughmapContainer1782029506097");
+        if (!container || container.dataset.rendered === "true" || !window.daum?.roughmap?.Lander) return;
+
+        const mapFrame = container.closest(".map") || container;
+        const rect = mapFrame.getBoundingClientRect();
+        const mapWidth = Math.max(320, Math.floor(rect.width || 640));
+        const mapHeight = Math.max(300, Math.floor(rect.height || 360));
+
+        new daum.roughmap.Lander({
+          "timestamp" : "1782029506097",
+          "key" : "pw7oq2qig7i",
+          "mapWidth" : String(mapWidth),
+          "mapHeight" : String(mapHeight)
+        }).render();
+
+        container.dataset.rendered = "true";
+      };
+
+      renderKakaoRoughMap();
+      window.addEventListener("load", renderKakaoRoughMap, { once: true });
 
       const revealSelectors = [
         ".case-inner",
