@@ -17,7 +17,7 @@
   </a>
   <div class="bottom-consult-form">
     <label class="bottom-consult-label" for="bottom-case">사건 영역</label>
-    <select class="bottom-consult-control" id="bottom-case" aria-label="사건 영역">
+    <select class="bottom-consult-control" id="bottom-case" name="case_type" aria-label="사건 영역">
       <option>사건 영역</option>
       <option>개인회생</option>
       <option>개인파산</option>
@@ -25,9 +25,9 @@
       <option>면책 검토</option>
     </select>
     <label class="bottom-consult-label" for="bottom-name">이름</label>
-    <input class="bottom-consult-control" id="bottom-name" type="text" placeholder="이름" aria-label="이름">
+    <input class="bottom-consult-control" id="bottom-name" name="name" type="text" autocomplete="name" placeholder="이름" aria-label="이름">
     <label class="bottom-consult-label" for="bottom-phone">전화번호</label>
-    <input class="bottom-consult-control" id="bottom-phone" type="tel" placeholder="전화번호" aria-label="전화번호">
+    <input class="bottom-consult-control" id="bottom-phone" name="phone" type="tel" autocomplete="tel" placeholder="전화번호" aria-label="전화번호">
     <label class="bottom-consult-agree">
       <input type="checkbox" checked aria-label="개인정보 수집 및 이용 동의">
       <span>개인정보 수집 및 이용 동의</span>
