@@ -122,6 +122,48 @@
     });
   };
 
+  const initFloatingContrast = () => {
+    const hamburgerButton = document.querySelector(".hamburger");
+    const sideWord = document.querySelector(".side-word");
+    if (!hamburgerButton && !sideWord) return;
+
+    const darkSectionSelector = ".hero, .case-section, .consult-section, .footer, .sub-hero";
+    let ticking = false;
+
+    const isDarkSectionAt = (viewportY) => {
+      const darkSections = Array.from(document.querySelectorAll(darkSectionSelector));
+      return darkSections.some((section) => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= viewportY && rect.bottom >= viewportY;
+      });
+    };
+
+    const updateFloatingContrast = () => {
+      if (hamburgerButton) {
+        hamburgerButton.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(54)));
+      }
+
+      if (sideWord) {
+        const rect = sideWord.getBoundingClientRect();
+        const pointY = rect.top + rect.height / 2;
+        sideWord.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(pointY)));
+      }
+    };
+
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        updateFloatingContrast();
+        ticking = false;
+      });
+    };
+
+    updateFloatingContrast();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+  };
+
   const initSubpageAnimations = () => {
     const targets = [
       ...document.querySelectorAll(".sub-heading, .sub-card, .service-area-card, .article-card, .faq-item, .sub-consult-panel, .sub-consult-form, .sub-table tbody tr")
@@ -200,6 +242,7 @@
 
   window.__layoutReady = Promise.all(includes.map(loadInclude)).then(() => {
     markActiveNav();
+    initFloatingContrast();
     initSubpageAnimations();
     initConsultForms();
   }).catch((error) => {

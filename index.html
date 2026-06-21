@@ -472,29 +472,7 @@
       revealTargets.forEach((el) => observer.observe(el));
 
       const hero = document.querySelector(".hero");
-      const hamburgerButton = document.querySelector(".hamburger");
-      const sideWord = document.querySelector(".side-word");
       let ticking = false;
-
-      const isDarkSectionAt = (viewportY) => {
-        const sections = Array.from(document.querySelectorAll(".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer"));
-        const currentSection = sections.find((section) => {
-          const rect = section.getBoundingClientRect();
-          return rect.top <= viewportY && rect.bottom >= viewportY;
-        });
-        return currentSection?.classList.contains("hero") || currentSection?.classList.contains("case-section") || currentSection?.classList.contains("consult-section") || currentSection?.classList.contains("footer");
-      };
-
-      const updateHeaderContrast = () => {
-        if (hamburgerButton) {
-          hamburgerButton.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(54)));
-        }
-        if (sideWord) {
-          const rect = sideWord.getBoundingClientRect();
-          const pointY = rect.top + rect.height / 2;
-          sideWord.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(pointY)));
-        }
-      };
 
       const updateScrollEffects = () => {
         const y = window.scrollY || 0;
@@ -503,7 +481,6 @@
           hero.style.setProperty("--hero-shift", `${shift}px`);
           hero.classList.toggle("is-scrolled", y > 8);
         }
-        updateHeaderContrast();
         ticking = false;
       };
 
@@ -514,7 +491,6 @@
       }, { passive: true });
 
       updateScrollEffects();
-      updateHeaderContrast();
 
       const caseMenuItems = Array.from(document.querySelectorAll(".case-menu li[data-case-target]"));
       const caseListItems = Array.from(document.querySelectorAll(".case-list li[data-case-key]"));
