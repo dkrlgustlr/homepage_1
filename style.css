@@ -902,6 +902,7 @@
     .case-right {
       --case-table-cols: minmax(104px, 140px) minmax(0, 1fr) minmax(92px, 122px) minmax(58px, 82px);
       --case-frame-bottom: clamp(10px, 1.6vh, 16px);
+      --case-content-drop: 15px;
       position: relative;
       padding: var(--fit-pad-md) clamp(54px, 5.5vw, 80px) var(--section-bottom-gap);
       background: rgba(250, 251, 253, 0.9);
@@ -925,6 +926,7 @@
     .case-right > * {
       position: relative;
       z-index: 1;
+      translate: 0 var(--case-content-drop);
     }
 
     .box-top {
@@ -3182,6 +3184,7 @@
       }
 
       .case-right {
+        --case-content-drop: 0px;
         padding: 34px 26px 38px;
         overflow: visible;
       }
