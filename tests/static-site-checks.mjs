@@ -44,6 +44,8 @@ const footerHtml = read("footer.html");
 const headerHtml = read("header.html");
 const css = read("style.css");
 const layoutJs = read("layout.js");
+const kakaoIconBytes = readFileSync(resolve(root, "mockup_assets/icon-kakaotalk-talk-blue-bg.png"));
+const phoneIconBytes = readFileSync(resolve(root, "mockup_assets/icon-phone-blue.png"));
 const pages = [
   ["index.html", indexHtml],
   ["about.html", aboutHtml],
@@ -85,6 +87,11 @@ assert(layoutJs.includes("initFloatingContrast"), "layout.js should initialize f
 assert(layoutJs.includes(".sub-hero") && layoutJs.includes(".footer") && layoutJs.includes(".hero"), "Floating contrast should inspect both main and subpage dark sections.");
 assert(layoutJs.includes(".side-word") && layoutJs.includes(".hamburger") && layoutJs.includes("is-over-dark"), "Floating contrast should update side word and hamburger colors.");
 assert(!/예약|quick-icon naver|sideFloat/.test(footerHtml + layoutJs + css), "Floating side banner should stay still and should not include Naver reservation.");
+assert(footerHtml.includes("mockup_assets/icon-kakaotalk-talk-blue-bg.png") && layoutJs.includes("mockup_assets/icon-kakaotalk-talk-blue-bg.png"), "Floating side banner should use the local blue-background TALK icon.");
+assert(footerHtml.includes("mockup_assets/icon-phone-blue.png") && layoutJs.includes("mockup_assets/icon-phone-blue.png"), "Floating and bottom phone actions should use the local blue phone icon.");
+assert(kakaoIconBytes.length > 1000, "Blue TALK icon asset should be present.");
+assert(phoneIconBytes.length > 500, "Blue phone icon asset should be present.");
+assert(!/☎|>K<\/div>/.test(footerHtml + layoutJs), "Floating and bottom phone/Kakao actions should not use text placeholder icons.");
 
 assert(/<a href="index\.html">메인<\/a>[\s\S]*<a href="about\.html">법무사소개<\/a>[\s\S]*<a href="cases\.html">실제사례<\/a>[\s\S]*<a href="knowledge\.html">지식센터<\/a>[\s\S]*<a href="consult\.html">상담신청<\/a>/.test(headerHtml), "Header nav should keep the approved order.");
 

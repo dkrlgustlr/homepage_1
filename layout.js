@@ -38,15 +38,15 @@
   <div class="side-word">KWONSEONKI</div>
   <div class="quick-btn">
     <div class="quick-title">Menu</div>
-    <div class="quick-item"><div class="quick-icon kakao">K</div><div>카카오톡</div></div>
-    <div class="quick-item"><div class="quick-icon">☎</div><div>전화상담</div></div>
+    <div class="quick-item"><div class="quick-icon kakao"><img src="mockup_assets/icon-kakaotalk-talk-blue-bg.png" alt="" aria-hidden="true"></div><div>카카오톡</div></div>
+    <div class="quick-item"><div class="quick-icon phone"><img src="mockup_assets/icon-phone-blue.png" alt="" aria-hidden="true"></div><div>전화상담</div></div>
     <div class="quick-item"><div class="quick-icon red">↑</div></div>
   </div>
 </aside>
 
 <form class="bottom-consult" aria-label="하단 상담 신청" data-consult-form>
   <a class="bottom-consult-phone" href="tel:15885986">
-    <span class="phone-mark">☎</span>
+    <span class="phone-mark"><img src="mockup_assets/icon-phone-blue.png" alt="" aria-hidden="true"></span>
     <span>대표전화</span>
     <strong>1588-5986</strong>
   </a>

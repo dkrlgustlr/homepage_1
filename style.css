@@ -265,7 +265,43 @@
       font-weight: 900;
     }
 
-    .quick-icon.kakao { background: #fee500; }
+    .quick-icon img,
+    .quick-icon svg {
+      width: 23px;
+      height: 23px;
+      display: block;
+    }
+
+    .quick-icon svg {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.25;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .quick-icon.kakao img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .quick-icon.kakao {
+      width: 58px;
+      height: 38px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--primary);
+    }
+    .quick-icon.phone {
+      background: transparent;
+      color: inherit;
+    }
+
+    .quick-icon.phone img {
+      width: 44px;
+      height: 44px;
+    }
     .quick-icon.red { background: var(--primary); color: #fff; }
 
     .bottom-consult {
@@ -304,9 +340,17 @@
     }
 
     .bottom-consult-phone .phone-mark {
-      font-size: 19px;
-      line-height: 1;
-      transform: translateY(1px);
+      width: 21px;
+      height: 21px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bottom-consult-phone .phone-mark img {
+      width: 20px;
+      height: 20px;
+      display: block;
     }
 
     .bottom-consult-phone strong {
