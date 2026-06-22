@@ -91,6 +91,8 @@ assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml)
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(footerHtml), "Bottom consultation form should require privacy consent.");
 assert(!/privacy_consent"[^>]*checked/.test(footerHtml + layoutJs), "Privacy consent checkboxes should not be pre-checked.");
+assert(footerHtml.includes("bottom-privacy-detail") && footerHtml.includes("bottom-privacy-panel"), "Bottom consultation bar should include a visible privacy detail panel.");
+assert(layoutJs.includes("bottom-privacy-detail") && layoutJs.includes("bottom-privacy-panel"), "Footer fallback should include the bottom privacy detail panel.");
 
 assert(!/site-intro|introLogoRise|is-finished|animationend/.test(indexHtml + css), "Main page should load directly without an intro overlay.");
 
@@ -151,6 +153,8 @@ assert(!/overflow-wrap:\s*break-word;/.test(css), "Korean content text should no
 assert(/\.privacy-consent\s*{[\s\S]*?display:\s*grid[\s\S]*?padding-left:\s*150px/.test(css), "Main consultation privacy block should align with the form input column.");
 assert(/\.privacy-consent-light\s*{[\s\S]*?padding-left:\s*162px/.test(css), "Consult page privacy block should align with the sub form input column.");
 assert(/\.bottom-consult-agree input:checked\s*{[\s\S]*?box-shadow:\s*inset 0 0 0 4px var\(--primary\)/.test(css), "Bottom consent checkbox should show a distinct checked state.");
+assert(/\.bottom-privacy-detail\s*{[\s\S]*?position:\s*relative/.test(css), "Bottom privacy detail should anchor its floating panel.");
+assert(/\.bottom-privacy-panel\s*{[\s\S]*?position:\s*absolute[\s\S]*?bottom:\s*calc\(100%\s*\+\s*16px\)/.test(css), "Bottom privacy panel should float above the fixed consultation bar.");
 assert(siteText.includes("동의 거부 권리") && siteText.includes("주민등록번호") && siteText.includes("계좌번호"), "Privacy consent details should include refusal rights and warn against unique identifiers.");
 const caseInnerBlock = getBlock(css, ".case-inner");
 assert(/--case-inner-lift:\s*-30px/.test(caseInnerBlock) && /translate:\s*0\s+var\(--case-inner-lift\)/.test(caseInnerBlock), "Desktop case section content should be lifted by 30px.");
