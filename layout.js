@@ -58,7 +58,7 @@
     <label class="bottom-consult-label" for="bottom-phone">전화번호</label>
     <input class="bottom-consult-control" id="bottom-phone" name="phone" type="tel" autocomplete="tel" placeholder="전화번호" aria-label="전화번호">
     <label class="bottom-consult-agree">
-      <input type="checkbox" checked aria-label="개인정보 수집 및 이용 동의">
+      <input type="checkbox" name="privacy_consent" required aria-label="개인정보 수집 및 이용 동의">
       <span>개인정보 수집 및 이용 동의</span>
     </label>
   </div>
@@ -201,10 +201,17 @@
         const phone = getFieldValue(form, "phone");
         const area = getFieldValue(form, "area");
         const message = getFieldValue(form, "message");
+        const privacyConsent = form.elements.privacy_consent;
 
         if (!phone) {
           alert("연락 가능한 전화번호를 입력해주세요.");
           if (form.elements.phone) form.elements.phone.focus();
+          return;
+        }
+
+        if (privacyConsent && !privacyConsent.checked) {
+          alert("개인정보 수집 및 이용에 동의해주세요.");
+          privacyConsent.focus();
           return;
         }
 
@@ -214,7 +221,8 @@
           name ? `이름: ${name}` : null,
           `전화번호: ${phone}`,
           area ? `지역: ${area}` : null,
-          message ? `문의내용: ${message}` : null
+          message ? `문의내용: ${message}` : null,
+          "개인정보 수집 및 이용 동의: 동의"
         ].filter(Boolean);
         const body = encodeURIComponent(lines.join("\n"));
         const subject = encodeURIComponent("홈페이지 상담 신청");
