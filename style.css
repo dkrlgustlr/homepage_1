@@ -98,7 +98,7 @@
       position: absolute;
       top: 34px;
       left: auto;
-      right: clamp(34px, 4vw, 76px);
+      right: calc(clamp(34px, 4vw, 76px) + 30px);
       height: 42px;
       translate: 0 0;
       transform: none;
