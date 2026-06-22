@@ -75,17 +75,7 @@ assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Co
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 
-assert(/<div class="site-intro" aria-hidden="true">[\s\S]*?<img[^>]*class="site-intro__logo"[^>]*kwonseongi_logo_sharp_sides_same_size_transparent_trimmed_4x\.png/.test(indexHtml), "Main page should include the logo intro overlay with the transparent high-resolution logo.");
-const siteIntroBlock = getBlock(css, ".site-intro");
-const siteIntroAuraBlock = getBlock(css, ".site-intro__logo-shell::before");
-assert(/position:\s*fixed/.test(siteIntroBlock) && /background-color:\s*#02050b/.test(siteIntroBlock) && /#1769d1/.test(siteIntroBlock), "Logo intro should use a fixed opaque blue-black background overlay.");
-assert(!/rgba\(/.test(siteIntroBlock) && !/animation\s*:/.test(siteIntroBlock), "Logo intro background should be opaque and stay on immediately without its own animation.");
-assert(/\.site-intro__logo\s*{[\s\S]*?animation:\s*introLogoRise/.test(css), "Logo intro should animate the logo dramatically.");
-assert(/radial-gradient/.test(siteIntroAuraBlock) && !/animation\s*:/.test(siteIntroAuraBlock), "Logo intro aura should be static so only the logo animates.");
-assert(!/@keyframes introCurtain/.test(css) && !/@keyframes introAura/.test(css) && !/@keyframes introCrossLine/.test(css), "Logo intro should not keep separate background or aura animations.");
-assert(/\.site-intro\.is-finished\s*{[\s\S]*?display:\s*none/.test(css), "Logo intro should hide the static background after the logo animation finishes.");
-assert(indexHtml.includes('classList.add("is-finished")') && indexHtml.includes("animationend"), "Main page should remove the intro overlay after the logo animation ends.");
-assert(/@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?\.site-intro\s*{[\s\S]*?display:\s*none/.test(css), "Logo intro should be disabled when reduced motion is requested.");
+assert(!/site-intro|introLogoRise|is-finished|animationend/.test(indexHtml + css), "Main page should load directly without an intro overlay.");
 
 assert(layoutJs.includes("initConsultForms"), "layout.js should initialize consultation forms.");
 assert(layoutJs.includes("mailto:") && layoutJs.includes("sms:"), "Consultation submit should support mailto and sms fallbacks.");
