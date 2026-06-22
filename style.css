@@ -1697,7 +1697,8 @@
     }
 
     .office-list li {
-      height: 76px;
+      min-height: 76px;
+      padding: 16px 0;
       border-bottom: 1px solid #ddd;
       display: flex;
       align-items: center;
@@ -1712,6 +1713,10 @@
       font-size: var(--type-body);
       text-align: right;
       line-height: 1.55;
+    }
+
+    .office-hours {
+      white-space: normal;
     }
 
     .map {

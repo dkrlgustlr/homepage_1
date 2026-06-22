@@ -67,6 +67,8 @@ pages.forEach(([file, html]) => {
 
 assert(siteText.includes("1588-5986"), "The site should display the unified representative phone number.");
 assert(!/(031-211-5230|031-211-5233|0312115230|01065509628|\+82-31-211)/.test(siteText), "The site should not contain old office phone numbers.");
+assert(indexHtml.includes("영업시간") && indexHtml.includes("월-금 09:30 - 18:00") && indexHtml.includes("토·일 정기휴무"), "Location section should show office hours instead of the building row.");
+assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자</small>"), "Location section should not show the old building row.");
 
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
