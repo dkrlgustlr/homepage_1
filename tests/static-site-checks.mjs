@@ -66,6 +66,13 @@ pages.forEach(([file, html]) => {
 });
 
 assert(siteText.includes("1588-5986"), "The site should display the unified representative phone number.");
+assert(siteText.includes("20년 경력"), "The site should mention the provided 20-year experience claim.");
+assert(siteText.includes("2천 건 이상 상담·처리 경험"), "The site should mention the provided 2,000+ consultation/handling experience claim.");
+assert(siteText.includes("95% 승률"), "The site should include the provided 95% win-rate claim.");
+assert(/채권추심/.test(siteText) && /카드값 연체/.test(siteText) && /통장압류/.test(siteText), "The site should reflect the priority emergency debt situations.");
+assert(/직장인/.test(siteText) && /자영업자/.test(siteText) && /프리랜서/.test(siteText) && /일용직/.test(siteText), "The site should reflect the supported customer work types.");
+assert(/주식·코인·도박 채무 상담/.test(siteText), "The site should reflect stock, crypto, and gambling debt consultation wording.");
+assert(/전화상담 후 방문 상담/.test(siteText), "The site should state the phone-first visit consultation flow.");
 assert(!/(031-211-5230|031-211-5233|0312115230|01065509628|\+82-31-211)/.test(siteText), "The site should not contain old office phone numbers.");
 assert(indexHtml.includes("영업시간") && indexHtml.includes("월-금 09:30 - 18:00") && indexHtml.includes("토·일 정기휴무"), "Location section should show office hours instead of the building row.");
 assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자</small>"), "Location section should not show the old building row.");
