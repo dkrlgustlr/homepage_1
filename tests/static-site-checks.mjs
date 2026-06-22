@@ -91,6 +91,8 @@ assert(footerHtml.includes("mockup_assets/icon-kakaotalk-talk-blue-bg.png") && l
 assert(footerHtml.includes("mockup_assets/icon-phone-blue.png") && layoutJs.includes("mockup_assets/icon-phone-blue.png"), "Floating and bottom phone actions should use the local blue phone icon.");
 assert(kakaoIconBytes.length > 1000, "Blue TALK icon asset should be present.");
 assert(phoneIconBytes.length > 500, "Blue phone icon asset should be present.");
+assert(/\.quick-icon\.kakao img\s*{[\s\S]*?object-fit:\s*contain/.test(css), "Kakao TALK icon should not be cropped.");
+assert(/\.quick-icon\.kakao\s*{[\s\S]*?width:\s*66px[\s\S]*?height:\s*34px/.test(css), "Kakao TALK icon should be wide enough to show the full word.");
 assert(!/☎|>K<\/div>/.test(footerHtml + layoutJs), "Floating and bottom phone/Kakao actions should not use text placeholder icons.");
 
 assert(/<a href="index\.html">메인<\/a>[\s\S]*<a href="about\.html">법무사소개<\/a>[\s\S]*<a href="cases\.html">실제사례<\/a>[\s\S]*<a href="knowledge\.html">지식센터<\/a>[\s\S]*<a href="consult\.html">상담신청<\/a>/.test(headerHtml), "Header nav should keep the approved order.");
