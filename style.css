@@ -287,11 +287,11 @@
     }
 
     .quick-icon.kakao {
-      width: 66px;
-      height: 34px;
-      border-radius: 7px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
       overflow: hidden;
-      background: var(--primary);
+      background: transparent;
     }
     .quick-icon.phone {
       background: transparent;
