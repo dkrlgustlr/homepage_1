@@ -39,7 +39,6 @@
   <div class="quick-btn">
     <div class="quick-title">Menu</div>
     <div class="quick-item"><div class="quick-icon kakao">K</div><div>카카오톡</div></div>
-    <div class="quick-item"><div class="quick-icon naver">N</div><div>예약</div></div>
     <div class="quick-item"><div class="quick-icon">☎</div><div>전화상담</div></div>
     <div class="quick-item"><div class="quick-icon red">↑</div></div>
   </div>
