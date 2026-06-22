@@ -4,14 +4,14 @@
     ["[data-include='footer']", "footer.html"]
   ];
   const OFFICE_EMAIL = "kkkk9628@nate.com";
-  const OFFICE_SMS = "01065509628";
+  const OFFICE_SMS = "15885986";
   const HEADER_FALLBACK_HTML = `
 <header class="header">
   <div class="header-bar">
     <div class="header-bar-inner">
-      <a class="consult-btn" href="tel:0312115230">
+      <a class="consult-btn" href="tel:15885986">
         <span class="pointer"></span>
-        <span>법무사 상담 접수 031-211-5230</span>
+        <span>법무사 상담 접수 1588-5986</span>
       </a>
       <nav class="top-nav" aria-label="주요 메뉴">
         <a href="index.html">메인</a>
@@ -46,10 +46,10 @@
 </aside>
 
 <form class="bottom-consult" aria-label="하단 상담 신청" data-consult-form>
-  <a class="bottom-consult-phone" href="tel:031-211-5230">
+  <a class="bottom-consult-phone" href="tel:15885986">
     <span class="phone-mark">☎</span>
     <span>대표전화</span>
-    <strong>031-211-5230</strong>
+    <strong>1588-5986</strong>
   </a>
   <div class="bottom-consult-form">
     <label class="bottom-consult-label" for="bottom-case">사건 영역</label>
@@ -83,7 +83,7 @@
     </div>
   </div>
   <div class="footer-contact">
-    <div class="call">031-211-5230<span>FAX. 031-211-5233</span></div>
+    <div class="call">1588-5986<span>FAX. 1588-5986</span></div>
     <ul class="footer-info">
       <li><strong>주요 업무</strong><span>개인회생 · 개인파산 · 면책</span></li>
       <li><strong>대응 분야</strong><span>압류 · 추심 · 보정권고</span></li>

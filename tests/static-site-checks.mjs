@@ -51,6 +51,7 @@ const pages = [
   ["knowledge.html", knowledgeHtml],
   ["consult.html", consultHtml]
 ];
+const siteText = [indexHtml, aboutHtml, casesHtml, knowledgeHtml, consultHtml, footerHtml, headerHtml, layoutJs].join("\n");
 
 assert((indexHtml.match(/<h1[\s>]/g) || []).length === 1, "index.html should have exactly one h1.");
 pages.forEach(([file, html]) => {
@@ -61,6 +62,9 @@ pages.forEach(([file, html]) => {
   const structuredData = getStructuredData(html);
   assert(Boolean(structuredData?.["@graph"]?.length), `${file} structured data should have an @graph.`);
 });
+
+assert(siteText.includes("1588-5986"), "The site should display the unified representative phone number.");
+assert(!/(031-211-5230|031-211-5233|0312115230|01065509628|\+82-31-211)/.test(siteText), "The site should not contain old office phone numbers.");
 
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
