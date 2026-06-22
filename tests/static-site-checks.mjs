@@ -92,7 +92,7 @@ assert(footerHtml.includes("mockup_assets/icon-phone-blue.png") && layoutJs.incl
 assert(kakaoIconBytes.length > 1000, "Blue TALK icon asset should be present.");
 assert(phoneIconBytes.length > 500, "Blue phone icon asset should be present.");
 assert(/\.quick-icon\.kakao img\s*{[\s\S]*?object-fit:\s*contain/.test(css), "Kakao TALK icon should not be cropped.");
-assert(/\.quick-icon\.kakao\s*{[\s\S]*?width:\s*42px[\s\S]*?height:\s*42px[\s\S]*?border-radius:\s*0[\s\S]*?overflow:\s*visible/.test(css), "Kakao TALK icon should show the provided image at the requested 0.8 scale without forced circular cropping.");
+assert(/\.quick-icon\.kakao\s*{[\s\S]*?width:\s*46px[\s\S]*?height:\s*46px[\s\S]*?border-radius:\s*0[\s\S]*?overflow:\s*visible/.test(css), "Kakao TALK icon should show the provided image at the requested 46px size without forced circular cropping.");
 assert(footerHtml.includes("quick-label\">TOP") && layoutJs.includes("quick-label\">TOP"), "Floating side banner should include a TOP label.");
 assert(/\.quick-item\s*{[\s\S]*?height:\s*92px[\s\S]*?gap:\s*12px/.test(css), "Floating side banner should keep wider icon and label spacing.");
 assert(!/☎|>K<\/div>/.test(footerHtml + layoutJs), "Floating and bottom phone/Kakao actions should not use text placeholder icons.");

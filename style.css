@@ -288,14 +288,14 @@
     }
 
     .quick-icon.kakao img {
-      width: 42px;
-      height: 42px;
+      width: 46px;
+      height: 46px;
       object-fit: contain;
     }
 
     .quick-icon.kakao {
-      width: 42px;
-      height: 42px;
+      width: 46px;
+      height: 46px;
       border-radius: 0;
       overflow: visible;
       background: transparent;
