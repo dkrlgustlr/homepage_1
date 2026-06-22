@@ -97,9 +97,10 @@
     .header-bar {
       position: absolute;
       top: 34px;
-      left: 50%;
+      left: auto;
+      right: clamp(34px, 4vw, 76px);
       height: 42px;
-      translate: -50% 0;
+      translate: 0 0;
       transform: none;
       background: rgba(48, 52, 59, 0.97);
       color: #fff;
@@ -2802,7 +2803,7 @@
       .header-bar {
         top: 16px;
         left: 18px;
-        right: 78px;
+        right: 18px;
         width: auto;
         height: 42px;
         translate: none;

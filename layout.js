@@ -26,12 +26,6 @@
       </nav>
     </div>
   </div>
-  <div class="header-top">
-    <div class="hamburger">
-      <span class="line"></span><span class="line"></span><span class="line"></span>
-      <div>menu</div>
-    </div>
-  </div>
 </header>`;
   const FOOTER_FALLBACK_HTML = `
 <aside class="fixed-side">
@@ -122,9 +116,8 @@
   };
 
   const initFloatingContrast = () => {
-    const hamburgerButton = document.querySelector(".hamburger");
     const sideWord = document.querySelector(".side-word");
-    if (!hamburgerButton && !sideWord) return;
+    if (!sideWord) return;
 
     const darkSectionSelector = ".hero, .case-section, .consult-section, .footer, .sub-hero";
     let ticking = false;
@@ -138,10 +131,6 @@
     };
 
     const updateFloatingContrast = () => {
-      if (hamburgerButton) {
-        hamburgerButton.classList.toggle("is-over-dark", Boolean(isDarkSectionAt(54)));
-      }
-
       if (sideWord) {
         const rect = sideWord.getBoundingClientRect();
         const pointY = rect.top + rect.height / 2;
