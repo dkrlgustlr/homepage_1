@@ -2844,9 +2844,11 @@
     }
 
     .about-page .sub-table {
-      background: rgba(255,255,255,0.96);
-      border: 1px solid #cfd8e6;
-      box-shadow: 0 26px 64px rgba(15, 35, 64, 0.13);
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
     }
 
     .sub-table th,
@@ -2871,11 +2873,22 @@
     }
 
     .about-page .sub-table th {
-      background: #e9eef5;
+      width: 280px;
+      color: #1769d1;
+      background: linear-gradient(90deg, #edf4fd 0%, #f6f9fd 100%);
+      border-left: 1px solid #cbd8e8;
+      border-top: 1px solid #d7e1ed;
+      border-bottom: 1px solid #d7e1ed;
+      border-radius: 8px 0 0 8px;
     }
 
     .about-page .sub-table td {
-      background: rgba(255,255,255,0.78);
+      background: rgba(255,255,255,0.94);
+      border-top: 1px solid #d7e1ed;
+      border-right: 1px solid #d7e1ed;
+      border-bottom: 1px solid #d7e1ed;
+      border-radius: 0 8px 8px 0;
+      box-shadow: 0 14px 34px rgba(15, 35, 64, 0.055);
     }
 
     .sub-table .accent {

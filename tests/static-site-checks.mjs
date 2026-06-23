@@ -263,8 +263,9 @@ assert(/\.about-page \.sub-content > \.sub-section:first-child\s*{[\s\S]*?margin
 assert(/\.about-page \.sub-content > \.service-area-section\s*{[\s\S]*?margin-bottom:\s*70px/.test(css), "About page should add 70px below the service-area section.");
 assert(/<main[^>]*class="[^"]*\bknowledge-page\b[^"]*"/.test(knowledgeHtml) && /<main[^>]*class="[^"]*\bcases-page\b[^"]*"/.test(casesHtml), "Knowledge and cases pages should have page-specific classes for section spacing.");
 assert(/\.knowledge-page \.sub-content > \.sub-section:first-child,\s*\.cases-page \.sub-content > \.sub-section:first-child\s*{[\s\S]*?margin-top:\s*70px[\s\S]*?margin-bottom:\s*70px/.test(css), "Knowledge center and case progress sections should add 70px vertical spacing above and below.");
-assert(/\.about-page \.sub-table\s*{[\s\S]*?background:\s*rgba\(255,255,255,0\.96\)[\s\S]*?border:\s*1px solid #cfd8e6[\s\S]*?box-shadow:\s*0 26px 64px rgba\(15, 35, 64, 0\.13\)/.test(css), "About office information table should have a visible surface, border, and shadow.");
-assert(/\.about-page \.sub-table th\s*{[\s\S]*?background:\s*#e9eef5/.test(css), "About office information table label cells should use a stronger background.");
+assert(/\.about-page \.sub-table\s*{[\s\S]*?border-collapse:\s*separate[\s\S]*?border-spacing:\s*0 10px[\s\S]*?background:\s*transparent/.test(css), "About office information table should use separated row panels.");
+assert(/\.about-page \.sub-table th\s*{[\s\S]*?width:\s*280px[\s\S]*?color:\s*#1769d1[\s\S]*?border-radius:\s*8px 0 0 8px/.test(css), "About office information labels should read as integrated blue-tinted panel labels.");
+assert(/\.about-page \.sub-table td\s*{[\s\S]*?background:\s*rgba\(255,255,255,0\.94\)[\s\S]*?border-radius:\s*0 8px 8px 0[\s\S]*?box-shadow:\s*0 14px 34px/.test(css), "About office information values should use matching white row panels.");
 
 assert(indexHtml.includes("daumRoughmapContainer1782029506097"), "Main page should include the Kakao roughmap container.");
 assert(indexHtml.includes("daumRoughmapContainer1782035826357"), "Main page should include the mobile Kakao roughmap container.");
