@@ -82,7 +82,7 @@
   <div class="footer-copy">
     <span class="footer-eyebrow">HWASEONG · BANWOL-DONG · HYUNDAI PLAZA</span>
     <h2>법무사 권선기 사무소</h2>
-    <p>20년 경력, 2천 건 이상 상담·처리 경험, 사무소 제공 기준 95% 승률을 바탕으로 개인회생, 개인파산, 채권추심·통장압류 대응을 차분하게 검토합니다. 전화상담 후 경기도 화성시 영통로 59, <span class="text-nowrap">현대프라자 205호</span> 방문 상담을 안내합니다.</p>
+    <p>20년 경력, 2천 건 이상 상담·처리 경험, 사무소 제공 기준 95% 승률을 바탕으로 개인회생, 개인파산, 채권추심·통장압류 대응을 차분하게 검토합니다. 주소는 경기도 화성시 영통로 59, <span class="text-nowrap">현대프라자 205호</span>(반월동)입니다.</p>
     <div class="footer-actions">
       <a class="footer-action primary" href="consult.html">상담 신청하기</a>
       <a class="footer-action" href="about.html#office">오시는 길</a>
