@@ -538,6 +538,101 @@
     });
   };
 
+  const initKnowledgeModal = () => {
+    const dataNode = document.getElementById("knowledge-article-data");
+    const triggers = document.querySelectorAll("[data-knowledge-modal-open]");
+    if (!dataNode || !triggers.length) return;
+
+    let articles = [];
+    try {
+      articles = JSON.parse(dataNode.textContent || "[]");
+    } catch (error) {
+      console.error("Knowledge article data could not be parsed", error);
+      return;
+    }
+
+    const articleMap = new Map(articles.map((article) => [article.id, article]));
+    let lastFocusedElement = null;
+
+    const ensureModal = () => {
+      let modal = document.getElementById("knowledge-article-modal");
+      if (modal) return modal;
+
+      document.body.insertAdjacentHTML("beforeend", `
+<div class="knowledge-modal" id="knowledge-article-modal" aria-hidden="true">
+  <div class="knowledge-modal-backdrop" data-knowledge-modal-close></div>
+  <article class="knowledge-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="knowledge-modal-title" tabindex="-1">
+    <button class="knowledge-modal-close" type="button" data-knowledge-modal-close aria-label="지식센터 게시물 닫기">&times;</button>
+    <div class="knowledge-modal-category" id="knowledge-modal-category"></div>
+    <h2 id="knowledge-modal-title"></h2>
+    <p class="knowledge-modal-summary" id="knowledge-modal-summary"></p>
+    <div class="knowledge-modal-body"></div>
+    <a class="knowledge-modal-cta" href="consult.html">상담 신청하기</a>
+  </article>
+</div>`);
+      modal = document.getElementById("knowledge-article-modal");
+      return modal;
+    };
+
+    const getModal = () => document.getElementById("knowledge-article-modal");
+    const getDialog = () => getModal()?.querySelector(".knowledge-modal-dialog");
+
+    const renderArticle = (article) => {
+      const modal = ensureModal();
+      modal.querySelector("#knowledge-modal-category").textContent = article.category || "지식센터";
+      modal.querySelector("#knowledge-modal-title").textContent = article.title || "";
+      modal.querySelector("#knowledge-modal-summary").textContent = article.summary || "";
+
+      const body = modal.querySelector(".knowledge-modal-body");
+      const paragraphs = Array.isArray(article.body) ? article.body : [];
+      body.replaceChildren(...paragraphs.map((text) => {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = text;
+        return paragraph;
+      }));
+
+      return modal;
+    };
+
+    const closeModal = () => {
+      const modal = getModal();
+      if (!modal || modal.getAttribute("aria-hidden") === "true") return;
+      modal.setAttribute("aria-hidden", "true");
+      document.documentElement.classList.remove("knowledge-modal-open");
+      if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+        lastFocusedElement.focus();
+      }
+    };
+
+    const openModal = (trigger) => {
+      const article = articleMap.get(trigger.dataset.knowledgeArticle);
+      if (!article) return;
+      const modal = renderArticle(article);
+      lastFocusedElement = trigger;
+      modal.setAttribute("aria-hidden", "false");
+      document.documentElement.classList.add("knowledge-modal-open");
+      requestAnimationFrame(() => getDialog()?.focus());
+    };
+
+    document.addEventListener("click", (event) => {
+      const openTrigger = event.target.closest("[data-knowledge-modal-open]");
+      if (openTrigger) {
+        event.preventDefault();
+        openModal(openTrigger);
+        return;
+      }
+
+      if (event.target.closest("[data-knowledge-modal-close]")) {
+        event.preventDefault();
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+  };
+
   window.__layoutReady = Promise.all(includes.map(loadInclude)).then(() => {
     markActiveNav();
     initFloatingContrast();
@@ -546,6 +641,7 @@
     initCustomSelects();
     initConsultForms();
     initPrivacyModal();
+    initKnowledgeModal();
   }).catch((error) => {
     console.error("Layout include failed", error);
   });

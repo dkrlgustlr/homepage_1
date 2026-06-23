@@ -143,9 +143,12 @@ assert(!/☎|>K<\/div>/.test(footerHtml + layoutJs), "Floating and bottom phone/
 
 assert(/<a href="index\.html">메인<\/a>[\s\S]*<a href="about\.html">법무사소개<\/a>[\s\S]*<a href="cases\.html">실제사례<\/a>[\s\S]*<a href="knowledge\.html">지식센터<\/a>[\s\S]*<a href="consult\.html">상담신청<\/a>/.test(headerHtml), "Header nav should keep the approved order.");
 
-assert(/<section[^>]*class="[^"]*\bfaq-section\b[^"]*"/.test(knowledgeHtml), "Knowledge page should include visible FAQ content for AEO.");
-assert(/"@type":\s*"FAQPage"/.test(knowledgeHtml), "Knowledge page should include FAQPage structured data.");
-assert((knowledgeHtml.match(/<article class="faq-item"/g) || []).length >= 4, "Knowledge page should include at least four FAQ items.");
+assert(!/<section[^>]*class="[^"]*\bfaq-section\b[^"]*"/.test(knowledgeHtml), "Knowledge page should remove the separate FAQ section.");
+assert(!/"@type":\s*"FAQPage"/.test(knowledgeHtml), "Knowledge page should remove FAQPage structured data when the FAQ section is hidden.");
+assert(knowledgeHtml.includes('id="knowledge-article-data"'), "Knowledge page should keep article detail content in page-local data.");
+assert((knowledgeHtml.match(/data-knowledge-modal-open/g) || []).length >= 6, "Knowledge cards should open article details without separate article pages.");
+assert(layoutJs.includes("initKnowledgeModal") && layoutJs.includes("knowledge-article-modal"), "layout.js should initialize the knowledge article modal.");
+assert(/\.knowledge-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Knowledge article details should open in a fixed modal.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");
