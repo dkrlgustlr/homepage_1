@@ -2556,14 +2556,14 @@
     .consult-reference-section {
       min-height: var(--section-h);
       display: grid;
-      grid-template-columns: minmax(410px, 42%) minmax(0, 58%);
+      grid-template-columns: minmax(0, 1fr) minmax(540px, min(32vw, 660px));
       background: #f5f7fa;
       overflow: hidden;
     }
 
     .consult-section.consult-reference-section {
       height: auto;
-      min-height: var(--section-h);
+      min-height: min(var(--section-h), 820px);
     }
 
     .consult-reference-left {
@@ -2572,7 +2572,7 @@
       flex-direction: column;
       justify-content: center;
       min-width: 0;
-      padding: calc(var(--header-h) + var(--fit-pad-md)) clamp(48px, 4.6vw, 86px) var(--section-bottom-gap) var(--side-pad);
+      padding: calc(var(--header-h) + 38px) clamp(56px, 5vw, 96px) 56px var(--side-pad);
       background:
         linear-gradient(90deg, rgba(23,105,209,0.05) 0 1px, transparent 1px 100%),
         linear-gradient(180deg, #fff 0%, #f5f7fa 100%);
@@ -2592,7 +2592,7 @@
     .consult-reference-left h2 {
       margin: 0;
       color: #101927;
-      font-size: clamp(38px, 3.5vw, 56px);
+      font-size: clamp(34px, 3vw, 48px);
       line-height: 1.22;
       font-weight: 900;
       letter-spacing: 0;
@@ -2601,10 +2601,10 @@
 
     .consult-reference-left > p {
       max-width: 700px;
-      margin: var(--fit-gap-md) 0 0;
+      margin: 26px 0 0;
       color: #4d5d70;
-      font-size: var(--type-subtitle);
-      line-height: var(--leading-subtitle);
+      font-size: clamp(17px, 1.08vw, 20px);
+      line-height: 1.55;
       font-weight: 700;
       letter-spacing: 0;
       word-break: keep-all;
@@ -2614,7 +2614,7 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0;
-      margin: var(--fit-gap-xl) 0 0;
+      margin: 46px 0 0;
       padding: 0;
     }
 
@@ -2631,14 +2631,14 @@
     .consult-proof-grid dt {
       margin: 0;
       color: #101927;
-      font-size: clamp(42px, 4.1vw, 64px);
+      font-size: clamp(36px, 3vw, 54px);
       line-height: 1;
       font-weight: 800;
       letter-spacing: 0;
     }
 
     .consult-proof-grid dd {
-      margin: 14px 0 0;
+      margin: 10px 0 0;
       color: #5f6d7f;
       font-size: var(--type-body);
       line-height: var(--leading-body);
@@ -2648,7 +2648,7 @@
     }
 
     .consult-check-list {
-      margin-top: var(--fit-gap-lg);
+      margin-top: 44px;
       border-top: 1px solid #d5dde8;
     }
 
@@ -2657,13 +2657,13 @@
       grid-template-columns: 72px minmax(0, 1fr);
       gap: 24px;
       align-items: center;
-      min-height: 74px;
+      min-height: 64px;
       border-bottom: 1px solid #d5dde8;
     }
 
     .consult-check-list strong {
       color: #101927;
-      font-size: clamp(28px, 2.5vw, 40px);
+      font-size: clamp(24px, 2vw, 34px);
       line-height: 1;
       font-weight: 800;
       letter-spacing: 0;
@@ -2683,7 +2683,7 @@
       display: flex;
       align-items: flex-start;
       min-width: 0;
-      padding: calc(var(--header-h) + var(--fit-pad-sm)) var(--safe-right-pad) var(--section-bottom-gap) clamp(54px, 5.2vw, 92px);
+      padding: calc(var(--header-h) + 34px) calc(var(--float-safe) + clamp(24px, 2vw, 40px)) 48px clamp(40px, 3vw, 60px);
       background: #071523;
       color: #fff;
       overflow: hidden;
@@ -2712,7 +2712,8 @@
 
     .consult-reference-right .consult-form,
     .consult-reference-right .sub-consult-form {
-      width: min(760px, 100%);
+      width: min(520px, 100%);
+      gap: 8px;
       padding: 0;
       border: 0;
       background: transparent;
@@ -2721,12 +2722,12 @@
     }
 
     .consult-form-head {
-      margin-bottom: var(--fit-gap-md);
+      margin-bottom: 20px;
     }
 
     .consult-form-head span {
       display: block;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       color: #8fbdff;
       font-size: var(--type-body);
       font-weight: 900;
@@ -2736,23 +2737,26 @@
     .consult-form-head h2 {
       margin: 0;
       color: #fff;
-      font-size: var(--type-title);
+      font-size: clamp(32px, 2.2vw, 42px);
       line-height: var(--leading-title);
       font-weight: 900;
       letter-spacing: 0;
     }
 
     .consult-form-head p {
-      margin: 14px 0 0;
+      margin: 12px 0 0;
       color: rgba(255,255,255,0.76);
-      font-size: var(--type-body);
-      line-height: var(--leading-body);
+      font-size: 15px;
+      line-height: 1.6;
       font-weight: 650;
       letter-spacing: 0;
     }
 
     .consult-reference-right .consult-form .form-row,
     .consult-reference-right .sub-consult-form .sub-form-row {
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 16px;
+      min-height: 52px;
       border-bottom-color: rgba(255,255,255,0.24);
       color: #fff;
     }
@@ -2768,8 +2772,8 @@
     .consult-reference-right .sub-consult-form .sub-form-row input,
     .consult-reference-right .sub-consult-form .sub-form-row select,
     .consult-reference-right .sub-consult-form .sub-form-row textarea {
-      min-height: 44px;
-      padding: 13px 16px;
+      min-height: 40px;
+      padding: 10px 12px;
       border-radius: 2px;
       background: rgba(255,255,255,0.1);
       color: #fff;
@@ -2796,6 +2800,11 @@
       color: rgba(255,255,255,0.55);
     }
 
+    .consult-reference-right .consult-form .form-row textarea,
+    .consult-reference-right .sub-consult-form .sub-form-row textarea {
+      min-height: 74px;
+    }
+
     .consult-reference-right .consult-form .form-row input:focus,
     .consult-reference-right .consult-form .form-row select:focus,
     .consult-reference-right .consult-form .form-row textarea:focus,
@@ -2811,6 +2820,12 @@
       color: rgba(255,255,255,0.76);
     }
 
+    .consult-reference-right .consult-form .privacy-consent {
+      padding-left: 134px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
     .consult-reference-right .consult-form .privacy-detail summary,
     .consult-reference-right .sub-consult-form .privacy-consent-light .privacy-detail summary {
       color: #8fbdff;
@@ -2823,6 +2838,12 @@
 
     .consult-reference-right .sub-consult-form .sub-note {
       color: rgba(255,255,255,0.68);
+    }
+
+    .consult-reference-right .form-button,
+    .consult-reference-right .sub-submit {
+      height: 56px;
+      margin-top: 18px;
     }
 
     @keyframes headerDrop {
