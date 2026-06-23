@@ -161,9 +161,11 @@ assert(layoutJs.includes("knowledge-modal-thumb-wrap") && layoutJs.includes("kno
 assert(layoutJs.includes('trigger.querySelector("img")') && layoutJs.includes("thumbnail.src"), "Knowledge article modal should reuse the clicked card thumbnail.");
 assert(/\.knowledge-modal-head\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*280px/.test(css), "Knowledge article modal header should lay out title copy and thumbnail on desktop.");
 assert(/\.knowledge-modal-thumb\s*{[\s\S]*?aspect-ratio:\s*16 \/ 10[\s\S]*?object-fit:\s*cover/.test(css), "Knowledge article modal thumbnail should keep a stable article image ratio.");
-assert((knowledgeHtml.match(/class="answer-label"/g) || []).length >= 7, "Knowledge cards should expose concise answer labels for AEO/GEO scanning.");
-assert(knowledgeHtml.includes("개인회생은 소득이 계속 발생할 가능성") && knowledgeHtml.includes("통장압류는 압류된 금융기관과 계좌 제한 여부"), "Knowledge cards should show direct answer snippets in visible page text.");
+const knowledgeCardMarkup = (knowledgeHtml.match(/<button class="article-card"[\s\S]*?<\/button>/g) || []).join("\n");
+assert(!knowledgeCardMarkup.includes('class="answer-label"') && !knowledgeCardMarkup.includes("핵심 답변"), "Knowledge cards should keep direct answers hidden until the article modal opens.");
+assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show the answer label before opening an article modal.");
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
+assert(/\.article-card:first-child img\s*{[\s\S]*?object-position:\s*center 64%/.test(css), "First knowledge card thumbnail should crop out the top blank band.");
 const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
 assert(!/border-left:\s*4px solid var\(--primary\)/.test(knowledgeAnswerBlock), "Knowledge modal answer should not use a thick blue left divider.");
 assert(/background:\s*#f4f7fb/.test(knowledgeAnswerBlock) && /border:\s*1px solid #dbe3ee/.test(knowledgeAnswerBlock), "Knowledge modal answer should use a quiet full box treatment.");
