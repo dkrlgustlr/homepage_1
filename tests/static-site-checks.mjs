@@ -149,6 +149,8 @@ assert((knowledgeHtml.match(/<article class="faq-item"/g) || []).length >= 4, "K
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");
+assert(/<main[^>]*class="[^"]*\babout-page\b[^"]*"/.test(aboutHtml), "About page should have a page-specific class for spacing adjustments.");
+assert(/\.about-page \.sub-section \+ \.sub-section\s*{[\s\S]*?margin-top:\s*calc\(var\(--fit-gap-xl\) \+ 70px\)/.test(css), "About page sections should add 70px more vertical spacing on desktop.");
 
 assert(indexHtml.includes("daumRoughmapContainer1782029506097"), "Main page should include the Kakao roughmap container.");
 assert(indexHtml.includes("daumRoughmapContainer1782035826357"), "Main page should include the mobile Kakao roughmap container.");

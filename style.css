@@ -2555,6 +2555,10 @@
       margin-top: var(--fit-gap-xl);
     }
 
+    .about-page .sub-section + .sub-section {
+      margin-top: calc(var(--fit-gap-xl) + 70px);
+    }
+
     .sub-heading {
       display: grid;
       grid-template-columns: minmax(220px, 0.34fr) minmax(0, 0.66fr);
@@ -4552,6 +4556,10 @@
 
       .sub-section + .sub-section {
         margin-top: 64px;
+      }
+
+      .about-page .sub-section + .sub-section {
+        margin-top: 104px;
       }
 
       .sub-grid,
