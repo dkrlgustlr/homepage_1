@@ -406,6 +406,26 @@
       background-size: 14px 14px;
     }
 
+    .bottom-consult select.bottom-consult-control option,
+    .consult-reference-right .consult-form .form-row select option,
+    .consult-reference-right .sub-consult-form .sub-form-row select option {
+      padding: 10px 14px;
+      min-height: 36px;
+      background-color: #fff;
+      color: #172033;
+      font-size: 15px;
+      font-weight: 650;
+      line-height: 1.45;
+    }
+
+    .bottom-consult select.bottom-consult-control option:checked,
+    .consult-reference-right .consult-form .form-row select option:checked,
+    .consult-reference-right .sub-consult-form .sub-form-row select option:checked {
+      background-color: var(--primary);
+      color: #fff;
+      font-weight: 800;
+    }
+
     .bottom-consult-control::placeholder {
       color: #9a9a9a;
       font-weight: 600;
