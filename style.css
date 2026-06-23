@@ -347,20 +347,6 @@
       white-space: nowrap;
     }
 
-    .bottom-consult-phone .phone-mark {
-      width: 21px;
-      height: 21px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .bottom-consult-phone .phone-mark img {
-      width: 20px;
-      height: 20px;
-      display: block;
-    }
-
     .bottom-consult-phone strong {
       font-size: 23px;
       letter-spacing: 0;

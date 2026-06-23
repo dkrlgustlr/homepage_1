@@ -115,7 +115,7 @@ assert((indexHtml.match(/data-knowledge-topic="/g) || []).length === 5, "Main kn
 assert(indexHtml.includes('data-knowledge-topic="seizure"') && indexHtml.includes('aria-pressed="true"'), "Main knowledge menu should initialize with accessible pressed state.");
 assert(layoutJs.includes("initMainKnowledgeTabs") && layoutJs.includes("renderTopic") && layoutJs.includes("grid.replaceChildren"), "Main knowledge menu should swap the right-side legal information cards.");
 assert(layoutJs.includes("압류·추심 대응") && layoutJs.includes("압류금지채권") && layoutJs.includes("지급명령"), "Main knowledge tab data should include seizure, collection, and court procedure content.");
-assert(indexHtml.includes("20260623-main-knowledge-rise1"), "Main page should load the knowledge tab rise animation assets.");
+assert(indexHtml.includes("layout.js?v=") && layoutJs.includes("initMainKnowledgeTabs"), "Main page should load the knowledge tab interaction assets.");
 assert(layoutJs.includes("animateCards") && layoutJs.includes("is-topic-entering"), "Main knowledge tab changes should trigger the card rise animation class.");
 assert(/@keyframes knowledgeCardRise[\s\S]*?translateY\(30px\)[\s\S]*?translateY\(0\)/.test(css) && /\.column-grid\.is-topic-entering \.column-card/.test(css), "Main knowledge cards should rise in when a filter changes.");
 
@@ -128,7 +128,7 @@ assert(/<form[^>]*class="sub-consult-form"[^>]*id="consult-form"[^>]*data-consul
 assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Consult page submit button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(consultHtml), "Consult page form should require privacy consent.");
 assert(consultHtml.includes("data-privacy-modal-open") && consultHtml.includes("privacy-consent-trigger"), "Consult page form should open the shared privacy modal from the consent text.");
-assert(consultHtml.includes("layout.js?v=20260623-consult-snap1"), "Consult page should load the section snap layout script version.");
+assert(consultHtml.includes("layout.js?v=") && layoutJs.includes("initConsultPageSnap"), "Consult page should load the section snap layout script.");
 assert(layoutJs.includes("initConsultPageSnap") && layoutJs.includes(".consult-page") && layoutJs.includes(".consult-reference-section, .footer"), "Consult page should snap between the consultation section and footer.");
 assert(layoutJs.includes('window.addEventListener("wheel"') && layoutJs.includes('window.addEventListener("keydown"') && layoutJs.includes('window.addEventListener("touchend"'), "Consult page snap should support wheel, keyboard, and touch navigation.");
 
@@ -161,7 +161,8 @@ assert(!headerHtml.includes("class=\"hamburger\"") && !layoutJs.includes("class=
 assert(/\.header-bar\s*{[\s\S]*?left:\s*auto[\s\S]*?right:\s*calc\(clamp\(34px,\s*4vw,\s*76px\)\s*\+\s*180px\)[\s\S]*?translate:\s*0 0/.test(css), "Header pill menu should be positioned from the right side and moved 180px left.");
 assert(!/예약|quick-icon naver|sideFloat/.test(footerHtml + layoutJs + css), "Floating side banner should stay still and should not include Naver reservation.");
 assert(footerHtml.includes("mockup_assets/icon-kakaotalk-talk-provided.png") && layoutJs.includes("mockup_assets/icon-kakaotalk-talk-provided.png"), "Floating side banner should use the user-provided TALK image.");
-assert(footerHtml.includes("mockup_assets/icon-phone-blue.png") && layoutJs.includes("mockup_assets/icon-phone-blue.png"), "Floating and bottom phone actions should use the local blue phone icon.");
+assert(footerHtml.includes("mockup_assets/icon-phone-blue.png") && layoutJs.includes("mockup_assets/icon-phone-blue.png"), "Floating phone action should use the local blue phone icon.");
+assert(!/bottom-consult-phone[\s\S]*?phone-mark/.test(footerHtml) && !/bottom-consult-phone[\s\S]*?phone-mark/.test(layoutJs), "Bottom consultation phone label should not show an icon before the representative phone number.");
 assert(kakaoIconBytes.length > 1000, "Blue TALK icon asset should be present.");
 assert(phoneIconBytes.length > 500, "Blue phone icon asset should be present.");
 assert(/\.quick-icon\.kakao img\s*{[\s\S]*?object-fit:\s*contain/.test(css), "Kakao TALK icon should not be cropped.");

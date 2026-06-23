@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260623-footertrim1";
+  const INCLUDE_VERSION = "20260624-bottom-phone-no-icon1";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -41,7 +41,6 @@
 
 <form class="bottom-consult" aria-label="하단 상담 신청" data-consult-form>
   <a class="bottom-consult-phone" href="tel:15885986">
-    <span class="phone-mark"><img src="mockup_assets/icon-phone-blue.png" alt="" aria-hidden="true"></span>
     <span>대표전화</span>
     <strong>1588-5986</strong>
   </a>
