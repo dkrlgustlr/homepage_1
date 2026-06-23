@@ -2929,7 +2929,7 @@
       margin: 0 0 var(--fit-gap-sm);
       font-size: var(--type-subtitle);
       line-height: var(--leading-subtitle);
-      font-weight: 900;
+      font-weight: 700;
       letter-spacing: 0;
       word-break: keep-all;
     }
