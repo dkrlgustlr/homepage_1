@@ -2418,7 +2418,7 @@
 
     .footer-contact {
       border-top: 1px solid rgba(255,255,255,0.22);
-      border-bottom: 1px solid rgba(255,255,255,0.22);
+      border-bottom: 0;
       padding: 34px 0;
       width: 100%;
       max-width: 760px;
@@ -2458,6 +2458,10 @@
       border-bottom: 1px solid rgba(255,255,255,0.14);
       color: rgba(255,255,255,0.74);
       font-size: var(--type-body);
+    }
+
+    .footer-info li:last-child {
+      border-bottom: 0;
     }
 
     .footer-info strong {

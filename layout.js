@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260623-business1";
+  const INCLUDE_VERSION = "20260623-footertrim1";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -84,11 +84,9 @@
   <div class="footer-contact">
     <div class="call">1588-5986<span>FAX. 1588-5986</span></div>
     <ul class="footer-info">
-      <li><strong>상호</strong><span>법무사 권선기 사무소</span></li>
       <li><strong>대표 법무사</strong><span>권선기</span></li>
       <li><strong>사업자등록번호</strong><span>577-53-00864</span></li>
-      <li><strong>사업장 소재지</strong><span>경기도 화성시 영통로 59, 현대프라자 205호(반월동)</span></li>
-      <li><strong>업태/종목</strong><span>전문, 과학 및 기술서비스업 / 법무사업</span></li>
+      <li><strong>주소</strong><span>경기도 화성시 영통로 59, 현대프라자 205호(반월동)</span></li>
     </ul>
   </div>
 </footer>`;
