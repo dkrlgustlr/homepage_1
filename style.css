@@ -844,6 +844,8 @@
       padding: 0 26px;
       color: rgba(255, 255, 255, 0.78);
       font-size: var(--type-body);
+      text-decoration: none;
+      cursor: pointer;
     }
 
     .search-ani .glass {

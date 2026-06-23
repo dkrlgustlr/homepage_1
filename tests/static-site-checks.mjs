@@ -110,6 +110,8 @@ assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-co
 });
 assert(layoutJs.includes("initCountUpStats") && layoutJs.includes("requestAnimationFrame"), "layout.js should animate consult proof numbers with requestAnimationFrame.");
 assert(/\.count-up\s*{[\s\S]*?display:\s*inline-block/.test(css), "Count-up numbers should have stable inline-block styling.");
+assert(/<a class="search-ani" href="knowledge\.html"[^>]*>[\s\S]*법률정보를 확인해 보세요\.[\s\S]*<\/a>/.test(indexHtml), "Main hero search bar should link to the knowledge center and invite users to check legal information.");
+assert(/\.search-ani\s*{[\s\S]*?text-decoration:\s*none[\s\S]*?cursor:\s*pointer/.test(css), "Main hero knowledge search link should keep the approved search-bar styling.");
 
 assert((indexHtml.match(/data-knowledge-topic="/g) || []).length === 5, "Main knowledge menu should expose five clickable content topics.");
 assert(indexHtml.includes('data-knowledge-topic="seizure"') && indexHtml.includes('aria-pressed="true"'), "Main knowledge menu should initialize with accessible pressed state.");
