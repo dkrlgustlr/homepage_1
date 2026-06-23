@@ -131,6 +131,8 @@ assert(consultHtml.includes("data-privacy-modal-open") && consultHtml.includes("
 assert(consultHtml.includes("layout.js?v=") && layoutJs.includes("initConsultPageSnap"), "Consult page should load the section snap layout script.");
 assert(layoutJs.includes("initConsultPageSnap") && layoutJs.includes(".consult-page") && layoutJs.includes(".consult-reference-section, .footer"), "Consult page should snap between the consultation section and footer.");
 assert(layoutJs.includes('window.addEventListener("wheel"') && layoutJs.includes('window.addEventListener("keydown"') && layoutJs.includes('window.addEventListener("touchend"'), "Consult page snap should support wheel, keyboard, and touch navigation.");
+assert(/\.consult-reference-left\s*{[\s\S]*?--consult-left-content-shift:\s*-30px/.test(css) && /\.consult-reference-left > \*\s*{[\s\S]*?transform:\s*translateY\(var\(--consult-left-content-shift\)\)/.test(css), "Consult reference left content should move up by 30px on wide layouts.");
+assert(/@media \(max-width:\s*1180px\)[\s\S]*?\.consult-reference-left\s*{[\s\S]*?--consult-left-content-shift:\s*0px/.test(css), "Stacked consult reference layouts should reset the left content lift.");
 
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");

@@ -3237,6 +3237,7 @@
     }
 
     .consult-reference-left {
+      --consult-left-content-shift: -30px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -3276,6 +3277,7 @@
     .consult-reference-left > * {
       position: relative;
       z-index: 2;
+      transform: translateY(var(--consult-left-content-shift));
     }
 
     .consult-reference-kicker {
@@ -4995,6 +4997,7 @@
       }
 
       .consult-reference-left {
+        --consult-left-content-shift: 0px;
         padding: calc(var(--header-h) + var(--fit-pad-md)) var(--side-pad) var(--fit-pad-lg);
       }
 
