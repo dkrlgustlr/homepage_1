@@ -80,23 +80,24 @@ assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(indexHtml), "Main page consultation form should require privacy consent.");
-assert(indexHtml.includes("privacy-detail") && indexHtml.includes("privacy-detail-content"), "Main page consultation form should include privacy detail content.");
+assert(indexHtml.includes("data-privacy-modal-open") && indexHtml.includes("privacy-consent-trigger"), "Main page consultation form should open the shared privacy modal from the consent text.");
 
 assert(/<form[^>]*class="sub-consult-form"[^>]*id="consult-form"[^>]*data-consult-form/.test(consultHtml), "Consult page form needs id and data-consult-form.");
 assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Consult page submit button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(consultHtml), "Consult page form should require privacy consent.");
-assert(consultHtml.includes("수집 항목") && consultHtml.includes("보유 및 이용 기간"), "Consult page form should include privacy collection and retention details.");
+assert(consultHtml.includes("data-privacy-modal-open") && consultHtml.includes("privacy-consent-trigger"), "Consult page form should open the shared privacy modal from the consent text.");
 
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(footerHtml), "Bottom consultation form should require privacy consent.");
 assert(!/privacy_consent"[^>]*checked/.test(footerHtml + layoutJs), "Privacy consent checkboxes should not be pre-checked.");
-assert(footerHtml.includes("bottom-privacy-detail") && footerHtml.includes("bottom-privacy-panel"), "Bottom consultation bar should include a visible privacy detail panel.");
-assert(layoutJs.includes("bottom-privacy-detail") && layoutJs.includes("bottom-privacy-panel"), "Footer fallback should include the bottom privacy detail panel.");
+assert(footerHtml.includes("bottom-privacy-trigger") && footerHtml.includes("footer-privacy-link"), "Footer should expose privacy modal triggers in the bottom bar and footer copy.");
+assert(layoutJs.includes("bottom-privacy-trigger") && layoutJs.includes("footer-privacy-link"), "Footer fallback should expose privacy modal triggers in the bottom bar and footer copy.");
 
 assert(!/site-intro|introLogoRise|is-finished|animationend/.test(indexHtml + css), "Main page should load directly without an intro overlay.");
 
 assert(layoutJs.includes("initConsultForms"), "layout.js should initialize consultation forms.");
+assert(layoutJs.includes("initPrivacyModal") && layoutJs.includes("privacy-consent-modal"), "layout.js should initialize the shared privacy consent modal.");
 assert(layoutJs.includes("mailto:") && layoutJs.includes("sms:"), "Consultation submit should support mailto and sms fallbacks.");
 assert(layoutJs.includes("privacy_consent") && layoutJs.includes("개인정보 수집 및 이용에 동의해주세요."), "Consultation submit should validate privacy consent before opening mail or sms.");
 assert(layoutJs.includes("HEADER_FALLBACK_HTML") && layoutJs.includes("FOOTER_FALLBACK_HTML"), "layout.js should provide fallback HTML when shared includes cannot be fetched.");
@@ -153,8 +154,8 @@ assert(!/overflow-wrap:\s*break-word;/.test(css), "Korean content text should no
 assert(/\.privacy-consent\s*{[\s\S]*?display:\s*grid[\s\S]*?padding-left:\s*150px/.test(css), "Main consultation privacy block should align with the form input column.");
 assert(/\.privacy-consent-light\s*{[\s\S]*?padding-left:\s*162px/.test(css), "Consult page privacy block should align with the sub form input column.");
 assert(/\.bottom-consult-agree input:checked,\s*\.privacy-consent-label input:checked\s*{[\s\S]*?box-shadow:\s*inset 0 0 0 4px var\(--primary\)/.test(css), "Consent checkboxes should show a shared distinct checked state.");
-assert(/\.bottom-privacy-detail\s*{[\s\S]*?position:\s*relative/.test(css), "Bottom privacy detail should anchor its floating panel.");
-assert(/\.bottom-privacy-panel\s*{[\s\S]*?position:\s*absolute[\s\S]*?bottom:\s*calc\(100%\s*\+\s*16px\)/.test(css), "Bottom privacy panel should float above the fixed consultation bar.");
+assert(/\.privacy-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Privacy consent details should open in a fixed modal.");
+assert(/\.privacy-modal-dialog\s*{[\s\S]*?border-radius:\s*20px/.test(css), "Privacy consent modal should use the rounded reference dialog style.");
 assert(siteText.includes("동의 거부 권리") && siteText.includes("주민등록번호") && siteText.includes("계좌번호"), "Privacy consent details should include refusal rights and warn against unique identifiers.");
 const caseInnerBlock = getBlock(css, ".case-inner");
 assert(/--case-inner-lift:\s*-30px/.test(caseInnerBlock) && /translate:\s*0\s+var\(--case-inner-lift\)/.test(caseInnerBlock), "Desktop case section content should be lifted by 30px.");

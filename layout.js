@@ -58,22 +58,10 @@
     <label class="bottom-consult-label" for="bottom-phone">전화번호</label>
     <input class="bottom-consult-control" id="bottom-phone" name="phone" type="tel" autocomplete="tel" placeholder="전화번호" aria-label="전화번호">
     <div class="bottom-consult-agree">
-      <details class="bottom-privacy-detail">
-        <summary>
-          <label class="bottom-consult-agree-check">
-            <input type="checkbox" name="privacy_consent" required aria-label="개인정보 수집 및 이용 동의">
-            <span>개인정보 수집 및 이용 동의</span>
-          </label>
-        </summary>
-        <div class="bottom-privacy-panel">
-          <strong>개인정보 수집 및 이용 안내</strong>
-          <p><b>수집 항목</b> 이름, 전화번호, 지역, 상담 분야, 문의 내용</p>
-          <p><b>이용 목적</b> 상담 신청 내용 확인, 전화 또는 문자 상담 안내, 방문 상담 일정 조율</p>
-          <p><b>보유 기간</b> 상담 신청일로부터 1년간 보관 후 파기합니다. 수임계약 체결 시 사건 처리 및 관련 법령에 따른 보존기간 동안 보관될 수 있습니다.</p>
-          <p><b>동의 거부 권리</b> 동의하지 않을 권리가 있으나, 홈페이지 상담 신청이 제한될 수 있습니다.</p>
-          <p><b>안내 사항</b> 주민등록번호, 계좌번호 등 고유식별정보는 입력하지 마시기 바랍니다.</p>
-        </div>
-      </details>
+      <label class="bottom-consult-agree-check">
+        <input type="checkbox" name="privacy_consent" required aria-label="개인정보 수집 및 이용 동의">
+      </label>
+      <button class="privacy-consent-trigger bottom-privacy-trigger" type="button" data-privacy-modal-open>개인정보 수집 및 이용 동의</button>
     </div>
   </div>
   <button class="bottom-consult-submit" type="submit">상담 신청</button>
@@ -87,6 +75,9 @@
     <div class="footer-actions">
       <a class="footer-action primary" href="consult.html">상담 신청하기</a>
       <a class="footer-action" href="about.html#office">오시는 길</a>
+    </div>
+    <div class="footer-privacy-box">
+      <button class="footer-privacy-link" type="button" data-privacy-modal-open>개인정보 수집 및 이용 동의</button>
     </div>
   </div>
   <div class="footer-contact">
@@ -250,11 +241,93 @@
     });
   };
 
+  const initPrivacyModal = () => {
+    let lastFocusedElement = null;
+
+    const ensureModal = () => {
+      let modal = document.getElementById("privacy-consent-modal");
+      if (modal) return modal;
+
+      document.body.insertAdjacentHTML("beforeend", `
+<div class="privacy-modal" id="privacy-consent-modal" aria-hidden="true">
+  <div class="privacy-modal-backdrop" data-privacy-modal-close></div>
+  <section class="privacy-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title" tabindex="-1">
+    <button class="privacy-modal-close" type="button" data-privacy-modal-close aria-label="개인정보 수집 및 이용 동의 닫기">&times;</button>
+    <h2 id="privacy-modal-title">개인정보 수집 및 이용 동의</h2>
+    <div class="privacy-modal-body">
+      <section>
+        <h3>수집하는 개인정보의 항목</h3>
+        <p>상담 신청과 방문 상담 안내를 위해 아래와 같은 개인정보를 수집합니다.</p>
+        <ul>
+          <li><strong>수집 항목</strong> 이름, 전화번호, 지역, 상담 분야, 문의 내용</li>
+          <li><strong>개인정보 수집방법</strong> 홈페이지 상담 신청</li>
+        </ul>
+      </section>
+      <section>
+        <h3>개인정보의 수집 및 이용목적</h3>
+        <p>상담 신청 내용 확인, 전화 또는 문자 상담 안내, 방문 상담 일정 조율, 개인회생·개인파산·면책·채권추심·압류 대응 관련 상담 진행을 위해 활용합니다.</p>
+      </section>
+      <section>
+        <h3>개인정보의 보유 및 이용기간</h3>
+        <p>상담 신청일로부터 1년간 보관 후 파기합니다. 단, 상담 후 수임계약이 체결되는 경우 사건 처리 및 관련 법령에 따른 보존기간 동안 보관될 수 있습니다.</p>
+      </section>
+      <section>
+        <h3>동의 거부 권리 및 안내사항</h3>
+        <p>개인정보 수집 및 이용에 동의하지 않을 권리가 있으나, 동의하지 않을 경우 홈페이지를 통한 상담 신청이 제한될 수 있습니다. 상담 신청 단계에서는 주민등록번호, 계좌번호 등 고유식별정보를 입력하지 마시기 바랍니다.</p>
+      </section>
+    </div>
+  </section>
+</div>`);
+      modal = document.getElementById("privacy-consent-modal");
+      return modal;
+    };
+
+    const getModal = () => document.getElementById("privacy-consent-modal");
+    const getDialog = () => getModal()?.querySelector(".privacy-modal-dialog");
+
+    const closeModal = () => {
+      const modal = getModal();
+      if (!modal || modal.getAttribute("aria-hidden") === "true") return;
+      modal.setAttribute("aria-hidden", "true");
+      document.documentElement.classList.remove("privacy-modal-open");
+      if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
+        lastFocusedElement.focus();
+      }
+    };
+
+    const openModal = (trigger) => {
+      const modal = ensureModal();
+      lastFocusedElement = trigger;
+      modal.setAttribute("aria-hidden", "false");
+      document.documentElement.classList.add("privacy-modal-open");
+      requestAnimationFrame(() => getDialog()?.focus());
+    };
+
+    document.addEventListener("click", (event) => {
+      const openTrigger = event.target.closest("[data-privacy-modal-open]");
+      if (openTrigger) {
+        event.preventDefault();
+        openModal(openTrigger);
+        return;
+      }
+
+      if (event.target.closest("[data-privacy-modal-close]")) {
+        event.preventDefault();
+        closeModal();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeModal();
+    });
+  };
+
   window.__layoutReady = Promise.all(includes.map(loadInclude)).then(() => {
     markActiveNav();
     initFloatingContrast();
     initSubpageAnimations();
     initConsultForms();
+    initPrivacyModal();
   }).catch((error) => {
     console.error("Layout include failed", error);
   });
