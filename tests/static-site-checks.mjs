@@ -10,6 +10,14 @@ const assert = (condition, message) => {
   if (!condition) failures.push(message);
 };
 
+const getPngSize = (file) => {
+  const buffer = readFileSync(resolve(root, file));
+  return {
+    width: buffer.readUInt32BE(16),
+    height: buffer.readUInt32BE(20)
+  };
+};
+
 const getBlock = (css, selector) => {
   const start = css.indexOf(selector);
   if (start === -1) return "";
@@ -163,10 +171,24 @@ assert(layoutJs.includes('trigger.querySelector(".article-thumb")') && layoutJs.
 assert(/\.knowledge-modal-head\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*280px/.test(css), "Knowledge article modal header should lay out title copy and thumbnail on desktop.");
 assert(/\.knowledge-modal-thumb\s*{[\s\S]*?aspect-ratio:\s*16 \/ 10[\s\S]*?object-fit:\s*cover/.test(css), "Knowledge article modal thumbnail should keep a stable article image ratio.");
 const knowledgeCardMarkup = (knowledgeHtml.match(/<button class="article-card"[\s\S]*?<\/button>/g) || []).join("\n");
+const knowledgeThumbnailFiles = [
+  "knowledge_thumb_seizure_response_v3.png",
+  "knowledge_thumb_collection_response_v3.png",
+  "knowledge_thumb_payment_order_v3.png",
+  "knowledge_thumb_card_overdue_v3.png",
+  "knowledge_thumb_frozen_account_v3.png",
+  "knowledge_thumb_wage_seizure_v3.png"
+];
 assert((knowledgeCardMarkup.match(/class="article-thumb"/g) || []).length === 6 && (knowledgeCardMarkup.match(/class="article-body"/g) || []).length === 6, "Knowledge cards should use one shared thumbnail class and body containers.");
 assert(!/<button class="article-card"[\s\S]*?<img\b/.test(knowledgeCardMarkup), "Knowledge cards should not render thumbnails as direct img elements.");
 assert(!/article-thumb-(income|seizure|bankruptcy|business|documents|correction|job)/.test(knowledgeHtml + css), "Knowledge thumbnails should not use card-specific classes that can diverge placement.");
 assert((knowledgeCardMarkup.match(/--article-thumb-image:\s*url\('/g) || []).length === 6, "Each knowledge thumbnail should pass only its image source through the shared CSS variable.");
+assert(!/knowledge_thumb_[1-6]_v2\.png/.test(knowledgeHtml), "Knowledge page should not reuse old portrait/source thumbnails for card display.");
+knowledgeThumbnailFiles.forEach((file) => {
+  assert(knowledgeHtml.includes(file), `Knowledge page should reference generated thumbnail ${file}.`);
+  const size = getPngSize(`mockup_assets/${file}`);
+  assert(size.width === 1440 && size.height === 540, `${file} should be a 1440x540 card thumbnail.`);
+});
 assert(!knowledgeCardMarkup.includes('class="answer-label"') && !knowledgeCardMarkup.includes("핵심 답변"), "Knowledge cards should keep direct answers hidden until the article modal opens.");
 assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show the answer label before opening an article modal.");
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
