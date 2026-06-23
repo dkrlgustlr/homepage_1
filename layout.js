@@ -58,12 +58,13 @@
     <label class="bottom-consult-label" for="bottom-phone">전화번호</label>
     <input class="bottom-consult-control" id="bottom-phone" name="phone" type="tel" autocomplete="tel" placeholder="전화번호" aria-label="전화번호">
     <div class="bottom-consult-agree">
-      <label class="bottom-consult-agree-check">
-        <input type="checkbox" name="privacy_consent" required aria-label="개인정보 수집 및 이용 동의">
-        <span>개인정보 수집 및 이용 동의</span>
-      </label>
       <details class="bottom-privacy-detail">
-        <summary>내용보기</summary>
+        <summary>
+          <label class="bottom-consult-agree-check">
+            <input type="checkbox" name="privacy_consent" required aria-label="개인정보 수집 및 이용 동의">
+            <span>개인정보 수집 및 이용 동의</span>
+          </label>
+        </summary>
         <div class="bottom-privacy-panel">
           <strong>개인정보 수집 및 이용 안내</strong>
           <p><b>수집 항목</b> 이름, 전화번호, 지역, 상담 분야, 문의 내용</p>

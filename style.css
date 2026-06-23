@@ -452,11 +452,11 @@
     .bottom-privacy-detail summary {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      min-height: 28px;
-      padding: 0 10px;
-      border: 1px solid rgba(255,255,255,0.36);
-      border-radius: 999px;
+      justify-content: flex-start;
+      min-height: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
       color: #fff;
       cursor: pointer;
       list-style: none;
@@ -467,8 +467,8 @@
     }
 
     .bottom-privacy-detail[open] summary {
-      background: rgba(255,255,255,0.12);
-      border-color: rgba(255,255,255,0.66);
+      background: transparent;
+      border-color: transparent;
     }
 
     .bottom-privacy-panel {
@@ -1785,9 +1785,20 @@
     }
 
     .privacy-detail summary {
+      display: inline-flex;
+      align-items: center;
       width: fit-content;
       cursor: pointer;
       color: rgba(255,255,255,0.68);
+      list-style: none;
+    }
+
+    .privacy-detail summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .privacy-detail summary::marker {
+      content: "";
     }
 
     .privacy-consent-light .privacy-detail summary {
@@ -2885,7 +2896,7 @@
 
     .consult-reference-right .consult-form .privacy-detail summary,
     .consult-reference-right .sub-consult-form .privacy-consent-light .privacy-detail summary {
-      color: #8fbdff;
+      color: rgba(255,255,255,0.82);
     }
 
     .consult-reference-right .consult-form .privacy-detail-content,

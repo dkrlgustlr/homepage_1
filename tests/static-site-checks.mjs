@@ -80,7 +80,7 @@ assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(indexHtml), "Main page consultation form should require privacy consent.");
-assert(indexHtml.includes("개인정보 수집 및 이용 동의 자세히 보기"), "Main page consultation form should include detailed privacy consent text.");
+assert(indexHtml.includes("privacy-detail") && indexHtml.includes("privacy-detail-content"), "Main page consultation form should include privacy detail content.");
 
 assert(/<form[^>]*class="sub-consult-form"[^>]*id="consult-form"[^>]*data-consult-form/.test(consultHtml), "Consult page form needs id and data-consult-form.");
 assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Consult page submit button should submit.");
