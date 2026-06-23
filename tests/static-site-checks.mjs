@@ -171,8 +171,12 @@ assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
 assert(/\.article-thumb\s*{[\s\S]*?height:\s*150px[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should be fixed-height background containers.");
 const incomeThumbBlock = getBlock(css, ".article-thumb-income");
-assert(!/background-image:\s*url/.test(incomeThumbBlock) && /filter:\s*none/.test(incomeThumbBlock), "First knowledge card thumbnail should not use the problematic photo background.");
-assert(/\.article-thumb-income::before\s*{[\s\S]*?content:\s*""/.test(css) && /\.article-thumb-income::after\s*{[\s\S]*?content:\s*""/.test(css), "First knowledge card thumbnail should be rebuilt as a CSS card container.");
+const bankruptcyThumbBlock = getBlock(css, ".article-thumb-bankruptcy");
+const jobThumbBlock = getBlock(css, ".article-thumb-job");
+assert(/background-image:\s*url\("mockup_assets\/knowledge_thumb_1_v2\.png"\)/.test(incomeThumbBlock) && /background-position:\s*center top/.test(incomeThumbBlock), "First knowledge card should top-align the tall source photo inside the thumbnail container.");
+assert(/background-image:\s*url\("mockup_assets\/knowledge_thumb_3_v2\.png"\)/.test(bankruptcyThumbBlock) && /background-position:\s*center top/.test(bankruptcyThumbBlock), "Third knowledge card should top-align the tall source photo inside the thumbnail container.");
+assert(/background-image:\s*url\("mockup_assets\/knowledge_thumb_1_v2\.png"\)/.test(jobThumbBlock) && /background-position:\s*center top/.test(jobThumbBlock), "Seventh knowledge card should top-align the tall source photo inside the thumbnail container.");
+assert(!/\.article-thumb-income::before|\.article-thumb-income::after/.test(css), "First knowledge card should not use custom pseudo-thumbnail art.");
 const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
 assert(!/border-left:\s*4px solid var\(--primary\)/.test(knowledgeAnswerBlock), "Knowledge modal answer should not use a thick blue left divider.");
 assert(/background:\s*#f4f7fb/.test(knowledgeAnswerBlock) && /border:\s*1px solid #dbe3ee/.test(knowledgeAnswerBlock), "Knowledge modal answer should use a quiet full box treatment.");
