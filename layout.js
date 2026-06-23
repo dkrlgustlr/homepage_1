@@ -592,12 +592,12 @@
       modal.querySelector("#knowledge-modal-title").textContent = article.title || "";
       modal.querySelector("#knowledge-modal-answer").textContent = article.directAnswer || article.summary || "";
 
-      const cardImage = trigger.querySelector("img");
+      const cardThumb = trigger.querySelector(".article-thumb");
       const thumbnailWrap = modal.querySelector(".knowledge-modal-thumb-wrap");
       const thumbnail = modal.querySelector(".knowledge-modal-thumb");
-      if (cardImage && thumbnail && thumbnailWrap) {
-        thumbnail.src = cardImage.currentSrc || cardImage.src;
-        thumbnail.alt = cardImage.alt || article.title || "";
+      if (cardThumb?.dataset.thumb && thumbnail && thumbnailWrap) {
+        thumbnail.src = cardThumb.dataset.thumb;
+        thumbnail.alt = cardThumb.dataset.thumbAlt || cardThumb.getAttribute("aria-label") || article.title || "";
         thumbnailWrap.hidden = false;
       } else if (thumbnailWrap) {
         thumbnailWrap.hidden = true;

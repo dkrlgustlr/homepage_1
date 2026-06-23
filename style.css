@@ -2891,21 +2891,49 @@
       outline-offset: 4px;
     }
 
-    .article-card img {
+    .article-thumb {
+      display: block;
       width: 100%;
       height: 150px;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-      vertical-align: top;
+      overflow: hidden;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
       filter: grayscale(0.72);
+      transform-origin: center center;
     }
 
-    .article-card:first-child img {
-      object-position: center 64%;
+    .article-thumb-income {
+      background-image: url("mockup_assets/knowledge_thumb_1_v2.png");
+      background-position: center 30%;
     }
 
-    .article-card div {
+    .article-thumb-job {
+      background-image: url("mockup_assets/knowledge_thumb_1_v2.png");
+      background-position: center 30%;
+    }
+
+    .article-thumb-seizure {
+      background-image: url("mockup_assets/knowledge_thumb_2_v2.png");
+    }
+
+    .article-thumb-bankruptcy {
+      background-image: url("mockup_assets/knowledge_thumb_3_v2.png");
+    }
+
+    .article-thumb-business {
+      background-image: url("mockup_assets/knowledge_thumb_4_v2.png");
+    }
+
+    .article-thumb-documents {
+      background-image: url("mockup_assets/knowledge_thumb_5_v2.png");
+    }
+
+    .article-thumb-correction {
+      background-image: url("mockup_assets/knowledge_thumb_6_v2.png");
+    }
+
+    .article-body {
       padding: var(--fit-pad-xs);
     }
 
@@ -3617,7 +3645,7 @@
     .map-img,
     .case-bg-img,
     .consult-photo,
-    .article-card img {
+    .article-thumb {
       transition: transform 1.1s cubic-bezier(.16, 1, .3, 1), opacity 0.5s ease;
       will-change: transform;
     }
@@ -3717,7 +3745,7 @@
       box-shadow: 0 28px 62px rgba(15, 35, 64, 0.14);
     }
 
-    .article-card:hover img {
+    .article-card:hover .article-thumb {
       transform: scale(1.045);
     }
 
