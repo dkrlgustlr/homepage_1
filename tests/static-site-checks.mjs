@@ -287,6 +287,8 @@ assert(css.includes(".kakao-map-mobile"), "Styles should include a mobile-only K
 assert(/@media \(max-width:\s*640px\)[\s\S]*?\.kakao-map-desktop\s*{[\s\S]*?display:\s*none/.test(css), "Desktop Kakao map should be hidden on mobile.");
 assert(/@media \(max-width:\s*640px\)[\s\S]*?\.kakao-map-mobile\s*{[\s\S]*?display:\s*block/.test(css), "Mobile Kakao map should be shown on mobile.");
 assert(!indexHtml.includes("beommusa_map_hyundai_plaza.png"), "Main page should not keep the old placeholder map image.");
+assert(/\.location-section\s*{[\s\S]*?position:\s*relative[\s\S]*?isolation:\s*isolate[\s\S]*?overflow:\s*hidden/.test(css), "Location section should support decorative background layers without leaking outside the section.");
+assert(/\.location-section::before\s*{[\s\S]*?beommusa_office_photo_v2\.png[\s\S]*?opacity:\s*0\.24/.test(css) && /\.location-section::after\s*{[\s\S]*?background-size:\s*54px 54px,\s*54px 54px,\s*100% 100%/.test(css), "Location section should use a subtle office-photo and grid background treatment.");
 const mapBlock = getBlock(css, ".map");
 const mapTransitionBlock = css.match(/\.map,\s*\n\s*\.more,\s*\n\s*\.add-btn\s*{/)?.[0] || "";
 assert(/height:\s*min\(calc\(var\(--section-h\)\s*-\s*var\(--header-h\)\s*-\s*var\(--fit-content-offset\)\s*-\s*70px\),\s*520px\)/.test(mapBlock), "Desktop map height should be reduced by about 70px.");

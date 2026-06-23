@@ -2323,15 +2323,46 @@
     }
 
     .location-section {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
       height: var(--section-h);
       min-height: var(--section-min);
-      background: #fff;
+      background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%);
       padding: calc(var(--header-h) + var(--fit-pad-sm)) var(--safe-right-pad) var(--section-bottom-gap) var(--side-pad);
       display: flex;
       align-items: center;
     }
 
+    .location-section::before,
+    .location-section::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .location-section::before {
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.74) 0%, rgba(255,255,255,0.92) 42%, rgba(255,255,255,0.74) 100%),
+        url("mockup_assets/beommusa_office_photo_v2.png") right center / cover no-repeat;
+      opacity: 0.24;
+      filter: grayscale(1) contrast(0.95);
+    }
+
+    .location-section::after {
+      background:
+        linear-gradient(90deg, rgba(23,105,209,0.055) 0 1px, transparent 1px 100%),
+        linear-gradient(180deg, rgba(23,105,209,0.04) 0 1px, transparent 1px 100%),
+        linear-gradient(118deg, transparent 0 63%, rgba(23,105,209,0.08) 63.1% 63.35%, transparent 63.45% 100%);
+      background-size: 54px 54px, 54px 54px, 100% 100%;
+      opacity: 0.72;
+    }
+
     .location-inner {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 41% 59%;
       height: min(calc(var(--section-h) - var(--header-h) - var(--fit-content-offset)), 680px);
