@@ -305,6 +305,7 @@ assert(/\.bottom-consult select\.bottom-consult-control option,\s*\.consult-refe
 assert(/\.bottom-consult select\.bottom-consult-control option:checked,\s*\.consult-reference-right \.consult-form \.form-row select option:checked,\s*\.consult-reference-right \.sub-consult-form \.sub-form-row select option:checked\s*{[\s\S]*?background-color:\s*var\(--primary\)/.test(css), "Expanded selected options should use the brand highlight color where the browser allows it.");
 assert(/\.native-select-hidden\s*{[\s\S]*?display:\s*none !important/.test(css), "Native selects marked for custom rendering should be hidden after enhancement.");
 assert(/\.custom-select-option\s*{[\s\S]*?padding:\s*10px 18px[\s\S]*?min-height:\s*38px[\s\S]*?text-align:\s*left/.test(css), "Custom dropdown option rows should have controlled left padding and height.");
+assert(/\.custom-select--bottom \.custom-select-list\s*{[\s\S]*?padding:\s*0/.test(css), "Bottom consultation dropdown should not leave empty padding above or below the options.");
 assert(/\.footer-contact\s*{[\s\S]*?border-top:\s*1px solid rgba\(255,255,255,0\.22\)[\s\S]*?border-bottom:\s*1px solid rgba\(255,255,255,0\.22\)/.test(css), "Footer contact frame should draw matching top and bottom divider lines.");
 assert(/\.footer-info li:last-child\s*{[\s\S]*?border-bottom:\s*0/.test(css), "Footer info should not draw a final bottom divider line.");
 const caseInnerBlock = getBlock(css, ".case-inner");

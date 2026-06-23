@@ -512,6 +512,7 @@
       top: auto;
       bottom: calc(100% + 8px);
       min-width: 188px;
+      padding: 0;
     }
 
     .custom-select--line .custom-select-button {
