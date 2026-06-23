@@ -2561,6 +2561,11 @@
       overflow: hidden;
     }
 
+    .consult-section.consult-reference-section {
+      height: auto;
+      min-height: var(--section-h);
+    }
+
     .consult-reference-left {
       position: relative;
       display: flex;
@@ -2583,7 +2588,8 @@
       letter-spacing: 0;
     }
 
-    .consult-reference-left h1 {
+    .consult-reference-left h1,
+    .consult-reference-left h2 {
       margin: 0;
       color: #101927;
       font-size: clamp(38px, 3.5vw, 56px);
@@ -2704,6 +2710,7 @@
         linear-gradient(180deg, rgba(7, 21, 35, 0.12), rgba(7, 21, 35, 0.38));
     }
 
+    .consult-reference-right .consult-form,
     .consult-reference-right .sub-consult-form {
       width: min(760px, 100%);
       padding: 0;
@@ -2744,15 +2751,20 @@
       letter-spacing: 0;
     }
 
+    .consult-reference-right .consult-form .form-row,
     .consult-reference-right .sub-consult-form .sub-form-row {
       border-bottom-color: rgba(255,255,255,0.24);
       color: #fff;
     }
 
+    .consult-reference-right .consult-form .form-row span,
     .consult-reference-right .sub-consult-form .sub-form-row span {
       color: #fff;
     }
 
+    .consult-reference-right .consult-form .form-row input,
+    .consult-reference-right .consult-form .form-row select,
+    .consult-reference-right .consult-form .form-row textarea,
     .consult-reference-right .sub-consult-form .sub-form-row input,
     .consult-reference-right .sub-consult-form .sub-form-row select,
     .consult-reference-right .sub-consult-form .sub-form-row textarea {
@@ -2763,6 +2775,7 @@
       color: #fff;
     }
 
+    .consult-reference-right .consult-form .form-row select,
     .consult-reference-right .sub-consult-form .sub-form-row select {
       appearance: none;
       background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.7) 50%), linear-gradient(135deg, rgba(255,255,255,0.7) 50%, transparent 50%);
@@ -2771,15 +2784,21 @@
       background-repeat: no-repeat;
     }
 
+    .consult-reference-right .consult-form .form-row select option,
     .consult-reference-right .sub-consult-form .sub-form-row select option {
       color: #1f2733;
     }
 
+    .consult-reference-right .consult-form .form-row input::placeholder,
+    .consult-reference-right .consult-form .form-row textarea::placeholder,
     .consult-reference-right .sub-consult-form .sub-form-row input::placeholder,
     .consult-reference-right .sub-consult-form .sub-form-row textarea::placeholder {
       color: rgba(255,255,255,0.55);
     }
 
+    .consult-reference-right .consult-form .form-row input:focus,
+    .consult-reference-right .consult-form .form-row select:focus,
+    .consult-reference-right .consult-form .form-row textarea:focus,
     .consult-reference-right .sub-consult-form .sub-form-row input:focus,
     .consult-reference-right .sub-consult-form .sub-form-row select:focus,
     .consult-reference-right .sub-consult-form .sub-form-row textarea:focus {
@@ -2787,14 +2806,17 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.32);
     }
 
+    .consult-reference-right .consult-form .privacy-consent,
     .consult-reference-right .sub-consult-form .privacy-consent-light {
       color: rgba(255,255,255,0.76);
     }
 
+    .consult-reference-right .consult-form .privacy-detail summary,
     .consult-reference-right .sub-consult-form .privacy-consent-light .privacy-detail summary {
       color: #8fbdff;
     }
 
+    .consult-reference-right .consult-form .privacy-detail-content,
     .consult-reference-right .sub-consult-form .privacy-consent-light .privacy-detail-content {
       background: rgba(255,255,255,0.08);
     }
@@ -4104,6 +4126,7 @@
         padding: var(--fit-pad-lg) var(--safe-right-pad) calc(var(--fit-pad-lg) + 24px) var(--side-pad);
       }
 
+      .consult-reference-right .consult-form,
       .consult-reference-right .sub-consult-form {
         width: 100%;
         max-width: 820px;
@@ -4115,7 +4138,8 @@
         padding: calc(var(--header-h) + 28px) var(--side-pad) 44px;
       }
 
-      .consult-reference-left h1 {
+      .consult-reference-left h1,
+      .consult-reference-left h2 {
         font-size: var(--type-title);
       }
 
@@ -4152,6 +4176,7 @@
         padding: 44px var(--side-pad) 74px;
       }
 
+      .consult-reference-right .consult-form .form-row,
       .consult-reference-right .sub-consult-form .sub-form-row {
         grid-template-columns: 1fr;
         gap: 0;
@@ -4159,12 +4184,16 @@
         padding: 16px 0;
       }
 
+      .consult-reference-right .consult-form .form-row input,
+      .consult-reference-right .consult-form .form-row select,
+      .consult-reference-right .consult-form .form-row textarea,
       .consult-reference-right .sub-consult-form .sub-form-row input,
       .consult-reference-right .sub-consult-form .sub-form-row select,
       .consult-reference-right .sub-consult-form .sub-form-row textarea {
         margin-top: 8px;
       }
 
+      .consult-reference-right .consult-form .privacy-consent,
       .consult-reference-right .sub-consult-form .privacy-consent-light {
         padding-left: 0;
       }
