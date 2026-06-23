@@ -90,6 +90,10 @@ assert(!/(031-211-5230|031-211-5233|0312115230|01065509628|\+82-31-211)/.test(si
 assert(indexHtml.includes("영업시간") && indexHtml.includes("월-금 09:30 - 18:00") && indexHtml.includes("토·일 정기휴무"), "Location section should show office hours instead of the building row.");
 assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자</small>"), "Location section should not show the old building row.");
 
+const caseProgressTypes = [...casesHtml.matchAll(/<tr><td class="accent">([^<]+)<\/td><td>[\s\S]*?<\/tr>/g)].map((match) => match[1]);
+const uniqueCaseProgressTypes = [...new Set(caseProgressTypes)];
+assert(uniqueCaseProgressTypes.length === 3 && ["개인회생", "개인파산", "압류대응"].every((type) => uniqueCaseProgressTypes.includes(type)), "Case progress business types should be grouped into 개인회생, 개인파산, 압류대응.");
+
 assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
 ["20", "2000", "95"].forEach((target) => {
   const marker = `data-count-to="${target}"`;
