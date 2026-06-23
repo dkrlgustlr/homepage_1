@@ -176,7 +176,7 @@ assert(!/<section[^>]*class="[^"]*\bfaq-section\b[^"]*"/.test(knowledgeHtml), "K
 assert(!/"@type":\s*"FAQPage"/.test(knowledgeHtml), "Knowledge page should remove FAQPage structured data when the FAQ section is hidden.");
 assert(!knowledgeHtml.includes("질문형 콘텐츠는 검색과 AI 답변에 잘 읽히도록 주제와 조건, 예외를 함께 정리합니다."), "Knowledge page should not show the removed guide sentence above the cards.");
 assert(knowledgeHtml.includes('id="knowledge-article-data"'), "Knowledge page should keep article detail content in page-local data.");
-assert((knowledgeHtml.match(/data-knowledge-modal-open/g) || []).length === 6, "Knowledge cards should open the six active article details without separate article pages.");
+assert((knowledgeHtml.match(/data-knowledge-modal-open/g) || []).length === 15, "Knowledge cards should open the fifteen active article details without separate article pages.");
 assert(layoutJs.includes("initKnowledgeModal") && layoutJs.includes("knowledge-article-modal"), "layout.js should initialize the knowledge article modal.");
 assert(/\.knowledge-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Knowledge article details should open in a fixed modal.");
 assert(layoutJs.includes("knowledge-modal-news") && layoutJs.includes("knowledge-modal-section"), "Knowledge article modal should render article details in sectioned news-style blocks.");
@@ -186,7 +186,9 @@ assert(/\.knowledge-modal-news\s*{[\s\S]*?display:\s*block/.test(css), "Knowledg
 assert(/\.knowledge-modal-dialog h2\s*{[\s\S]*?font-size:\s*clamp\(28px,\s*2\.1vw,\s*36px\)/.test(css), "Knowledge article modal title should use a more restrained size.");
 assert(/\.knowledge-modal-section\s*{[\s\S]*?border-top:\s*1px solid #dbe3ee/.test(css), "Knowledge article modal should visually divide each article section.");
 assert(layoutJs.includes("실무상 쟁점") && layoutJs.includes("상담 시 확인할 점"), "Knowledge article modal should include professional section labels.");
-assert(knowledgeHtml.includes("압류 및 추심명령") && knowledgeHtml.includes("지급명령") && knowledgeHtml.includes("압류금지채권"), "Knowledge article content should include more detailed professional context.");
+const knowledgeArticleData = JSON.parse(knowledgeHtml.match(/<script type="application\/json" id="knowledge-article-data">([\s\S]*?)<\/script>/)?.[1] || "[]");
+assert(knowledgeArticleData.length === 15 && knowledgeArticleData.every((article) => article.directAnswer && article.body?.length >= 4), "Knowledge article content should include detailed professional context for every card.");
+assert(["income-standard", "seizure-order", "basic-documents", "payment-order-objection"].every((id) => knowledgeArticleData.some((article) => article.id === id)), "Knowledge article data should include the expanded fifteen-topic set.");
 assert(layoutJs.includes("knowledge-modal-thumb-wrap") && layoutJs.includes("knowledge-modal-thumb"), "Knowledge article modal should include a thumbnail image area.");
 assert(layoutJs.includes('trigger.querySelector(".article-thumb")') && layoutJs.includes("dataset.thumb"), "Knowledge article modal should reuse the card thumbnail container source.");
 assert(/\.knowledge-modal-head\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*280px/.test(css), "Knowledge article modal header should lay out title copy and thumbnail on desktop.");
@@ -200,12 +202,12 @@ const knowledgeThumbnailFiles = [
   "knowledge_thumb_frozen_account_v3.png",
   "knowledge_thumb_wage_seizure_v3.png"
 ];
-assert((knowledgeCardMarkup.match(/class="article-thumb"/g) || []).length === 6 && (knowledgeCardMarkup.match(/class="article-body"/g) || []).length === 6, "Knowledge cards should use one shared thumbnail class and body containers.");
-assert((knowledgeCardMarkup.match(/<h4>/g) || []).length === 6 && !/<h3>/.test(knowledgeCardMarkup), "Knowledge card titles should use h4 elements.");
+assert((knowledgeCardMarkup.match(/class="article-thumb"/g) || []).length === 15 && (knowledgeCardMarkup.match(/class="article-body"/g) || []).length === 15, "Knowledge cards should use one shared thumbnail class and body containers.");
+assert((knowledgeCardMarkup.match(/<h4>/g) || []).length === 15 && !/<h3>/.test(knowledgeCardMarkup), "Knowledge card titles should use h4 elements.");
 assert(!/<button class="article-card"[\s\S]*?<img\b/.test(knowledgeCardMarkup), "Knowledge cards should not render thumbnails as direct img elements.");
 assert(!/<button class="article-card"[\s\S]*?<div class="article-body">[\s\S]*?<p>/.test(knowledgeCardMarkup), "Knowledge cards should not show gray summary text below the title.");
 assert(!/article-thumb-(income|seizure|bankruptcy|business|documents|correction|job)/.test(knowledgeHtml + css), "Knowledge thumbnails should not use card-specific classes that can diverge placement.");
-assert((knowledgeCardMarkup.match(/--article-thumb-image:\s*url\('/g) || []).length === 6, "Each knowledge thumbnail should pass only its image source through the shared CSS variable.");
+assert((knowledgeCardMarkup.match(/--article-thumb-image:\s*url\('/g) || []).length === 15, "Each knowledge thumbnail should pass only its image source through the shared CSS variable.");
 assert(!/knowledge_thumb_[1-6]_v2\.png/.test(knowledgeHtml), "Knowledge page should not reuse old portrait/source thumbnails for card display.");
 knowledgeThumbnailFiles.forEach((file) => {
   assert(knowledgeHtml.includes(file), `Knowledge page should reference generated thumbnail ${file}.`);
@@ -234,7 +236,7 @@ const knowledgeStructuredData = getStructuredData(knowledgeHtml);
 const knowledgeGraph = knowledgeStructuredData?.["@graph"] || [];
 const knowledgeItemList = knowledgeGraph.find((node) => node["@id"] === "https://dkrlgustlr.github.io/homepage_1/knowledge.html#knowledge-list");
 const knowledgeArticles = knowledgeItemList?.itemListElement?.map((entry) => entry.item) || [];
-assert(knowledgeArticles.length === 6, "Knowledge structured data should describe the six active knowledge cards.");
+assert(knowledgeArticles.length === 15, "Knowledge structured data should describe the fifteen active knowledge cards.");
 assert(knowledgeArticles.every((article) => article.headline && article.description && article.image && article.keywords && article.about && article.mentions && article.mainEntityOfPage && article.datePublished && article.dateModified), "Each knowledge Article should include headline, description, image, keywords, entities, canonical page reference, and dates.");
 assert(knowledgeArticles.some((article) => /급여압류 통장압류/.test(article.keywords)) && knowledgeArticles.some((article) => /지급명령 이의신청/.test(article.keywords)) && knowledgeArticles.some((article) => /압류통장 생활비/.test(article.keywords)), "Knowledge Article keywords should target practical search and answer queries.");
 
