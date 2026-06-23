@@ -230,6 +230,7 @@ const articleThumbBlock = getBlock(css, ".article-thumb");
 const articleBodyBlock = getBlock(css, ".article-body");
 const articleTitleBlock = getBlock(css, ".article-card h4");
 assert(/display:\s*flex/.test(articleCardBlock) && /flex-direction:\s*column/.test(articleCardBlock) && /justify-content:\s*flex-start/.test(articleCardBlock), "Knowledge cards should use a vertical flex layout to keep thumbnails pinned at the top in stretched grid rows.");
+assert(/\.article-card\[hidden\]\s*{[\s\S]*?display:\s*none/.test(css), "Knowledge pagination should hide non-current article cards even though article-card declares display flex.");
 assert(/flex:\s*0 0 200px/.test(articleThumbBlock) && /flex:\s*0 0 150px/.test(articleBodyBlock) && /height:\s*150px/.test(articleBodyBlock), "Knowledge card thumbnail and body should use fixed heights without absorbing extra vertical space.");
 assert(/font-weight:\s*700/.test(articleTitleBlock), "Knowledge card h4 titles should use a lighter 700 weight.");
 assert(/\.article-thumb\s*{[\s\S]*?height:\s*200px[\s\S]*?background-image:\s*var\(--article-thumb-image\)[\s\S]*?background-position:\s*center center[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should share one fixed-height background layout.");

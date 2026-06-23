@@ -2902,6 +2902,10 @@
       cursor: pointer;
     }
 
+    .article-card[hidden] {
+      display: none;
+    }
+
     .article-card:focus-visible {
       outline: 3px solid rgba(23,105,209,0.28);
       outline-offset: 4px;
