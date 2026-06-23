@@ -46,7 +46,7 @@
   </a>
   <div class="bottom-consult-form">
     <label class="bottom-consult-label" for="bottom-case">사건 영역</label>
-    <select class="bottom-consult-control" id="bottom-case" name="case_type" aria-label="사건 영역">
+    <select class="bottom-consult-control" id="bottom-case" name="case_type" aria-label="사건 영역" data-custom-select>
       <option>사건 영역</option>
       <option>개인회생</option>
       <option>개인파산</option>
@@ -270,6 +270,146 @@
     return field ? String(field.value || "").trim() : "";
   };
 
+  const initCustomSelects = () => {
+    const selects = Array.from(document.querySelectorAll("select[data-custom-select]"));
+    if (!selects.length) return;
+
+    const closeCustomSelect = (field) => {
+      if (!field) return;
+      const button = field.querySelector(".custom-select-button");
+      const list = field.querySelector(".custom-select-list");
+      field.classList.remove("is-open");
+      button?.setAttribute("aria-expanded", "false");
+      if (list) list.hidden = true;
+    };
+
+    const closeAllCustomSelects = (except = null) => {
+      document.querySelectorAll(".custom-select.is-open").forEach((field) => {
+        if (field !== except) closeCustomSelect(field);
+      });
+    };
+
+    selects.forEach((select, selectIndex) => {
+      if (select.dataset.customReady === "true") return;
+
+      select.dataset.customReady = "true";
+      select.classList.add("native-select-hidden");
+
+      const isBottom = select.classList.contains("bottom-consult-control");
+      const field = document.createElement("div");
+      const button = document.createElement("button");
+      const value = document.createElement("span");
+      const chevron = document.createElement("span");
+      const list = document.createElement("div");
+      const listId = `${select.id || `custom-select-${selectIndex}`}-list`;
+
+      field.className = `custom-select ${isBottom ? "custom-select--bottom" : "custom-select--line"}`;
+      button.className = "custom-select-button";
+      button.type = "button";
+      button.setAttribute("aria-haspopup", "listbox");
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-controls", listId);
+      value.className = "custom-select-value";
+      chevron.className = "custom-select-chevron";
+      chevron.setAttribute("aria-hidden", "true");
+      list.className = "custom-select-list";
+      list.id = listId;
+      list.role = "listbox";
+      list.hidden = true;
+
+      const options = Array.from(select.options);
+
+      const syncSelected = () => {
+        const selectedIndex = Math.max(select.selectedIndex, 0);
+        const selectedOption = options[selectedIndex] || options[0];
+        value.textContent = selectedOption ? selectedOption.textContent.trim() : "";
+        list.querySelectorAll(".custom-select-option").forEach((optionButton, index) => {
+          const isSelected = index === selectedIndex;
+          optionButton.classList.toggle("is-selected", isSelected);
+          optionButton.setAttribute("aria-selected", String(isSelected));
+        });
+      };
+
+      const setOpen = (open) => {
+        if (open) {
+          closeAllCustomSelects(field);
+          field.classList.add("is-open");
+          button.setAttribute("aria-expanded", "true");
+          list.hidden = false;
+          return;
+        }
+        closeCustomSelect(field);
+      };
+
+      const chooseOption = (index) => {
+        if (!options[index]) return;
+        select.selectedIndex = index;
+        syncSelected();
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+      };
+
+      options.forEach((option, index) => {
+        const optionButton = document.createElement("button");
+        optionButton.className = "custom-select-option";
+        optionButton.type = "button";
+        optionButton.role = "option";
+        optionButton.tabIndex = -1;
+        optionButton.textContent = option.textContent.trim();
+        optionButton.addEventListener("click", () => {
+          chooseOption(index);
+          setOpen(false);
+          button.focus();
+        });
+        list.appendChild(optionButton);
+      });
+
+      button.append(value, chevron);
+      field.append(button, list);
+      select.insertAdjacentElement("afterend", field);
+      syncSelected();
+
+      button.addEventListener("click", () => {
+        setOpen(!field.classList.contains("is-open"));
+      });
+
+      button.addEventListener("keydown", (event) => {
+        const currentIndex = Math.max(select.selectedIndex, 0);
+        let nextIndex = currentIndex;
+
+        if (event.key === "ArrowDown") nextIndex = Math.min(currentIndex + 1, options.length - 1);
+        if (event.key === "ArrowUp") nextIndex = Math.max(currentIndex - 1, 0);
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = options.length - 1;
+
+        if (nextIndex !== currentIndex || ["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) {
+          event.preventDefault();
+          setOpen(true);
+          chooseOption(nextIndex);
+          return;
+        }
+
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setOpen(!field.classList.contains("is-open"));
+        }
+      });
+
+      select.addEventListener("change", syncSelected);
+    });
+
+    if (document.documentElement.dataset.customSelectEvents === "true") return;
+    document.documentElement.dataset.customSelectEvents = "true";
+
+    document.addEventListener("click", (event) => {
+      if (event.target.closest(".custom-select")) return;
+      closeAllCustomSelects();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeAllCustomSelects();
+    });
+  };
+
   const initConsultForms = () => {
     document.querySelectorAll("[data-consult-form]").forEach((form) => {
       form.addEventListener("submit", (event) => {
@@ -401,6 +541,7 @@
     initFloatingContrast();
     initSubpageAnimations();
     initCountUpStats();
+    initCustomSelects();
     initConsultForms();
     initPrivacyModal();
   }).catch((error) => {

@@ -109,10 +109,13 @@ assert(/name="privacy_consent"[^>]*required/.test(footerHtml), "Bottom consultat
 assert(!/privacy_consent"[^>]*checked/.test(footerHtml + layoutJs), "Privacy consent checkboxes should not be pre-checked.");
 assert(footerHtml.includes("bottom-privacy-trigger") && footerHtml.includes("footer-privacy-link"), "Footer should expose privacy modal triggers in the bottom bar and footer copy.");
 assert(layoutJs.includes("bottom-privacy-trigger") && layoutJs.includes("footer-privacy-link"), "Footer fallback should expose privacy modal triggers in the bottom bar and footer copy.");
+assert(indexHtml.includes("data-custom-select") && consultHtml.includes("data-custom-select"), "Consult page native selects should be marked for custom dropdown rendering.");
+assert(footerHtml.includes("data-custom-select") && layoutJs.includes("data-custom-select"), "Bottom bar select and its fallback should be marked for custom dropdown rendering.");
 
 assert(!/site-intro|introLogoRise|is-finished|animationend/.test(indexHtml + css), "Main page should load directly without an intro overlay.");
 
 assert(layoutJs.includes("initConsultForms"), "layout.js should initialize consultation forms.");
+assert(layoutJs.includes("initCustomSelects") && layoutJs.includes("custom-select-option") && layoutJs.includes("aria-expanded"), "layout.js should replace marked native selects with accessible custom dropdowns.");
 assert(layoutJs.includes("initPrivacyModal") && layoutJs.includes("privacy-consent-modal"), "layout.js should initialize the shared privacy consent modal.");
 assert(layoutJs.includes("mailto:") && layoutJs.includes("sms:"), "Consultation submit should support mailto and sms fallbacks.");
 assert(layoutJs.includes("privacy_consent") && layoutJs.includes("개인정보 수집 및 이용에 동의해주세요."), "Consultation submit should validate privacy consent before opening mail or sms.");
@@ -179,6 +182,8 @@ assert(/\.consult-reference-right \.consult-form \.form-row select,\s*\.consult-
 assert(/\.consult-reference-right \.consult-form \.form-row select,\s*\.consult-reference-right \.sub-consult-form \.sub-form-row select\s*{[\s\S]*?background-position:\s*right 2px center/.test(css), "Reference consultation select chevron should align with the underline field edge.");
 assert(/\.bottom-consult select\.bottom-consult-control option,\s*\.consult-reference-right \.consult-form \.form-row select option,\s*\.consult-reference-right \.sub-consult-form \.sub-form-row select option\s*{[\s\S]*?padding:\s*10px 14px[\s\S]*?min-height:\s*36px[\s\S]*?line-height:\s*1\.45/.test(css), "Expanded select options should keep the approved padding and row height.");
 assert(/\.bottom-consult select\.bottom-consult-control option:checked,\s*\.consult-reference-right \.consult-form \.form-row select option:checked,\s*\.consult-reference-right \.sub-consult-form \.sub-form-row select option:checked\s*{[\s\S]*?background-color:\s*var\(--primary\)/.test(css), "Expanded selected options should use the brand highlight color where the browser allows it.");
+assert(/\.native-select-hidden\s*{[\s\S]*?display:\s*none !important/.test(css), "Native selects marked for custom rendering should be hidden after enhancement.");
+assert(/\.custom-select-option\s*{[\s\S]*?padding:\s*10px 18px[\s\S]*?min-height:\s*38px[\s\S]*?text-align:\s*left/.test(css), "Custom dropdown option rows should have controlled left padding and height.");
 const caseInnerBlock = getBlock(css, ".case-inner");
 assert(/--case-inner-lift:\s*-30px/.test(caseInnerBlock) && /translate:\s*0\s+var\(--case-inner-lift\)/.test(caseInnerBlock), "Desktop case section content should be lifted by 30px.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-inner\s*{[\s\S]*?translate:\s*none/.test(css), "Stacked case layout should reset the desktop 30px lift on tablet/mobile.");
