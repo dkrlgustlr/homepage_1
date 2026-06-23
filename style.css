@@ -2895,43 +2895,13 @@
       display: block;
       width: 100%;
       height: 150px;
-      overflow: hidden;
+      background-image: var(--article-thumb-image);
       background-repeat: no-repeat;
-      background-size: cover;
       background-position: center center;
+      background-size: cover;
+      overflow: hidden;
       filter: grayscale(0.72);
       transform-origin: center center;
-    }
-
-    .article-thumb-income {
-      background-image: url("mockup_assets/knowledge_thumb_1_v2.png");
-      background-position: center top;
-    }
-
-    .article-thumb-job {
-      background-image: url("mockup_assets/knowledge_thumb_1_v2.png");
-      background-position: center top;
-    }
-
-    .article-thumb-seizure {
-      background-image: url("mockup_assets/knowledge_thumb_2_v2.png");
-    }
-
-    .article-thumb-bankruptcy {
-      background-image: url("mockup_assets/knowledge_thumb_3_v2.png");
-      background-position: center top;
-    }
-
-    .article-thumb-business {
-      background-image: url("mockup_assets/knowledge_thumb_4_v2.png");
-    }
-
-    .article-thumb-documents {
-      background-image: url("mockup_assets/knowledge_thumb_5_v2.png");
-    }
-
-    .article-thumb-correction {
-      background-image: url("mockup_assets/knowledge_thumb_6_v2.png");
     }
 
     .article-body {
