@@ -161,7 +161,7 @@
 
   const initSubpageAnimations = () => {
     const targets = [
-      ...document.querySelectorAll(".sub-heading, .sub-card, .service-area-card, .article-card, .faq-item, .sub-consult-panel, .sub-consult-form, .consult-reference-left, .consult-proof-grid div, .consult-check-list li, .sub-table tbody tr")
+      ...document.querySelectorAll(".sub-heading, .sub-card, .service-area-card, .faq-item, .sub-consult-panel, .sub-consult-form, .consult-reference-left, .consult-proof-grid div, .consult-check-list li, .sub-table tbody tr")
     ];
 
     if (!targets.length) return;

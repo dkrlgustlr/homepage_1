@@ -18,6 +18,11 @@ const getPngSize = (file) => {
   };
 };
 
+const getPngColorType = (file) => {
+  const buffer = readFileSync(resolve(root, file));
+  return buffer[25];
+};
+
 const getBlock = (css, selector) => {
   const start = css.indexOf(selector);
   if (start === -1) return "";
@@ -188,11 +193,14 @@ knowledgeThumbnailFiles.forEach((file) => {
   assert(knowledgeHtml.includes(file), `Knowledge page should reference generated thumbnail ${file}.`);
   const size = getPngSize(`mockup_assets/${file}`);
   assert(size.width === 1440 && size.height === 540, `${file} should be a 1440x540 card thumbnail.`);
+  const colorType = getPngColorType(`mockup_assets/${file}`);
+  assert(colorType !== 4 && colorType !== 6, `${file} should be saved without a PNG alpha channel.`);
 });
 assert(!knowledgeCardMarkup.includes('class="answer-label"') && !knowledgeCardMarkup.includes("핵심 답변"), "Knowledge cards should keep direct answers hidden until the article modal opens.");
 assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show the answer label before opening an article modal.");
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
 assert(/\.article-thumb\s*{[\s\S]*?height:\s*150px[\s\S]*?background-image:\s*var\(--article-thumb-image\)[\s\S]*?background-position:\s*center center[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should share one fixed-height background layout.");
+assert(!/querySelectorAll\("[^"]*\.article-card/.test(layoutJs), "Knowledge cards should not receive staggered reveal transforms that can offset individual cards.");
 const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
 assert(!/border-left:\s*4px solid var\(--primary\)/.test(knowledgeAnswerBlock), "Knowledge modal answer should not use a thick blue left divider.");
 assert(/background:\s*#f4f7fb/.test(knowledgeAnswerBlock) && /border:\s*1px solid #dbe3ee/.test(knowledgeAnswerBlock), "Knowledge modal answer should use a quiet full box treatment.");
