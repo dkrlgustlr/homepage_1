@@ -169,8 +169,8 @@ assert(/\.quick-icon\.kakao\s*{[\s\S]*?width:\s*46px[\s\S]*?height:\s*46px[\s\S]
 assert(footerHtml.includes("quick-label\">TOP") && layoutJs.includes("quick-label\">TOP"), "Floating side banner should include a TOP label.");
 assert(/\.quick-item\s*{[\s\S]*?height:\s*92px[\s\S]*?gap:\s*12px/.test(css), "Floating side banner should keep wider icon and label spacing.");
 assert(!/☎|>K<\/div>/.test(footerHtml + layoutJs), "Floating and bottom phone/Kakao actions should not use text placeholder icons.");
-assert(/\.footer-action:hover,\s*[\s\S]*?\.footer-action:focus-visible\s*{[\s\S]*?background:\s*#fff[\s\S]*?color:\s*#07111f/.test(css), "Footer outline CTA should invert to a white fill on hover and keyboard focus.");
-assert(/\.footer-action\.primary:hover,\s*[\s\S]*?\.footer-action\.primary:focus-visible\s*{[\s\S]*?background:\s*#fff[\s\S]*?color:\s*var\(--primary\)/.test(css), "Footer primary CTA should invert to white with primary text on hover and keyboard focus.");
+assert(/\.footer-action:hover,\s*[\s\S]*?\.footer-action:focus-visible\s*{[\s\S]*?background:\s*var\(--primary\)[\s\S]*?color:\s*#fff/.test(css), "Footer outline CTA should turn primary blue on hover and keyboard focus.");
+assert(/\.footer-action\.primary:hover,\s*[\s\S]*?\.footer-action\.primary:focus-visible\s*{[\s\S]*?background:\s*transparent[\s\S]*?color:\s*#fff/.test(css), "Footer primary CTA should turn transparent on hover and keyboard focus.");
 
 assert(/<a href="index\.html">메인<\/a>[\s\S]*<a href="about\.html">법무사소개<\/a>[\s\S]*<a href="cases\.html">실제사례<\/a>[\s\S]*<a href="knowledge\.html">지식센터<\/a>[\s\S]*<a href="consult\.html">상담신청<\/a>/.test(headerHtml), "Header nav should keep the approved order.");
 
