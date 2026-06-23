@@ -157,6 +157,10 @@ assert(/\.knowledge-modal-dialog h2\s*{[\s\S]*?font-size:\s*clamp\(28px,\s*2\.1v
 assert(/\.knowledge-modal-section\s*{[\s\S]*?border-top:\s*1px solid #dbe3ee/.test(css), "Knowledge article modal should visually divide each article section.");
 assert(layoutJs.includes("실무상 쟁점") && layoutJs.includes("상담 시 확인할 점"), "Knowledge article modal should include professional section labels.");
 assert(knowledgeHtml.includes("채무자회생 및 파산에 관한 법률") && knowledgeHtml.includes("변제계획안") && knowledgeHtml.includes("면책불허가"), "Knowledge article content should include more detailed professional context.");
+assert(layoutJs.includes("knowledge-modal-thumb-wrap") && layoutJs.includes("knowledge-modal-thumb"), "Knowledge article modal should include a thumbnail image area.");
+assert(layoutJs.includes('trigger.querySelector("img")') && layoutJs.includes("thumbnail.src"), "Knowledge article modal should reuse the clicked card thumbnail.");
+assert(/\.knowledge-modal-head\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*280px/.test(css), "Knowledge article modal header should lay out title copy and thumbnail on desktop.");
+assert(/\.knowledge-modal-thumb\s*{[\s\S]*?aspect-ratio:\s*16 \/ 10[\s\S]*?object-fit:\s*cover/.test(css), "Knowledge article modal thumbnail should keep a stable article image ratio.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");

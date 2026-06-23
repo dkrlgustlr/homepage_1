@@ -565,8 +565,13 @@
   <article class="knowledge-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="knowledge-modal-title" tabindex="-1">
     <button class="knowledge-modal-close" type="button" data-knowledge-modal-close aria-label="지식센터 게시물 닫기">&times;</button>
     <header class="knowledge-modal-head">
-      <div class="knowledge-modal-category" id="knowledge-modal-category"></div>
-      <h2 id="knowledge-modal-title"></h2>
+      <div class="knowledge-modal-copy">
+        <div class="knowledge-modal-category" id="knowledge-modal-category"></div>
+        <h2 id="knowledge-modal-title"></h2>
+      </div>
+      <figure class="knowledge-modal-thumb-wrap">
+        <img class="knowledge-modal-thumb" src="" alt="" loading="lazy" decoding="async">
+      </figure>
     </header>
     <div class="knowledge-modal-news">
       <div class="knowledge-modal-body"></div>
@@ -580,10 +585,21 @@
     const getModal = () => document.getElementById("knowledge-article-modal");
     const getDialog = () => getModal()?.querySelector(".knowledge-modal-dialog");
 
-    const renderArticle = (article) => {
+    const renderArticle = (article, trigger) => {
       const modal = ensureModal();
       modal.querySelector("#knowledge-modal-category").textContent = article.category || "지식센터";
       modal.querySelector("#knowledge-modal-title").textContent = article.title || "";
+
+      const cardImage = trigger.querySelector("img");
+      const thumbnailWrap = modal.querySelector(".knowledge-modal-thumb-wrap");
+      const thumbnail = modal.querySelector(".knowledge-modal-thumb");
+      if (cardImage && thumbnail && thumbnailWrap) {
+        thumbnail.src = cardImage.currentSrc || cardImage.src;
+        thumbnail.alt = cardImage.alt || article.title || "";
+        thumbnailWrap.hidden = false;
+      } else if (thumbnailWrap) {
+        thumbnailWrap.hidden = true;
+      }
 
       const body = modal.querySelector(".knowledge-modal-body");
       const paragraphs = Array.isArray(article.body) ? article.body : [];
@@ -616,7 +632,7 @@
     const openModal = (trigger) => {
       const article = articleMap.get(trigger.dataset.knowledgeArticle);
       if (!article) return;
-      const modal = renderArticle(article);
+      const modal = renderArticle(article, trigger);
       lastFocusedElement = trigger;
       modal.setAttribute("aria-hidden", "false");
       document.documentElement.classList.add("knowledge-modal-open");

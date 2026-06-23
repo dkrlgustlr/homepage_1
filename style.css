@@ -2178,6 +2178,18 @@
       color: #111;
     }
 
+    .knowledge-modal-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 34px;
+      align-items: end;
+      margin-right: 34px;
+    }
+
+    .knowledge-modal-copy {
+      min-width: 0;
+    }
+
     .knowledge-modal-category {
       margin-bottom: 16px;
       color: var(--primary);
@@ -2189,13 +2201,32 @@
 
     .knowledge-modal-dialog h2 {
       max-width: 760px;
-      margin: 0 44px 24px 0;
+      margin: 0 0 24px;
       color: #121c2d;
       font-size: clamp(28px, 2.1vw, 36px);
       line-height: 1.24;
       font-weight: 950;
       letter-spacing: 0;
       word-break: keep-all;
+    }
+
+    .knowledge-modal-thumb-wrap {
+      margin: 0 0 24px;
+      overflow: hidden;
+      background: #e9eef5;
+      border: 1px solid #dbe3ee;
+    }
+
+    .knowledge-modal-thumb-wrap[hidden] {
+      display: none;
+    }
+
+    .knowledge-modal-thumb {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      filter: grayscale(0.45);
     }
 
     .knowledge-modal-news {
@@ -4657,9 +4688,20 @@
         border-radius: 18px;
       }
 
+      .knowledge-modal-head {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-right: 0;
+      }
+
       .knowledge-modal-dialog h2 {
         margin-right: 36px;
+        margin-bottom: 18px;
         font-size: 24px;
+      }
+
+      .knowledge-modal-thumb-wrap {
+        margin-bottom: 24px;
       }
 
       .knowledge-modal-section {
