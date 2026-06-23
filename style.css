@@ -2844,6 +2844,39 @@
       line-height: 1;
       font-weight: 800;
       letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .count-up {
+      display: inline-block;
+      min-width: 2ch;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0;
+      transform-origin: 50% 78%;
+      will-change: contents, transform;
+    }
+
+    .count-up[data-count-to="2000"] {
+      min-width: 4ch;
+    }
+
+    .count-up.is-counting {
+      animation: countTension 0.56s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .count-up.is-counted {
+      animation: countSnap 0.42s cubic-bezier(0.18, 1.36, 0.32, 1) both;
+    }
+
+    @keyframes countTension {
+      0% { transform: translateY(7px) scale(0.94); opacity: 0.55; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    @keyframes countSnap {
+      0% { transform: translateY(0) scale(1); }
+      45% { transform: translateY(-3px) scale(1.045); }
+      100% { transform: translateY(0) scale(1); }
     }
 
     .consult-proof-grid dd {
@@ -4499,10 +4532,12 @@
       }
 
       .reveal,
-      .sub-reveal {
+      .sub-reveal,
+      .count-up {
         opacity: 1;
         transform: none;
         filter: none;
+        animation: none !important;
       }
     }
     .page :is(

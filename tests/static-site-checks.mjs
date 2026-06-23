@@ -77,6 +77,14 @@ assert(!/(031-211-5230|031-211-5233|0312115230|01065509628|\+82-31-211)/.test(si
 assert(indexHtml.includes("영업시간") && indexHtml.includes("월-금 09:30 - 18:00") && indexHtml.includes("토·일 정기휴무"), "Location section should show office hours instead of the building row.");
 assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자</small>"), "Location section should not show the old building row.");
 
+assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
+["20", "2000", "95"].forEach((target) => {
+  const marker = `data-count-to="${target}"`;
+  assert(indexHtml.includes(marker) && consultHtml.includes(marker), `Consult proof number ${target} should be wired for count-up animation.`);
+});
+assert(layoutJs.includes("initCountUpStats") && layoutJs.includes("requestAnimationFrame"), "layout.js should animate consult proof numbers with requestAnimationFrame.");
+assert(/\.count-up\s*{[\s\S]*?display:\s*inline-block/.test(css), "Count-up numbers should have stable inline-block styling.");
+
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(indexHtml), "Main page consultation form should require privacy consent.");

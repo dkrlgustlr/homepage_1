@@ -191,6 +191,80 @@
     targets.forEach((element) => observer.observe(element));
   };
 
+  const initCountUpStats = () => {
+    const numbers = Array.from(document.querySelectorAll("[data-count-to]"));
+    if (!numbers.length) return;
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const formatValue = (element, value) => {
+      const decimals = Number(element.dataset.countDecimals || "0");
+      return decimals > 0 ? value.toFixed(decimals) : String(Math.round(value));
+    };
+
+    const runCount = (element, index) => {
+      if (element.dataset.counted === "true") return;
+      element.dataset.counted = "true";
+
+      const target = Number(element.dataset.countTo || "0");
+      if (!Number.isFinite(target)) return;
+
+      if (prefersReducedMotion) {
+        element.textContent = formatValue(element, target);
+        return;
+      }
+
+      const duration = Number(element.dataset.countDuration || "1200");
+      const delay = Number(element.dataset.countDelay || index * 95);
+
+      window.setTimeout(() => {
+        const startTime = performance.now();
+        element.textContent = formatValue(element, 0);
+        element.classList.add("is-counting");
+
+        const tick = (now) => {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 4);
+          element.textContent = formatValue(element, target * eased);
+
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+            return;
+          }
+
+          element.textContent = formatValue(element, target);
+          element.classList.remove("is-counting");
+          element.classList.add("is-counted");
+        };
+
+        requestAnimationFrame(tick);
+      }, delay);
+    };
+
+    numbers.forEach((element, index) => {
+      element.style.setProperty("--count-order", index);
+    });
+
+    if (!("IntersectionObserver" in window)) {
+      numbers.forEach(runCount);
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const index = numbers.indexOf(entry.target);
+        runCount(entry.target, Math.max(index, 0));
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.35,
+      rootMargin: "0px 0px -10% 0px"
+    });
+
+    numbers.forEach((element) => observer.observe(element));
+  };
+
   const getFieldValue = (form, name) => {
     const field = form.elements[name];
     return field ? String(field.value || "").trim() : "";
@@ -326,6 +400,7 @@
     markActiveNav();
     initFloatingContrast();
     initSubpageAnimations();
+    initCountUpStats();
     initConsultForms();
     initPrivacyModal();
   }).catch((error) => {
