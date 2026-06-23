@@ -170,7 +170,9 @@ assert(!knowledgeCardMarkup.includes('class="answer-label"') && !knowledgeCardMa
 assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show the answer label before opening an article modal.");
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
 assert(/\.article-thumb\s*{[\s\S]*?height:\s*150px[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should be fixed-height background containers.");
-assert(/\.article-thumb-income\s*{[\s\S]*?background-image:\s*url\("mockup_assets\/knowledge_thumb_1_v2\.png"\)[\s\S]*?background-position:\s*center 30%/.test(css), "First knowledge card thumbnail container should control the visible crop position.");
+const incomeThumbBlock = getBlock(css, ".article-thumb-income");
+assert(!/background-image:\s*url/.test(incomeThumbBlock) && /filter:\s*none/.test(incomeThumbBlock), "First knowledge card thumbnail should not use the problematic photo background.");
+assert(/\.article-thumb-income::before\s*{[\s\S]*?content:\s*""/.test(css) && /\.article-thumb-income::after\s*{[\s\S]*?content:\s*""/.test(css), "First knowledge card thumbnail should be rebuilt as a CSS card container.");
 const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
 assert(!/border-left:\s*4px solid var\(--primary\)/.test(knowledgeAnswerBlock), "Knowledge modal answer should not use a thick blue left divider.");
 assert(/background:\s*#f4f7fb/.test(knowledgeAnswerBlock) && /border:\s*1px solid #dbe3ee/.test(knowledgeAnswerBlock), "Knowledge modal answer should use a quiet full box treatment.");

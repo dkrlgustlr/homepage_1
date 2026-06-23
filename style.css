@@ -2904,8 +2904,45 @@
     }
 
     .article-thumb-income {
-      background-image: url("mockup_assets/knowledge_thumb_1_v2.png");
-      background-position: center 30%;
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      background: #eef3f8;
+      filter: none;
+      border-bottom: 1px solid #d9e1eb;
+    }
+
+    .article-thumb-income::before {
+      content: "";
+      position: absolute;
+      left: 74px;
+      right: 54px;
+      top: 18px;
+      bottom: 16px;
+      z-index: 1;
+      background: #fff;
+      border: 1px solid #d5dfeb;
+      box-shadow:
+        -34px 16px 0 -8px #f7f9fc,
+        38px -8px 0 -10px #f8fafc,
+        0 16px 28px rgba(15, 35, 64, 0.14);
+      transform: rotate(-3deg);
+    }
+
+    .article-thumb-income::after {
+      content: "";
+      position: absolute;
+      right: 44px;
+      bottom: 36px;
+      z-index: 2;
+      width: 126px;
+      height: 10px;
+      background: #111827;
+      border-radius: 999px;
+      box-shadow:
+        18px 2px 0 #9aa4b2,
+        -196px 24px 0 22px rgba(15, 35, 64, 0.12);
+      transform: rotate(-18deg);
     }
 
     .article-thumb-job {
