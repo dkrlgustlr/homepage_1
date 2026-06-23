@@ -199,6 +199,11 @@ knowledgeThumbnailFiles.forEach((file) => {
 assert(!knowledgeCardMarkup.includes('class="answer-label"') && !knowledgeCardMarkup.includes("핵심 답변"), "Knowledge cards should keep direct answers hidden until the article modal opens.");
 assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show the answer label before opening an article modal.");
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
+const articleCardBlock = getBlock(css, ".article-card");
+const articleThumbBlock = getBlock(css, ".article-thumb");
+const articleBodyBlock = getBlock(css, ".article-body");
+assert(/display:\s*flex/.test(articleCardBlock) && /flex-direction:\s*column/.test(articleCardBlock) && /justify-content:\s*flex-start/.test(articleCardBlock), "Knowledge cards should use a vertical flex layout to keep thumbnails pinned at the top in stretched grid rows.");
+assert(/flex:\s*0 0 150px/.test(articleThumbBlock) && /flex:\s*0 0 auto/.test(articleBodyBlock), "Knowledge card thumbnail and body should not absorb extra vertical space.");
 assert(/\.article-thumb\s*{[\s\S]*?height:\s*150px[\s\S]*?background-image:\s*var\(--article-thumb-image\)[\s\S]*?background-position:\s*center center[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should share one fixed-height background layout.");
 assert(!/querySelectorAll\("[^"]*\.article-card/.test(layoutJs), "Knowledge cards should not receive staggered reveal transforms that can offset individual cards.");
 const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
