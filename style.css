@@ -2598,10 +2598,9 @@
     .consult-reference-left::after {
       z-index: 1;
       background:
-        linear-gradient(90deg, rgba(23,105,209,0.045) 0 1px, transparent 1px 100%),
         linear-gradient(105deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.68) 52%, rgba(255,255,255,0.34) 100%),
         linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(245,247,250,0.42) 100%);
-      background-size: 58px 58px, 100% 100%, 100% 100%;
+      background-size: 100% 100%, 100% 100%;
     }
 
     .consult-reference-left > * {
