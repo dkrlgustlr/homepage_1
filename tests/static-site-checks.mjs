@@ -186,6 +186,7 @@ const knowledgeThumbnailFiles = [
 ];
 assert((knowledgeCardMarkup.match(/class="article-thumb"/g) || []).length === 6 && (knowledgeCardMarkup.match(/class="article-body"/g) || []).length === 6, "Knowledge cards should use one shared thumbnail class and body containers.");
 assert(!/<button class="article-card"[\s\S]*?<img\b/.test(knowledgeCardMarkup), "Knowledge cards should not render thumbnails as direct img elements.");
+assert(!/<button class="article-card"[\s\S]*?<div class="article-body">[\s\S]*?<p>/.test(knowledgeCardMarkup), "Knowledge cards should not show gray summary text below the title.");
 assert(!/article-thumb-(income|seizure|bankruptcy|business|documents|correction|job)/.test(knowledgeHtml + css), "Knowledge thumbnails should not use card-specific classes that can diverge placement.");
 assert((knowledgeCardMarkup.match(/--article-thumb-image:\s*url\('/g) || []).length === 6, "Each knowledge thumbnail should pass only its image source through the shared CSS variable.");
 assert(!/knowledge_thumb_[1-6]_v2\.png/.test(knowledgeHtml), "Knowledge page should not reuse old portrait/source thumbnails for card display.");
@@ -203,8 +204,8 @@ const articleCardBlock = getBlock(css, ".article-card");
 const articleThumbBlock = getBlock(css, ".article-thumb");
 const articleBodyBlock = getBlock(css, ".article-body");
 assert(/display:\s*flex/.test(articleCardBlock) && /flex-direction:\s*column/.test(articleCardBlock) && /justify-content:\s*flex-start/.test(articleCardBlock), "Knowledge cards should use a vertical flex layout to keep thumbnails pinned at the top in stretched grid rows.");
-assert(/flex:\s*0 0 150px/.test(articleThumbBlock) && /flex:\s*0 0 auto/.test(articleBodyBlock), "Knowledge card thumbnail and body should not absorb extra vertical space.");
-assert(/\.article-thumb\s*{[\s\S]*?height:\s*150px[\s\S]*?background-image:\s*var\(--article-thumb-image\)[\s\S]*?background-position:\s*center center[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should share one fixed-height background layout.");
+assert(/flex:\s*0 0 200px/.test(articleThumbBlock) && /flex:\s*0 0 auto/.test(articleBodyBlock), "Knowledge card thumbnail and body should not absorb extra vertical space.");
+assert(/\.article-thumb\s*{[\s\S]*?height:\s*200px[\s\S]*?background-image:\s*var\(--article-thumb-image\)[\s\S]*?background-position:\s*center center[\s\S]*?background-size:\s*cover[\s\S]*?overflow:\s*hidden/.test(css), "Knowledge card thumbnails should share one fixed-height background layout.");
 assert(!/querySelectorAll\("[^"]*\.article-card/.test(layoutJs), "Knowledge cards should not receive staggered reveal transforms that can offset individual cards.");
 const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
 assert(!/border-left:\s*4px solid var\(--primary\)/.test(knowledgeAnswerBlock), "Knowledge modal answer should not use a thick blue left divider.");
