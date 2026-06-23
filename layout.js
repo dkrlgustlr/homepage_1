@@ -552,7 +552,7 @@
     }
 
     const articleMap = new Map(articles.map((article) => [article.id, article]));
-    const sectionLabels = ["핵심 기준", "확인 순서", "상담 포인트"];
+    const sectionLabels = ["핵심 기준", "검토 자료", "실무상 쟁점", "상담 시 확인할 점"];
     let lastFocusedElement = null;
 
     const ensureModal = () => {
@@ -570,11 +570,6 @@
     </header>
     <div class="knowledge-modal-news">
       <div class="knowledge-modal-body"></div>
-      <aside class="knowledge-modal-rail" aria-label="게시물 요약">
-        <strong>핵심 요약</strong>
-        <p class="knowledge-modal-summary" id="knowledge-modal-summary"></p>
-        <a class="knowledge-modal-cta" href="consult.html">상담 신청하기</a>
-      </aside>
     </div>
   </article>
 </div>`);
@@ -589,7 +584,6 @@
       const modal = ensureModal();
       modal.querySelector("#knowledge-modal-category").textContent = article.category || "지식센터";
       modal.querySelector("#knowledge-modal-title").textContent = article.title || "";
-      modal.querySelector("#knowledge-modal-summary").textContent = article.summary || "";
 
       const body = modal.querySelector(".knowledge-modal-body");
       const paragraphs = Array.isArray(article.body) ? article.body : [];

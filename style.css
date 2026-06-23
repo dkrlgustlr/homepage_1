@@ -2188,10 +2188,10 @@
     }
 
     .knowledge-modal-dialog h2 {
-      max-width: 690px;
+      max-width: 760px;
       margin: 0 44px 24px 0;
       color: #121c2d;
-      font-size: clamp(34px, 2.8vw, 48px);
+      font-size: clamp(28px, 2.1vw, 36px);
       line-height: 1.24;
       font-weight: 950;
       letter-spacing: 0;
@@ -2199,10 +2199,7 @@
     }
 
     .knowledge-modal-news {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 240px;
-      gap: 42px;
-      align-items: start;
+      display: block;
       padding-top: 30px;
       border-top: 1px solid #dbe3ee;
     }
@@ -2244,54 +2241,6 @@
       font-weight: 650;
       letter-spacing: 0;
       word-break: keep-all;
-    }
-
-    .knowledge-modal-rail {
-      position: sticky;
-      top: 0;
-      padding: 24px 22px;
-      background: #f4f7fb;
-      border: 1px solid #dbe3ee;
-    }
-
-    .knowledge-modal-rail strong {
-      display: block;
-      margin-bottom: 12px;
-      color: var(--primary);
-      font-size: var(--type-body);
-      line-height: 1.35;
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    .knowledge-modal-summary {
-      margin: 0;
-      color: #526071;
-      font-size: var(--type-body);
-      line-height: var(--leading-body);
-      font-weight: 750;
-      letter-spacing: 0;
-      word-break: keep-all;
-    }
-
-    .knowledge-modal-cta {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      min-height: 58px;
-      margin-top: 24px;
-      background: var(--primary);
-      color: #fff;
-      font-size: var(--type-body);
-      font-weight: 900;
-      letter-spacing: 0;
-      text-decoration: none;
-    }
-
-    .knowledge-modal-cta:hover,
-    .knowledge-modal-cta:focus-visible {
-      background: #145dba;
     }
 
     .footer-privacy-box {
@@ -4710,24 +4659,11 @@
 
       .knowledge-modal-dialog h2 {
         margin-right: 36px;
-        font-size: 25px;
-      }
-
-      .knowledge-modal-news {
-        grid-template-columns: 1fr;
-        gap: 28px;
+        font-size: 24px;
       }
 
       .knowledge-modal-section {
         padding: 24px 0;
-      }
-
-      .knowledge-modal-rail {
-        position: static;
-      }
-
-      .knowledge-modal-cta {
-        min-height: 56px;
       }
 
       .bottom-privacy-panel {

@@ -151,8 +151,12 @@ assert(layoutJs.includes("initKnowledgeModal") && layoutJs.includes("knowledge-a
 assert(/\.knowledge-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Knowledge article details should open in a fixed modal.");
 assert(layoutJs.includes("knowledge-modal-news") && layoutJs.includes("knowledge-modal-section"), "Knowledge article modal should render article details in sectioned news-style blocks.");
 assert(/\.knowledge-modal-dialog\s*{[\s\S]*?width:\s*min\(920px,\s*calc\(100vw - 40px\)\)/.test(css), "Knowledge article modal should use a wider desktop dialog.");
-assert(/\.knowledge-modal-news\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*240px/.test(css), "Knowledge article modal should separate article body and summary rail on desktop.");
+assert(!layoutJs.includes("knowledge-modal-rail") && !layoutJs.includes("핵심 요약"), "Knowledge article modal should remove the side summary rail.");
+assert(/\.knowledge-modal-news\s*{[\s\S]*?display:\s*block/.test(css), "Knowledge article modal should use the full dialog width for article content.");
+assert(/\.knowledge-modal-dialog h2\s*{[\s\S]*?font-size:\s*clamp\(28px,\s*2\.1vw,\s*36px\)/.test(css), "Knowledge article modal title should use a more restrained size.");
 assert(/\.knowledge-modal-section\s*{[\s\S]*?border-top:\s*1px solid #dbe3ee/.test(css), "Knowledge article modal should visually divide each article section.");
+assert(layoutJs.includes("실무상 쟁점") && layoutJs.includes("상담 시 확인할 점"), "Knowledge article modal should include professional section labels.");
+assert(knowledgeHtml.includes("채무자회생 및 파산에 관한 법률") && knowledgeHtml.includes("변제계획안") && knowledgeHtml.includes("면책불허가"), "Knowledge article content should include more detailed professional context.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");
