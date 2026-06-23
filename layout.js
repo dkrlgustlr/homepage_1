@@ -663,6 +663,77 @@
     });
   };
 
+  const initKnowledgePagination = () => {
+    const list = document.querySelector("[data-knowledge-article-list]");
+    const pagination = document.querySelector("[data-article-pagination]");
+    if (!list || !pagination) return;
+
+    const cards = Array.from(list.children).filter((element) => element.classList.contains("article-card"));
+    const perPage = 6;
+    const pageCount = Math.ceil(cards.length / perPage);
+
+    if (pageCount <= 1) {
+      pagination.hidden = true;
+      return;
+    }
+
+    let currentPage = 1;
+    const shouldAnimate = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const playPageChange = () => {
+      if (!shouldAnimate) return;
+      list.classList.remove("is-page-changing");
+      void list.offsetWidth;
+      list.classList.add("is-page-changing");
+    };
+
+    const showPage = (page, focusButton = false) => {
+      currentPage = Math.min(Math.max(page, 1), pageCount);
+      const start = (currentPage - 1) * perPage;
+      const end = start + perPage;
+
+      cards.forEach((card, index) => {
+        const isVisible = index >= start && index < end;
+        card.hidden = !isVisible;
+        if (isVisible) {
+          card.removeAttribute("aria-hidden");
+        } else {
+          card.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      Array.from(pagination.children).forEach((button, index) => {
+        const isCurrent = index + 1 === currentPage;
+        button.classList.toggle("is-active", isCurrent);
+        if (isCurrent) {
+          button.setAttribute("aria-current", "page");
+        } else {
+          button.removeAttribute("aria-current");
+        }
+      });
+
+      if (focusButton) {
+        pagination.children[currentPage - 1]?.focus({ preventScroll: true });
+        playPageChange();
+      }
+    };
+
+    const buttons = Array.from({ length: pageCount }, (_, index) => {
+      const page = index + 1;
+      const button = document.createElement("button");
+      button.className = "article-page-button";
+      button.type = "button";
+      button.textContent = String(page);
+      button.setAttribute("aria-label", `지식센터 ${page}페이지 보기`);
+      button.addEventListener("click", () => showPage(page, true));
+      return button;
+    });
+
+    pagination.replaceChildren(...buttons);
+    pagination.hidden = false;
+    showPage(1);
+  };
+
   const initKnowledgeModal = () => {
     const dataNode = document.getElementById("knowledge-article-data");
     const triggers = document.querySelectorAll("[data-knowledge-modal-open]");
@@ -913,6 +984,7 @@
     initCustomSelects();
     initConsultForms();
     initPrivacyModal();
+    initKnowledgePagination();
     initKnowledgeModal();
     initConsultPageSnap();
   }).catch((error) => {

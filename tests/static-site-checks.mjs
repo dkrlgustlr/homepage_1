@@ -179,6 +179,10 @@ assert(!/"@type":\s*"FAQPage"/.test(knowledgeHtml), "Knowledge page should remov
 assert(!knowledgeHtml.includes("질문형 콘텐츠는 검색과 AI 답변에 잘 읽히도록 주제와 조건, 예외를 함께 정리합니다."), "Knowledge page should not show the removed guide sentence above the cards.");
 assert(knowledgeHtml.includes('id="knowledge-article-data"'), "Knowledge page should keep article detail content in page-local data.");
 assert((knowledgeHtml.match(/data-knowledge-modal-open/g) || []).length === 15, "Knowledge cards should open the fifteen active article details without separate article pages.");
+assert(knowledgeHtml.includes("data-knowledge-article-list") && knowledgeHtml.includes("data-article-pagination"), "Knowledge page should include a paginated article list container and page number navigation.");
+assert(layoutJs.includes("initKnowledgePagination") && layoutJs.includes("const perPage = 6") && layoutJs.includes('button.setAttribute("aria-label", `지식센터 ${page}페이지 보기`)'), "Knowledge pagination should show six cards per page and create accessible page number buttons.");
+assert(layoutJs.includes('button.setAttribute("aria-current", "page")') && layoutJs.includes("card.hidden = !isVisible"), "Knowledge pagination should mark the current page and hide non-current cards.");
+assert(/\.article-pagination\s*{[\s\S]*?display:\s*flex[\s\S]*?justify-content:\s*center/.test(css) && /\.article-page-button\.is-active\s*{[\s\S]*?background:\s*var\(--primary\)/.test(css), "Knowledge pagination should center page numbers and show the active page in the primary color.");
 assert(layoutJs.includes("initKnowledgeModal") && layoutJs.includes("knowledge-article-modal"), "layout.js should initialize the knowledge article modal.");
 assert(/\.knowledge-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Knowledge article details should open in a fixed modal.");
 assert(layoutJs.includes("knowledge-modal-news") && layoutJs.includes("knowledge-modal-section"), "Knowledge article modal should render article details in sectioned news-style blocks.");
