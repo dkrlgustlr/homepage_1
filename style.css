@@ -2874,18 +2874,17 @@
     .consult-reference-right .consult-form .privacy-consent,
     .consult-reference-right .sub-consult-form .privacy-consent-light {
       color: rgba(255,255,255,0.76);
+      padding-left: 0;
+      margin-top: 14px;
+      margin-bottom: 18px;
+      font-size: var(--type-body);
+      line-height: 1.35;
     }
 
-    .consult-reference-right .consult-form .privacy-consent {
-      padding-left: 134px;
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    .consult-reference-right .sub-consult-form .privacy-consent-light {
-      padding-left: 134px;
-      font-size: 13px;
-      line-height: 1.55;
+    .consult-reference-right .consult-form .privacy-detail,
+    .consult-reference-right .sub-consult-form .privacy-detail {
+      font-size: var(--type-body);
+      font-weight: 800;
     }
 
     .consult-reference-right .consult-form .privacy-detail summary,
