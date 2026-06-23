@@ -132,7 +132,7 @@
     const sideWord = document.querySelector(".side-word");
     if (!sideWord) return;
 
-    const darkSectionSelector = ".hero, .case-section, .consult-section, .footer, .sub-hero";
+    const darkSectionSelector = ".hero, .case-section, .consult-section, .footer, .sub-hero, .consult-reference-right";
     let ticking = false;
 
     const isDarkSectionAt = (viewportY) => {
@@ -167,13 +167,13 @@
 
   const initSubpageAnimations = () => {
     const targets = [
-      ...document.querySelectorAll(".sub-heading, .sub-card, .service-area-card, .article-card, .faq-item, .sub-consult-panel, .sub-consult-form, .sub-table tbody tr")
+      ...document.querySelectorAll(".sub-heading, .sub-card, .service-area-card, .article-card, .faq-item, .sub-consult-panel, .sub-consult-form, .consult-reference-left, .consult-proof-grid div, .consult-check-list li, .sub-table tbody tr")
     ];
 
     if (!targets.length) return;
 
     targets.forEach((element) => {
-      const parent = element.closest(".sub-grid, .article-list, tbody, .sub-consult-layout") || element.parentElement;
+      const parent = element.closest(".sub-grid, .article-list, tbody, .sub-consult-layout, .consult-reference-section, .consult-proof-grid, .consult-check-list") || element.parentElement;
       const index = parent ? Array.from(parent.children).indexOf(element) : 0;
       const delay = Math.min(Math.max(index, 0) * 0.055, 0.32);
       element.classList.add("sub-reveal");
