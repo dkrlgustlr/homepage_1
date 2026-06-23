@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (file) => readFileSync(resolve(root, file), "utf8");
+const readBytes = (file) => readFileSync(resolve(root, file));
 const failures = [];
 
 const assert = (condition, message) => {
@@ -33,6 +34,14 @@ const getStructuredData = (html) => {
     failures.push(`Structured data should be valid JSON: ${error.message}`);
     return null;
   }
+};
+
+const getPngSize = (file) => {
+  const bytes = readBytes(file);
+  return {
+    width: bytes.readUInt32BE(16),
+    height: bytes.readUInt32BE(20),
+  };
 };
 
 const indexHtml = read("index.html");
@@ -161,6 +170,9 @@ assert(layoutJs.includes("knowledge-modal-thumb-wrap") && layoutJs.includes("kno
 assert(layoutJs.includes('trigger.querySelector("img")') && layoutJs.includes("thumbnail.src"), "Knowledge article modal should reuse the clicked card thumbnail.");
 assert(/\.knowledge-modal-head\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*280px/.test(css), "Knowledge article modal header should lay out title copy and thumbnail on desktop.");
 assert(/\.knowledge-modal-thumb\s*{[\s\S]*?aspect-ratio:\s*16 \/ 10[\s\S]*?object-fit:\s*cover/.test(css), "Knowledge article modal thumbnail should keep a stable article image ratio.");
+assert(/id="income-standard"[\s\S]*?src="mockup_assets\/knowledge_thumb_1_card\.png"/.test(knowledgeHtml), "First knowledge card should use a dedicated cropped thumbnail without the top blank band.");
+const incomeThumbSize = getPngSize("mockup_assets/knowledge_thumb_1_card.png");
+assert(incomeThumbSize.width === 1448 && incomeThumbSize.height === 547, "First knowledge card cropped thumbnail should be saved at the card crop ratio.");
 const knowledgeCardMarkup = (knowledgeHtml.match(/<button class="article-card"[\s\S]*?<\/button>/g) || []).join("\n");
 assert(!knowledgeCardMarkup.includes('class="answer-label"') && !knowledgeCardMarkup.includes("핵심 답변"), "Knowledge cards should keep direct answers hidden until the article modal opens.");
 assert(!knowledgeHtml.includes("핵심 답변"), "Knowledge page should not show the answer label before opening an article modal.");
