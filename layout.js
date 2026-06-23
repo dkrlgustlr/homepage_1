@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260624-bottom-phone-no-icon1";
+  const INCLUDE_VERSION = "20260624-consult-term1";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -45,9 +45,9 @@
     <strong>1588-5986</strong>
   </a>
   <div class="bottom-consult-form">
-    <label class="bottom-consult-label" for="bottom-case">사건 영역</label>
-    <select class="bottom-consult-control" id="bottom-case" name="case_type" aria-label="사건 영역" data-custom-select>
-      <option>사건 영역</option>
+    <label class="bottom-consult-label" for="bottom-case">상담 분야</label>
+    <select class="bottom-consult-control" id="bottom-case" name="case_type" aria-label="상담 분야" data-custom-select>
+      <option>상담 분야</option>
       <option>개인회생</option>
       <option>개인파산</option>
       <option>압류 · 추심 대응</option>

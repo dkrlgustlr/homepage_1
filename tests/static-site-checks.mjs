@@ -135,6 +135,8 @@ assert(layoutJs.includes('window.addEventListener("wheel"') && layoutJs.includes
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(footerHtml), "Bottom consultation form should require privacy consent.");
+assert(!footerHtml.includes("사건 영역") && !layoutJs.includes("사건 영역"), "Bottom consultation form should use 상담 분야 instead of 사건 영역.");
+assert(/<label class="bottom-consult-label" for="bottom-case">상담 분야<\/label>/.test(footerHtml) && /aria-label="상담 분야"/.test(footerHtml), "Bottom consultation case selector should use the same 상담 분야 term as the main form.");
 assert(!/privacy_consent"[^>]*checked/.test(footerHtml + layoutJs), "Privacy consent checkboxes should not be pre-checked.");
 assert(footerHtml.includes("bottom-privacy-trigger") && footerHtml.includes("footer-privacy-link"), "Footer should expose privacy modal triggers in the bottom bar and footer copy.");
 assert(layoutJs.includes("bottom-privacy-trigger") && layoutJs.includes("footer-privacy-link"), "Footer fallback should expose privacy modal triggers in the bottom bar and footer copy.");
