@@ -396,6 +396,16 @@
       min-width: 0;
     }
 
+    .bottom-consult select.bottom-consult-control {
+      appearance: none;
+      -webkit-appearance: none;
+      padding-right: 38px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 5.25 7 8.75l3.5-3.5' fill='none' stroke='%23222934' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      background-size: 14px 14px;
+    }
+
     .bottom-consult-control::placeholder {
       color: #9a9a9a;
       font-weight: 600;
@@ -1737,10 +1747,12 @@
 
     .form-row select {
       appearance: none;
-      background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.7) 50%), linear-gradient(135deg, rgba(255,255,255,0.7) 50%, transparent 50%);
-      background-position: calc(100% - 18px) 20px, calc(100% - 12px) 20px;
-      background-size: 6px 6px, 6px 6px;
+      -webkit-appearance: none;
+      padding-right: 44px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 5.25 7 8.75l3.5-3.5' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
+      background-position: right 16px center;
+      background-size: 14px 14px;
     }
 
     .form-row select option {
@@ -3047,10 +3059,12 @@
     .consult-reference-right .consult-form .form-row select,
     .consult-reference-right .sub-consult-form .sub-form-row select {
       appearance: none;
-      background-image: linear-gradient(45deg, transparent 50%, rgba(255,255,255,0.7) 50%), linear-gradient(135deg, rgba(255,255,255,0.7) 50%, transparent 50%);
-      background-position: calc(100% - 18px) 20px, calc(100% - 12px) 20px;
-      background-size: 6px 6px, 6px 6px;
+      -webkit-appearance: none;
+      padding-right: 36px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M3.5 5.25 7 8.75l3.5-3.5' fill='none' stroke='%23ffffff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat;
+      background-position: right 2px center;
+      background-size: 14px 14px;
     }
 
     .consult-reference-right .consult-form .form-row select option,

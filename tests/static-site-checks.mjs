@@ -173,6 +173,10 @@ assert(/\.bottom-consult-agree input:checked,\s*\.privacy-consent-label input:ch
 assert(/\.privacy-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Privacy consent details should open in a fixed modal.");
 assert(/\.privacy-modal-dialog\s*{[\s\S]*?border-radius:\s*20px/.test(css), "Privacy consent modal should use the rounded reference dialog style.");
 assert(siteText.includes("동의 거부 권리") && siteText.includes("주민등록번호") && siteText.includes("계좌번호"), "Privacy consent details should include refusal rights and warn against unique identifiers.");
+assert(/\.bottom-consult select\.bottom-consult-control\s*{[\s\S]*?appearance:\s*none[\s\S]*?padding-right:\s*38px[\s\S]*?background-image:\s*url\("data:image\/svg\+xml/.test(css), "Bottom consult select should use the shared custom chevron with enough right padding.");
+assert(/\.bottom-consult select\.bottom-consult-control\s*{[\s\S]*?background-position:\s*right 14px center/.test(css), "Bottom consult select chevron should keep the approved right margin.");
+assert(/\.consult-reference-right \.consult-form \.form-row select,\s*\.consult-reference-right \.sub-consult-form \.sub-form-row select\s*{[\s\S]*?appearance:\s*none[\s\S]*?padding-right:\s*36px[\s\S]*?background-image:\s*url\("data:image\/svg\+xml/.test(css), "Reference consultation selects should use the shared custom chevron with enough text clearance.");
+assert(/\.consult-reference-right \.consult-form \.form-row select,\s*\.consult-reference-right \.sub-consult-form \.sub-form-row select\s*{[\s\S]*?background-position:\s*right 2px center/.test(css), "Reference consultation select chevron should align with the underline field edge.");
 const caseInnerBlock = getBlock(css, ".case-inner");
 assert(/--case-inner-lift:\s*-30px/.test(caseInnerBlock) && /translate:\s*0\s+var\(--case-inner-lift\)/.test(caseInnerBlock), "Desktop case section content should be lifted by 30px.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-inner\s*{[\s\S]*?translate:\s*none/.test(css), "Stacked case layout should reset the desktop 30px lift on tablet/mobile.");
