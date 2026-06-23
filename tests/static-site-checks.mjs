@@ -185,6 +185,7 @@ const knowledgeThumbnailFiles = [
   "knowledge_thumb_wage_seizure_v3.png"
 ];
 assert((knowledgeCardMarkup.match(/class="article-thumb"/g) || []).length === 6 && (knowledgeCardMarkup.match(/class="article-body"/g) || []).length === 6, "Knowledge cards should use one shared thumbnail class and body containers.");
+assert((knowledgeCardMarkup.match(/<h4>/g) || []).length === 6 && !/<h3>/.test(knowledgeCardMarkup), "Knowledge card titles should use h4 elements.");
 assert(!/<button class="article-card"[\s\S]*?<img\b/.test(knowledgeCardMarkup), "Knowledge cards should not render thumbnails as direct img elements.");
 assert(!/<button class="article-card"[\s\S]*?<div class="article-body">[\s\S]*?<p>/.test(knowledgeCardMarkup), "Knowledge cards should not show gray summary text below the title.");
 assert(!/article-thumb-(income|seizure|bankruptcy|business|documents|correction|job)/.test(knowledgeHtml + css), "Knowledge thumbnails should not use card-specific classes that can diverge placement.");

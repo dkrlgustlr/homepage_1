@@ -2925,7 +2925,7 @@
       margin-bottom: var(--fit-gap-sm);
     }
 
-    .article-card h3 {
+    .article-card h4 {
       margin: 0 0 var(--fit-gap-sm);
       font-size: var(--type-subtitle);
       line-height: var(--leading-subtitle);
