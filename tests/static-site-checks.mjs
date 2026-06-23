@@ -164,7 +164,9 @@ assert(/\.knowledge-modal-thumb\s*{[\s\S]*?aspect-ratio:\s*16 \/ 10[\s\S]*?objec
 assert((knowledgeHtml.match(/class="answer-label"/g) || []).length >= 7, "Knowledge cards should expose concise answer labels for AEO/GEO scanning.");
 assert(knowledgeHtml.includes("개인회생은 소득이 계속 발생할 가능성") && knowledgeHtml.includes("통장압류는 압류된 금융기관과 계좌 제한 여부"), "Knowledge cards should show direct answer snippets in visible page text.");
 assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
-assert(/\.knowledge-modal-answer\s*{[\s\S]*?background:\s*#f4f7fb[\s\S]*?border-left:\s*4px solid var\(--primary\)/.test(css), "Knowledge modal should visually emphasize the direct answer.");
+const knowledgeAnswerBlock = getBlock(css, ".knowledge-modal-answer");
+assert(!/border-left:\s*4px solid var\(--primary\)/.test(knowledgeAnswerBlock), "Knowledge modal answer should not use a thick blue left divider.");
+assert(/background:\s*#f4f7fb/.test(knowledgeAnswerBlock) && /border:\s*1px solid #dbe3ee/.test(knowledgeAnswerBlock), "Knowledge modal answer should use a quiet full box treatment.");
 
 const knowledgeStructuredData = getStructuredData(knowledgeHtml);
 const knowledgeGraph = knowledgeStructuredData?.["@graph"] || [];
