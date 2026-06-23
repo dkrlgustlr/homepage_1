@@ -93,6 +93,7 @@ assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자
 const caseProgressTypes = [...casesHtml.matchAll(/<tr><td class="accent">([^<]+)<\/td><td>[\s\S]*?<\/tr>/g)].map((match) => match[1]);
 const uniqueCaseProgressTypes = [...new Set(caseProgressTypes)];
 assert(uniqueCaseProgressTypes.length === 3 && ["개인회생", "개인파산", "압류대응"].every((type) => uniqueCaseProgressTypes.includes(type)), "Case progress business types should be grouped into 개인회생, 개인파산, 압류대응.");
+assert(!casesHtml.includes("아래 내용은 개인정보를 제외한 상담 유형 예시입니다. 실제 진행 여부와 결과는 개별 상담에서 확인합니다."), "Case progress section should not show the removed privacy/example notice.");
 
 assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
 ["20", "2000", "95"].forEach((target) => {
