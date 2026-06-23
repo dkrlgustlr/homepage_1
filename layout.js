@@ -660,6 +660,125 @@
     });
   };
 
+  const initConsultPageSnap = () => {
+    const page = document.querySelector(".consult-page");
+    if (!page) return;
+
+    const snapSections = Array.from(page.children).filter((section) => (
+      section.matches(".consult-reference-section, .footer")
+    ));
+    if (snapSections.length < 2) return;
+
+    let snapLocked = false;
+    let pointerStartY = null;
+    let pointerStartX = null;
+    let touchStartY = null;
+    let touchStartX = null;
+
+    const stickyConsultHeight = () => {
+      const stickyBar = document.querySelector(".bottom-consult");
+      return stickyBar ? Math.ceil(stickyBar.getBoundingClientRect().height) : 0;
+    };
+    const usableViewportHeight = () => Math.max(360, window.innerHeight - stickyConsultHeight());
+    const shouldUseSnap = () => (
+      window.matchMedia("(min-width: 1025px)").matches &&
+      !document.documentElement.classList.contains("privacy-modal-open") &&
+      !document.documentElement.classList.contains("knowledge-modal-open")
+    );
+    const maxScrollTop = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const sectionTop = (section) => Math.min(section.offsetTop, maxScrollTop());
+
+    const currentSectionIndex = () => {
+      const viewportPoint = window.scrollY + usableViewportHeight() * 0.38;
+      let bestIndex = 0;
+      let bestDistance = Infinity;
+
+      snapSections.forEach((section, index) => {
+        const distance = Math.abs(section.offsetTop - viewportPoint);
+        if (distance < bestDistance) {
+          bestDistance = distance;
+          bestIndex = index;
+        }
+      });
+
+      return bestIndex;
+    };
+
+    const snapToSection = (direction) => {
+      if (!shouldUseSnap() || snapLocked || snapSections.length === 0) return false;
+
+      const current = currentSectionIndex();
+      const next = Math.min(Math.max(current + direction, 0), snapSections.length - 1);
+      if (next === current) return false;
+
+      snapLocked = true;
+      window.scrollTo({
+        top: sectionTop(snapSections[next]),
+        behavior: "smooth"
+      });
+
+      window.setTimeout(() => {
+        snapLocked = false;
+      }, 920);
+
+      return true;
+    };
+
+    window.addEventListener("wheel", (event) => {
+      if (!shouldUseSnap() || event.ctrlKey || Math.abs(event.deltaY) < 14) return;
+      if (!snapToSection(event.deltaY > 0 ? 1 : -1)) return;
+      event.preventDefault();
+    }, { passive: false });
+
+    window.addEventListener("keydown", (event) => {
+      if (!shouldUseSnap()) return;
+      const downKeys = ["ArrowDown", "PageDown", "Space"];
+      const upKeys = ["ArrowUp", "PageUp"];
+      if (![...downKeys, ...upKeys].includes(event.code)) return;
+      if (!snapToSection(downKeys.includes(event.code) ? 1 : -1)) return;
+      event.preventDefault();
+    });
+
+    window.addEventListener("pointerdown", (event) => {
+      if (!shouldUseSnap()) return;
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      pointerStartY = event.clientY;
+      pointerStartX = event.clientX;
+    });
+
+    window.addEventListener("pointerup", (event) => {
+      if (!shouldUseSnap()) return;
+      if (pointerStartY === null || pointerStartX === null) return;
+      const deltaY = pointerStartY - event.clientY;
+      const deltaX = pointerStartX - event.clientX;
+      pointerStartY = null;
+      pointerStartX = null;
+      if (Math.abs(deltaY) < 72 || Math.abs(deltaY) < Math.abs(deltaX) * 1.15) return;
+      snapToSection(deltaY > 0 ? 1 : -1);
+    });
+
+    window.addEventListener("touchstart", (event) => {
+      if (!shouldUseSnap()) return;
+      const touch = event.touches[0];
+      if (!touch) return;
+      touchStartY = touch.clientY;
+      touchStartX = touch.clientX;
+    }, { passive: true });
+
+    window.addEventListener("touchend", (event) => {
+      if (!shouldUseSnap()) return;
+      if (touchStartY === null || touchStartX === null) return;
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+      const deltaY = touchStartY - touch.clientY;
+      const deltaX = touchStartX - touch.clientX;
+      touchStartY = null;
+      touchStartX = null;
+      if (Math.abs(deltaY) < 58 || Math.abs(deltaY) < Math.abs(deltaX) * 1.15) return;
+      snapToSection(deltaY > 0 ? 1 : -1);
+    }, { passive: true });
+  };
+
   window.__layoutReady = Promise.all(includes.map(loadInclude)).then(() => {
     markActiveNav();
     initFloatingContrast();
@@ -669,6 +788,7 @@
     initConsultForms();
     initPrivacyModal();
     initKnowledgeModal();
+    initConsultPageSnap();
   }).catch((error) => {
     console.error("Layout include failed", error);
   });

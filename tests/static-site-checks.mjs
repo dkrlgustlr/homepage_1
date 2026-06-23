@@ -120,6 +120,9 @@ assert(/<form[^>]*class="sub-consult-form"[^>]*id="consult-form"[^>]*data-consul
 assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Consult page submit button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(consultHtml), "Consult page form should require privacy consent.");
 assert(consultHtml.includes("data-privacy-modal-open") && consultHtml.includes("privacy-consent-trigger"), "Consult page form should open the shared privacy modal from the consent text.");
+assert(consultHtml.includes("layout.js?v=20260623-consult-snap1"), "Consult page should load the section snap layout script version.");
+assert(layoutJs.includes("initConsultPageSnap") && layoutJs.includes(".consult-page") && layoutJs.includes(".consult-reference-section, .footer"), "Consult page should snap between the consultation section and footer.");
+assert(layoutJs.includes('window.addEventListener("wheel"') && layoutJs.includes('window.addEventListener("keydown"') && layoutJs.includes('window.addEventListener("touchend"'), "Consult page snap should support wheel, keyboard, and touch navigation.");
 
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
