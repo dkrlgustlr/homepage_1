@@ -2559,6 +2559,14 @@
       margin-top: calc(var(--fit-gap-xl) + 70px);
     }
 
+    .about-page .sub-content > .sub-section:first-child {
+      margin-top: 70px;
+    }
+
+    .about-page .sub-content > .service-area-section {
+      margin-bottom: 70px;
+    }
+
     .sub-heading {
       display: grid;
       grid-template-columns: minmax(220px, 0.34fr) minmax(0, 0.66fr);
