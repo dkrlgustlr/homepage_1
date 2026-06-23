@@ -1555,11 +1555,6 @@
       outline: none;
     }
 
-    .knowledge-left .mini-menu li:first-child {
-      color: #fff;
-      font-weight: 800;
-    }
-
     .knowledge-left .mini-menu li.is-active .knowledge-filter {
       color: #fff;
       font-weight: 800;

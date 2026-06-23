@@ -164,7 +164,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260623-footerline1">
+  <link rel="stylesheet" href="style.css?v=20260623-main-knowledge-tabs1">
 </head>
 <body>
   <div class="page">
@@ -263,11 +263,11 @@
           <h2>지식센터</h2>
           <p>개인회생과 파산 절차에서 의뢰인이 가장 궁금해하는 내용을 쉽게 정리합니다.</p>
           <ul class="mini-menu">
-            <li><button class="knowledge-filter" type="button">회생·파산 가이드</button></li>
-            <li><button class="knowledge-filter" type="button">압류·추심 대응</button></li>
-            <li><button class="knowledge-filter" type="button">서류 준비</button></li>
-            <li><button class="knowledge-filter" type="button">상담 전 체크사항</button></li>
-            <li><button class="knowledge-filter" type="button">법원 절차 안내</button></li>
+            <li class="is-active"><button class="knowledge-filter" type="button" data-knowledge-topic="rehabilitation" aria-pressed="true">회생·파산 가이드</button></li>
+            <li><button class="knowledge-filter" type="button" data-knowledge-topic="seizure" aria-pressed="false">압류·추심 대응</button></li>
+            <li><button class="knowledge-filter" type="button" data-knowledge-topic="documents" aria-pressed="false">서류 준비</button></li>
+            <li><button class="knowledge-filter" type="button" data-knowledge-topic="checklist" aria-pressed="false">상담 전 체크사항</button></li>
+            <li><button class="knowledge-filter" type="button" data-knowledge-topic="court" aria-pressed="false">법원 절차 안내</button></li>
           </ul>
         </div>
         <div class="knowledge-right">
@@ -381,7 +381,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260623-footertrim1"></script>
+  <script src="layout.js?v=20260623-main-knowledge-tabs1"></script>
   <script>
     (async () => {
       await window.__layoutReady;

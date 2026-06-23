@@ -111,6 +111,11 @@ assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-co
 assert(layoutJs.includes("initCountUpStats") && layoutJs.includes("requestAnimationFrame"), "layout.js should animate consult proof numbers with requestAnimationFrame.");
 assert(/\.count-up\s*{[\s\S]*?display:\s*inline-block/.test(css), "Count-up numbers should have stable inline-block styling.");
 
+assert((indexHtml.match(/data-knowledge-topic="/g) || []).length === 5, "Main knowledge menu should expose five clickable content topics.");
+assert(indexHtml.includes('data-knowledge-topic="seizure"') && indexHtml.includes('aria-pressed="true"'), "Main knowledge menu should initialize with accessible pressed state.");
+assert(layoutJs.includes("initMainKnowledgeTabs") && layoutJs.includes("renderTopic") && layoutJs.includes("grid.replaceChildren"), "Main knowledge menu should swap the right-side legal information cards.");
+assert(layoutJs.includes("압류·추심 대응") && layoutJs.includes("압류금지채권") && layoutJs.includes("지급명령"), "Main knowledge tab data should include seizure, collection, and court procedure content.");
+
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(indexHtml), "Main page consultation form should require privacy consent.");

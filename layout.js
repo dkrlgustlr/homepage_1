@@ -267,6 +267,121 @@
     numbers.forEach((element) => observer.observe(element));
   };
 
+  const initMainKnowledgeTabs = () => {
+    const section = document.querySelector(".knowledge-row");
+    if (!section) return;
+
+    const filters = Array.from(section.querySelectorAll(".knowledge-filter[data-knowledge-topic]"));
+    const grid = section.querySelector(".column-grid");
+    const title = section.querySelector(".knowledge-right .page-title h2");
+    const headline = section.querySelector(".knowledge-right .section-headline");
+    if (!filters.length || !grid || !title || !headline) return;
+
+    const topics = {
+      rehabilitation: {
+        title: "법률정보",
+        headline: ["회생·파산 절차에서", "먼저 확인할 기준입니다."],
+        cards: [
+          ["개인회생", "개인회생 신청 전 반드시 확인할 소득 기준", "반복 소득, 최저생계비, 매달 납부 가능한 변제금을 먼저 확인합니다.", "mockup_assets/knowledge_thumb_1_v2.png", "개인회생 소득 기준"],
+          ["개인파산", "파산과 면책을 함께 검토해야 하는 이유", "파산은 절차이고 면책은 남은 채무 책임을 정리하는 판단 단계입니다.", "mockup_assets/knowledge_thumb_3_v2.png", "개인파산 면책 검토"],
+          ["자영업자", "폐업 후 남은 채무를 정리할 때 필요한 자료", "사업자 대출, 카드채무, 보증채무, 폐업 자료를 함께 정리합니다.", "mockup_assets/knowledge_thumb_4_v2.png", "자영업자 채무 자료"]
+        ]
+      },
+      seizure: {
+        title: "압류·추심 대응",
+        headline: ["압류와 채권추심은", "진행 단계부터 구분합니다."],
+        cards: [
+          ["압류대응", "급여압류와 통장압류가 걱정될 때 보는 순서", "압류 진행 여부와 추심 상황을 확인한 뒤 금지명령 가능성을 검토합니다.", "mockup_assets/knowledge_thumb_2_v2.png", "급여압류 통장압류 대응"],
+          ["채권추심", "추심 문자와 전화가 계속될 때 먼저 확인할 점", "발신 주체, 채권 양도 여부, 법원 절차 진행 여부를 나누어 봅니다.", "mockup_assets/knowledge_thumb_6_v2.png", "채권추심 대응"],
+          ["생활비 보호", "압류된 통장에서 생활비를 확보할 수 있나요?", "압류금지채권과 생계비 보호 가능성을 자료로 확인합니다.", "mockup_assets/knowledge_thumb_5_v2.png", "압류금지채권 생활비"]
+        ]
+      },
+      documents: {
+        title: "서류 준비",
+        headline: ["상담 전 자료를", "빠짐없이 정리합니다."],
+        cards: [
+          ["기본자료", "상담 전 준비하면 좋은 채무·재산·소득 자료", "채무내역, 소득자료, 재산자료, 압류·추심 관련 서류를 함께 봅니다.", "mockup_assets/knowledge_thumb_5_v2.png", "상담 전 준비 서류"],
+          ["소득자료", "직장인·자영업자·프리랜서 소득은 다르게 봅니다", "급여명세, 매출자료, 입금내역처럼 실제 소득 흐름을 확인합니다.", "mockup_assets/knowledge_thumb_4_v2.png", "소득자료 정리"],
+          ["보완자료", "누락 자료가 있으면 보정권고로 이어질 수 있습니다", "법원이 요구할 가능성이 큰 자료를 상담 단계에서 먼저 점검합니다.", "mockup_assets/knowledge_thumb_6_v2.png", "보정권고 자료 보완"]
+        ]
+      },
+      checklist: {
+        title: "상담 전 체크사항",
+        headline: ["현재 상황을", "짧은 기준으로 점검합니다."],
+        cards: [
+          ["채무현황", "채무 규모와 연체 기간을 먼저 정리해야 합니다", "카드값, 대출, 보증채무, 사채 여부를 나누어 상담 방향을 잡습니다.", "mockup_assets/knowledge_thumb_1_v2.png", "채무현황 체크"],
+          ["긴급상황", "압류·추심·지급명령 여부를 확인합니다", "법원 서류를 받았는지, 계좌나 급여 압류가 시작됐는지 먼저 봅니다.", "mockup_assets/knowledge_thumb_2_v2.png", "긴급 채무 상황 확인"],
+          ["절차선택", "개인회생과 개인파산 중 어떤 절차가 맞을까요?", "소득 유지 가능성과 재산·부양가족·면책 사유를 함께 검토합니다.", "mockup_assets/knowledge_thumb_3_v2.png", "개인회생 개인파산 절차 선택"]
+        ]
+      },
+      court: {
+        title: "법원 절차 안내",
+        headline: ["법원 절차는", "기한과 제출자료가 중요합니다."],
+        cards: [
+          ["보정권고", "법원 보정권고가 나왔을 때 당황하지 않는 방법", "요구 자료와 제출 기한을 확인하고 누락된 내용을 보완합니다.", "mockup_assets/knowledge_thumb_6_v2.png", "법원 보정권고 대응"],
+          ["면책절차", "면책 판단에서 법원이 주로 확인하는 부분", "채무 발생 원인, 재산 처분, 최근 거래 내역을 중심으로 봅니다.", "mockup_assets/knowledge_thumb_3_v2.png", "개인파산 면책 절차"],
+          ["지급명령", "지급명령을 받으면 이의신청 기간부터 봅니다", "송달일, 채무 인정 여부, 이의신청 가능성을 기한 안에 확인합니다.", "mockup_assets/knowledge_thumb_2_v2.png", "지급명령 이의신청"]
+        ]
+      }
+    };
+
+    const createCard = ([categoryText, titleText, summaryText, imageSrc, imageAlt]) => {
+      const button = document.createElement("button");
+      button.className = "column-card";
+      button.type = "button";
+
+      const thumb = document.createElement("div");
+      thumb.className = "thumb";
+      const image = document.createElement("img");
+      image.src = imageSrc;
+      image.alt = imageAlt;
+      image.loading = "lazy";
+      image.decoding = "async";
+      thumb.append(image);
+
+      const text = document.createElement("div");
+      text.className = "column-text";
+      const category = document.createElement("div");
+      category.className = "cat";
+      category.textContent = categoryText;
+      const cardTitle = document.createElement("div");
+      cardTitle.className = "title";
+      cardTitle.textContent = titleText;
+      const summary = document.createElement("p");
+      summary.className = "summary";
+      summary.textContent = summaryText;
+      text.append(category, cardTitle, summary);
+      button.append(thumb, text);
+
+      return button;
+    };
+
+    const renderTopic = (topicKey) => {
+      const topic = topics[topicKey] || topics.rehabilitation;
+      title.textContent = topic.title;
+      headline.replaceChildren(
+        document.createTextNode(topic.headline[0]),
+        document.createElement("br"),
+        Object.assign(document.createElement("strong"), { textContent: topic.headline[1] })
+      );
+      grid.replaceChildren(...topic.cards.map(createCard));
+      grid.scrollTo({ left: 0 });
+
+      filters.forEach((filter) => {
+        const active = filter.dataset.knowledgeTopic === topicKey;
+        filter.setAttribute("aria-pressed", String(active));
+        filter.closest("li")?.classList.toggle("is-active", active);
+      });
+    };
+
+    filters.forEach((filter) => {
+      filter.addEventListener("click", () => renderTopic(filter.dataset.knowledgeTopic));
+    });
+
+    const activeFilter = filters.find((filter) => filter.getAttribute("aria-pressed") === "true") || filters[0];
+    renderTopic(activeFilter.dataset.knowledgeTopic);
+  };
+
   const getFieldValue = (form, name) => {
     const field = form.elements[name];
     return field ? String(field.value || "").trim() : "";
@@ -784,6 +899,7 @@
     initFloatingContrast();
     initSubpageAnimations();
     initCountUpStats();
+    initMainKnowledgeTabs();
     initCustomSelects();
     initConsultForms();
     initPrivacyModal();
