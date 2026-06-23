@@ -2877,7 +2877,7 @@
       align-items: stretch;
       justify-content: flex-start;
       width: 100%;
-      min-height: 340px;
+      min-height: 350px;
       padding: 0;
       background: #fff;
       border: 1px solid #d9e1eb;
@@ -2910,8 +2910,9 @@
     }
 
     .article-body {
-      flex: 0 0 auto;
-      padding: var(--fit-pad-xs);
+      flex: 0 0 150px;
+      height: 150px;
+      padding: 24px var(--fit-pad-xs);
     }
 
     .article-card strong {
