@@ -250,8 +250,9 @@ assert(knowledgeArticles.some((article) => /급여압류 통장압류/.test(arti
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");
 assert(/<main[^>]*class="[^"]*\babout-page\b[^"]*"/.test(aboutHtml), "About page should have a page-specific class for spacing adjustments.");
-assert(!/<div class="sub-heading">[\s\S]*?<p>/.test(aboutHtml) && !/<article class="(?:sub-card|service-area-card)">[\s\S]*?<p>/.test(aboutHtml), "About page section headings and cards should not show gray descriptive copy.");
-assert(/\.about-page \.sub-card\s*{[\s\S]*?min-height:\s*156px/.test(css) && /\.about-page \.service-area-card\s*{[\s\S]*?min-height:\s*112px/.test(css), "About page cards should be compact after removing gray copy.");
+const aboutHeadingBlocks = aboutHtml.match(/<div class="sub-heading">[\s\S]*?<\/div>/g) || [];
+assert(aboutHeadingBlocks.length >= 3 && aboutHeadingBlocks.every((block) => !/<p>/.test(block)), "About page section headings should not show right-side gray descriptive copy.");
+assert((aboutHtml.match(/<article class="sub-card">[\s\S]*?<p>/g) || []).length === 3 && (aboutHtml.match(/<article class="service-area-card">[\s\S]*?<p>/g) || []).length === 4, "About page cards should keep their gray body copy.");
 assert(/\.about-page \.sub-section \+ \.sub-section\s*{[\s\S]*?margin-top:\s*calc\(var\(--fit-gap-xl\) \+ 70px\)/.test(css), "About page sections should add 70px more vertical spacing on desktop.");
 assert(/\.about-page \.sub-content > \.sub-section:first-child\s*{[\s\S]*?margin-top:\s*70px/.test(css), "About page should add 70px above the law office introduction section.");
 assert(/\.about-page \.sub-content > \.service-area-section\s*{[\s\S]*?margin-bottom:\s*70px/.test(css), "About page should add 70px below the service-area section.");

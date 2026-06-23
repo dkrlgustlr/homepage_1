@@ -2803,10 +2803,6 @@
       box-shadow: 0 18px 48px rgba(15, 35, 64, 0.08);
     }
 
-    .about-page .sub-card {
-      min-height: 156px;
-    }
-
     .sub-card .eyebrow {
       color: var(--primary);
       font-size: var(--type-body);
@@ -3065,16 +3061,6 @@
 
     .service-area-card strong {
       color: var(--primary);
-    }
-
-    .about-page .service-area-card {
-      min-height: 112px;
-      display: flex;
-      align-items: center;
-    }
-
-    .about-page .service-area-card strong {
-      margin-bottom: 0;
     }
 
     .service-area-card p,
