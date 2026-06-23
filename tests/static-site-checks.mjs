@@ -161,6 +161,18 @@ assert(layoutJs.includes("knowledge-modal-thumb-wrap") && layoutJs.includes("kno
 assert(layoutJs.includes('trigger.querySelector("img")') && layoutJs.includes("thumbnail.src"), "Knowledge article modal should reuse the clicked card thumbnail.");
 assert(/\.knowledge-modal-head\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*280px/.test(css), "Knowledge article modal header should lay out title copy and thumbnail on desktop.");
 assert(/\.knowledge-modal-thumb\s*{[\s\S]*?aspect-ratio:\s*16 \/ 10[\s\S]*?object-fit:\s*cover/.test(css), "Knowledge article modal thumbnail should keep a stable article image ratio.");
+assert((knowledgeHtml.match(/class="answer-label"/g) || []).length >= 7, "Knowledge cards should expose concise answer labels for AEO/GEO scanning.");
+assert(knowledgeHtml.includes("개인회생은 소득이 계속 발생할 가능성") && knowledgeHtml.includes("통장압류는 압류된 금융기관과 계좌 제한 여부"), "Knowledge cards should show direct answer snippets in visible page text.");
+assert(layoutJs.includes("knowledge-modal-answer") && layoutJs.includes("directAnswer"), "Knowledge modal should render a direct answer before detailed sections.");
+assert(/\.knowledge-modal-answer\s*{[\s\S]*?background:\s*#f4f7fb[\s\S]*?border-left:\s*4px solid var\(--primary\)/.test(css), "Knowledge modal should visually emphasize the direct answer.");
+
+const knowledgeStructuredData = getStructuredData(knowledgeHtml);
+const knowledgeGraph = knowledgeStructuredData?.["@graph"] || [];
+const knowledgeItemList = knowledgeGraph.find((node) => node["@id"] === "https://dkrlgustlr.github.io/homepage_1/knowledge.html#knowledge-list");
+const knowledgeArticles = knowledgeItemList?.itemListElement?.map((entry) => entry.item) || [];
+assert(knowledgeArticles.length === 7, "Knowledge structured data should describe all seven knowledge cards.");
+assert(knowledgeArticles.every((article) => article.headline && article.description && article.image && article.keywords && article.about && article.mentions && article.mainEntityOfPage && article.datePublished && article.dateModified), "Each knowledge Article should include headline, description, image, keywords, entities, canonical page reference, and dates.");
+assert(knowledgeArticles.some((article) => /개인회생 소득/.test(article.keywords)) && knowledgeArticles.some((article) => /급여압류 통장압류/.test(article.keywords)), "Knowledge Article keywords should target practical search and answer queries.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");

@@ -573,6 +573,7 @@
         <img class="knowledge-modal-thumb" src="" alt="" loading="lazy" decoding="async">
       </figure>
     </header>
+    <p class="knowledge-modal-answer"><span>핵심 답변</span><strong id="knowledge-modal-answer"></strong></p>
     <div class="knowledge-modal-news">
       <div class="knowledge-modal-body"></div>
     </div>
@@ -589,6 +590,7 @@
       const modal = ensureModal();
       modal.querySelector("#knowledge-modal-category").textContent = article.category || "지식센터";
       modal.querySelector("#knowledge-modal-title").textContent = article.title || "";
+      modal.querySelector("#knowledge-modal-answer").textContent = article.directAnswer || article.summary || "";
 
       const cardImage = trigger.querySelector("img");
       const thumbnailWrap = modal.querySelector(".knowledge-modal-thumb-wrap");

@@ -2229,6 +2229,30 @@
       filter: grayscale(0.45);
     }
 
+    .knowledge-modal-answer {
+      margin: 2px 0 30px;
+      padding: 18px 20px;
+      background: #f4f7fb;
+      border-left: 4px solid var(--primary);
+      color: #263446;
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      font-weight: 750;
+      letter-spacing: 0;
+      word-break: keep-all;
+    }
+
+    .knowledge-modal-answer span {
+      display: inline-flex;
+      margin-right: 10px;
+      color: var(--primary);
+      font-weight: 900;
+    }
+
+    .knowledge-modal-answer strong {
+      font-weight: 800;
+    }
+
     .knowledge-modal-news {
       display: block;
       padding-top: 30px;
@@ -2906,6 +2930,14 @@
       font-weight: 650;
       letter-spacing: 0;
       word-break: keep-all;
+    }
+
+    .article-card .answer-label {
+      display: inline-flex;
+      align-items: center;
+      margin-right: 6px;
+      color: var(--primary);
+      font-weight: 900;
     }
 
     .service-area-grid,
