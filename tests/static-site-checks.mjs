@@ -112,6 +112,8 @@ assert(layoutJs.includes("initCountUpStats") && layoutJs.includes("requestAnimat
 assert(/\.count-up\s*{[\s\S]*?display:\s*inline-block/.test(css), "Count-up numbers should have stable inline-block styling.");
 assert(/<a class="search-ani" href="knowledge\.html"[^>]*>[\s\S]*법률정보를 확인해 보세요\.[\s\S]*<\/a>/.test(indexHtml), "Main hero search bar should link to the knowledge center and invite users to check legal information.");
 assert(/\.search-ani\s*{[\s\S]*?text-decoration:\s*none[\s\S]*?cursor:\s*pointer/.test(css), "Main hero knowledge search link should keep the approved search-bar styling.");
+assert(indexHtml.includes('class="search-arrow"') && !indexHtml.includes('class="glass"'), "Main hero knowledge search link should use a right arrow instead of a search icon.");
+assert(/\.search-ani \.search-arrow\s*{[\s\S]*?width:\s*34px[\s\S]*?height:\s*2px[\s\S]*?background:\s*#fff/.test(css) && /\.search-ani \.search-arrow::after\s*{[\s\S]*?border-top:\s*2px solid #fff[\s\S]*?border-right:\s*2px solid #fff/.test(css), "Main hero knowledge search icon should render as a left-to-right arrow.");
 
 assert((indexHtml.match(/data-knowledge-topic="/g) || []).length === 5, "Main knowledge menu should expose five clickable content topics.");
 assert(indexHtml.includes('data-knowledge-topic="seizure"') && indexHtml.includes('aria-pressed="true"'), "Main knowledge menu should initialize with accessible pressed state.");

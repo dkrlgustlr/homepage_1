@@ -848,24 +848,30 @@
       cursor: pointer;
     }
 
-    .search-ani .glass {
+    .search-ani .search-arrow {
       margin-left: auto;
-      width: 21px;
-      height: 21px;
-      border: 2px solid #fff;
-      border-radius: 50%;
-      position: relative;
-    }
-
-    .search-ani .glass::after {
-      content: "";
-      position: absolute;
-      width: 10px;
+      width: 34px;
       height: 2px;
       background: #fff;
-      transform: rotate(45deg);
-      right: -7px;
-      bottom: -3px;
+      position: relative;
+      transition: transform 0.22s ease;
+    }
+
+    .search-ani .search-arrow::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 11px;
+      height: 11px;
+      border-top: 2px solid #fff;
+      border-right: 2px solid #fff;
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .search-ani:hover .search-arrow,
+    .search-ani:focus-visible .search-arrow {
+      transform: translateX(5px);
     }
 
     .scroll-down {
