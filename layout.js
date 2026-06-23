@@ -356,7 +356,16 @@
       return button;
     };
 
-    const renderTopic = (topicKey) => {
+    const animateCards = () => {
+      grid.classList.remove("is-topic-entering");
+      void grid.offsetWidth;
+      grid.classList.add("is-topic-entering");
+      window.setTimeout(() => {
+        grid.classList.remove("is-topic-entering");
+      }, 820);
+    };
+
+    const renderTopic = (topicKey, animate = true) => {
       const topic = topics[topicKey] || topics.rehabilitation;
       title.textContent = topic.title;
       headline.replaceChildren(
@@ -366,6 +375,7 @@
       );
       grid.replaceChildren(...topic.cards.map(createCard));
       grid.scrollTo({ left: 0 });
+      if (animate) animateCards();
 
       filters.forEach((filter) => {
         const active = filter.dataset.knowledgeTopic === topicKey;
@@ -375,11 +385,11 @@
     };
 
     filters.forEach((filter) => {
-      filter.addEventListener("click", () => renderTopic(filter.dataset.knowledgeTopic));
+      filter.addEventListener("click", () => renderTopic(filter.dataset.knowledgeTopic, true));
     });
 
     const activeFilter = filters.find((filter) => filter.getAttribute("aria-pressed") === "true") || filters[0];
-    renderTopic(activeFilter.dataset.knowledgeTopic);
+    renderTopic(activeFilter.dataset.knowledgeTopic, false);
   };
 
   const getFieldValue = (form, name) => {
