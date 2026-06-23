@@ -111,6 +111,10 @@ assert(footerHtml.includes("bottom-privacy-trigger") && footerHtml.includes("foo
 assert(layoutJs.includes("bottom-privacy-trigger") && layoutJs.includes("footer-privacy-link"), "Footer fallback should expose privacy modal triggers in the bottom bar and footer copy.");
 assert(indexHtml.includes("data-custom-select") && consultHtml.includes("data-custom-select"), "Consult page native selects should be marked for custom dropdown rendering.");
 assert(footerHtml.includes("data-custom-select") && layoutJs.includes("data-custom-select"), "Bottom bar select and its fallback should be marked for custom dropdown rendering.");
+["법무사 권선기 사무소", "대표 법무사", "권선기", "사업자등록번호", "577-53-00864", "사업장 소재지", "경기도 화성시 영통로 59", "현대프라자 205호", "업태/종목", "전문, 과학 및 기술서비스업", "법무사업"].forEach((text) => {
+  assert(footerHtml.includes(text) && layoutJs.includes(text), `Footer business information should include ${text}.`);
+});
+assert(!/(주요 업무|대응 분야|상담 권역)/.test(footerHtml + layoutJs), "Footer should replace service category rows with business registration information.");
 
 assert(!/site-intro|introLogoRise|is-finished|animationend/.test(indexHtml + css), "Main page should load directly without an intro overlay.");
 
