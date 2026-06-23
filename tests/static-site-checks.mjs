@@ -82,6 +82,14 @@ assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-co
   const marker = `data-count-to="${target}"`;
   assert(indexHtml.includes(marker) && consultHtml.includes(marker), `Consult proof number ${target} should be wired for count-up animation.`);
 });
+[
+  ["20", "1800"],
+  ["2000", "2600"],
+  ["95", "2100"]
+].forEach(([target, duration]) => {
+  const pattern = new RegExp(`data-count-to="${target}"[^>]*data-count-duration="${duration}"`);
+  assert(pattern.test(indexHtml) && pattern.test(consultHtml), `Consult proof number ${target} should count up more slowly over ${duration}ms.`);
+});
 assert(layoutJs.includes("initCountUpStats") && layoutJs.includes("requestAnimationFrame"), "layout.js should animate consult proof numbers with requestAnimationFrame.");
 assert(/\.count-up\s*{[\s\S]*?display:\s*inline-block/.test(css), "Count-up numbers should have stable inline-block styling.");
 
