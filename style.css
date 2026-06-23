@@ -2589,9 +2589,9 @@
 
     .consult-reference-left::before {
       z-index: 0;
-      background: url("mockup_assets/consult-left-bg.png") center / cover no-repeat;
-      opacity: 0.58;
-      filter: saturate(0.72) contrast(0.92);
+      background: url("mockup_assets/consult-left-bg.png") 68% center / cover no-repeat;
+      opacity: 0.9;
+      filter: saturate(0.76) contrast(0.96);
       transform: scale(1.01);
     }
 
@@ -2599,8 +2599,8 @@
       z-index: 1;
       background:
         linear-gradient(90deg, rgba(23,105,209,0.045) 0 1px, transparent 1px 100%),
-        linear-gradient(115deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 48%, rgba(255,255,255,0.78) 100%),
-        linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(245,247,250,0.96) 100%);
+        linear-gradient(105deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.68) 52%, rgba(255,255,255,0.34) 100%),
+        linear-gradient(180deg, rgba(255,255,255,0.22) 0%, rgba(245,247,250,0.42) 100%);
       background-size: 58px 58px, 100% 100%, 100% 100%;
     }
 
