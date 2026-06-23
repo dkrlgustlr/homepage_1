@@ -249,11 +249,15 @@ assert(knowledgeArticles.every((article) => article.headline && article.descript
 assert(knowledgeArticles.some((article) => /급여압류 통장압류/.test(article.keywords)) && knowledgeArticles.some((article) => /지급명령 이의신청/.test(article.keywords)) && knowledgeArticles.some((article) => /압류통장 생활비/.test(article.keywords)), "Knowledge Article keywords should target practical search and answer queries.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
-assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");
+["수원시", "용인시", "화성시", "오산시", "평택시", "의왕시", "안양시", "군포시"].forEach((city) => {
+  assert(aboutHtml.includes(`<li>${city}</li>`), `About page service-area list should include ${city}.`);
+});
+assert(aboutHtml.includes('class="service-area-list"') && !/<article class="service-area-card">/.test(aboutHtml), "About page service areas should use a city-name list instead of cards.");
+assert(/\.service-area-list\s*{[\s\S]*?grid-template-columns:\s*repeat\(4,\s*minmax\(0,\s*1fr\)\)/.test(css) && /\.service-area-list li\s*{[\s\S]*?justify-content:\s*center/.test(css), "Service-area city list should use a centered four-column layout on desktop.");
 assert(/<main[^>]*class="[^"]*\babout-page\b[^"]*"/.test(aboutHtml), "About page should have a page-specific class for spacing adjustments.");
 const aboutHeadingBlocks = aboutHtml.match(/<div class="sub-heading">[\s\S]*?<\/div>/g) || [];
 assert(aboutHeadingBlocks.length >= 3 && aboutHeadingBlocks.every((block) => !/<p>/.test(block)), "About page section headings should not show right-side gray descriptive copy.");
-assert((aboutHtml.match(/<article class="sub-card">[\s\S]*?<p>/g) || []).length === 3 && (aboutHtml.match(/<article class="service-area-card">[\s\S]*?<p>/g) || []).length === 4, "About page cards should keep their gray body copy.");
+assert((aboutHtml.match(/<article class="sub-card">[\s\S]*?<p>/g) || []).length === 3, "About page introduction cards should keep their gray body copy.");
 assert(/\.about-page \.sub-section \+ \.sub-section\s*{[\s\S]*?margin-top:\s*calc\(var\(--fit-gap-xl\) \+ 70px\)/.test(css), "About page sections should add 70px more vertical spacing on desktop.");
 assert(/\.about-page \.sub-content > \.sub-section:first-child\s*{[\s\S]*?margin-top:\s*70px/.test(css), "About page should add 70px above the law office introduction section.");
 assert(/\.about-page \.sub-content > \.service-area-section\s*{[\s\S]*?margin-bottom:\s*70px/.test(css), "About page should add 70px below the service-area section.");

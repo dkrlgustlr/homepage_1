@@ -3060,6 +3060,34 @@
       word-break: keep-all;
     }
 
+    .service-area-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid #cfd8e6;
+      border-left: 1px solid #cfd8e6;
+      background: rgba(255,255,255,0.58);
+      box-shadow: 0 18px 46px rgba(15, 35, 64, 0.05);
+    }
+
+    .service-area-list li {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-right: 1px solid #cfd8e6;
+      border-bottom: 1px solid #cfd8e6;
+      color: #142236;
+      font-size: var(--type-subtitle);
+      line-height: var(--leading-subtitle);
+      font-weight: 900;
+      letter-spacing: 0;
+      background: rgba(255,255,255,0.72);
+    }
+
     .sub-consult-layout {
       display: grid;
       grid-template-columns: minmax(300px, 0.36fr) minmax(0, 0.64fr);
@@ -4852,6 +4880,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
+      .service-area-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
       .sub-consult-layout {
         grid-template-columns: 1fr;
       }
@@ -4883,6 +4915,10 @@
       .service-area-grid,
       .faq-list,
       .article-list {
+        grid-template-columns: 1fr;
+      }
+
+      .service-area-list {
         grid-template-columns: 1fr;
       }
 
