@@ -149,6 +149,10 @@ assert(knowledgeHtml.includes('id="knowledge-article-data"'), "Knowledge page sh
 assert((knowledgeHtml.match(/data-knowledge-modal-open/g) || []).length >= 6, "Knowledge cards should open article details without separate article pages.");
 assert(layoutJs.includes("initKnowledgeModal") && layoutJs.includes("knowledge-article-modal"), "layout.js should initialize the knowledge article modal.");
 assert(/\.knowledge-modal\s*{[\s\S]*?position:\s*fixed/.test(css), "Knowledge article details should open in a fixed modal.");
+assert(layoutJs.includes("knowledge-modal-news") && layoutJs.includes("knowledge-modal-section"), "Knowledge article modal should render article details in sectioned news-style blocks.");
+assert(/\.knowledge-modal-dialog\s*{[\s\S]*?width:\s*min\(920px,\s*calc\(100vw - 40px\)\)/.test(css), "Knowledge article modal should use a wider desktop dialog.");
+assert(/\.knowledge-modal-news\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*240px/.test(css), "Knowledge article modal should separate article body and summary rail on desktop.");
+assert(/\.knowledge-modal-section\s*{[\s\S]*?border-top:\s*1px solid #dbe3ee/.test(css), "Knowledge article modal should visually divide each article section.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(/화성/.test(aboutHtml) && /반월동/.test(aboutHtml) && /동탄/.test(aboutHtml) && /수원/.test(aboutHtml), "About page should mention the main local service areas.");

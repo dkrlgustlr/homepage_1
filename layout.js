@@ -552,6 +552,7 @@
     }
 
     const articleMap = new Map(articles.map((article) => [article.id, article]));
+    const sectionLabels = ["핵심 기준", "확인 순서", "상담 포인트"];
     let lastFocusedElement = null;
 
     const ensureModal = () => {
@@ -563,11 +564,18 @@
   <div class="knowledge-modal-backdrop" data-knowledge-modal-close></div>
   <article class="knowledge-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="knowledge-modal-title" tabindex="-1">
     <button class="knowledge-modal-close" type="button" data-knowledge-modal-close aria-label="지식센터 게시물 닫기">&times;</button>
-    <div class="knowledge-modal-category" id="knowledge-modal-category"></div>
-    <h2 id="knowledge-modal-title"></h2>
-    <p class="knowledge-modal-summary" id="knowledge-modal-summary"></p>
-    <div class="knowledge-modal-body"></div>
-    <a class="knowledge-modal-cta" href="consult.html">상담 신청하기</a>
+    <header class="knowledge-modal-head">
+      <div class="knowledge-modal-category" id="knowledge-modal-category"></div>
+      <h2 id="knowledge-modal-title"></h2>
+    </header>
+    <div class="knowledge-modal-news">
+      <div class="knowledge-modal-body"></div>
+      <aside class="knowledge-modal-rail" aria-label="게시물 요약">
+        <strong>핵심 요약</strong>
+        <p class="knowledge-modal-summary" id="knowledge-modal-summary"></p>
+        <a class="knowledge-modal-cta" href="consult.html">상담 신청하기</a>
+      </aside>
+    </div>
   </article>
 </div>`);
       modal = document.getElementById("knowledge-article-modal");
@@ -585,10 +593,17 @@
 
       const body = modal.querySelector(".knowledge-modal-body");
       const paragraphs = Array.isArray(article.body) ? article.body : [];
-      body.replaceChildren(...paragraphs.map((text) => {
+      body.replaceChildren(...paragraphs.map((text, index) => {
+        const section = document.createElement("section");
+        section.className = "knowledge-modal-section";
+
+        const heading = document.createElement("h3");
+        heading.textContent = sectionLabels[index] || "추가 확인";
+
         const paragraph = document.createElement("p");
         paragraph.textContent = text;
-        return paragraph;
+        section.append(heading, paragraph);
+        return section;
       }));
 
       return modal;
