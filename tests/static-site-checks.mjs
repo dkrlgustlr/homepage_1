@@ -86,6 +86,11 @@ const pages = [
 const siteText = [indexHtml, aboutHtml, casesHtml, knowledgeHtml, consultHtml, footerHtml, headerHtml, layoutJs].join("\n");
 
 assert((indexHtml.match(/<h1[\s>]/g) || []).length === 1, "index.html should have exactly one h1.");
+assert(
+  !indexHtml.includes(".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer") ||
+  !indexHtml.includes("snapToSection"),
+  "Index page should preserve natural scrolling instead of hijacking movement with full-page section snap."
+);
 pages.forEach(([file, html]) => {
   assert((html.match(/<h1[\s>]/g) || []).length === 1, `${file} should have exactly one h1.`);
   assert(/<link rel="canonical" href="https:\/\/dkrlgustlr\.github\.io\/homepage_1\/[^"]*"/.test(html), `${file} should have an absolute canonical URL.`);
@@ -176,34 +181,47 @@ assert(!/<(div|strong) class="cat">압류대응/.test(indexHtml) && !indexHtml.i
 assert(!knowledgeHtml.includes("<strong>압류대응</strong>") && !knowledgeHtml.includes("<strong>추심대응</strong>") && !knowledgeHtml.includes("<strong>보정권고</strong>"), "Knowledge card category labels should avoid shortened inconsistent response terms.");
 assert(!/>서류준비</.test(indexHtml) && !indexHtml.includes('"서류준비"'), "Visible case status labels should use 서류 준비 with spacing.");
 
-assert((indexHtml.match(/data-case-target="/g) || []).length === 7, "Main case menu should expose seven clickable status topics.");
+assert((indexHtml.match(/class="case-menu-desktop"/g) || []).length === 1, "Main case menu should have one desktop-only menu.");
+assert((indexHtml.match(/class="case-menu-mobile"/g) || []).length === 1, "Main case menu should have one mobile-only menu.");
+assert((indexHtml.match(/class="case-tab-desktop"/g) || []).length === 7, "Desktop case menu should expose seven clickable status topics.");
+assert((indexHtml.match(/class="case-tab-mobile"/g) || []).length === 7, "Mobile case menu should expose seven clickable status topics.");
+assert(!/class="case-menu"/.test(indexHtml) && !/class="case-tab"/.test(indexHtml), "Case menus should not use the old shared case-menu/case-tab classes.");
 assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-case-status-description") && indexHtml.includes("data-case-status-list"), "Main case status panel should expose replaceable title, description, and list targets.");
 assert(indexHtml.includes("CASE_STATUS_DATA") && indexHtml.includes("renderCaseStatus") && indexHtml.includes("caseList.replaceChildren"), "Main case menu should replace the right-side status rows by selected topic.");
 assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S]*?translateY\(24px\)[\s\S]*?translateY\(0\)/.test(css), "Main case status changes should rise in with a dedicated animation.");
-assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
-assert(indexHtml.includes("data-case-menu-prev") && indexHtml.includes("data-case-menu-next"), "Mobile case menu should expose previous and next arrow controls.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu\s*{[\s\S]*?display:\s*flex[\s\S]*?overflow-x:\s*auto[\s\S]*?scroll-snap-type:\s*x mandatory/.test(css), "Mobile case menu should become a horizontal swipe carousel.");
+assert(/class="case-tab-desktop"[^>]*aria-pressed="true"/.test(indexHtml) && /class="case-tab-mobile"[^>]*aria-pressed="true"/.test(indexHtml), "Both desktop and mobile case menus should initialize with accessible pressed state.");
+assert(indexHtml.includes("data-case-mobile-prev") && indexHtml.includes("data-case-mobile-next"), "Mobile case menu should expose previous and next arrow controls.");
+assert(/\.case-menu-mobile\s*{[\s\S]*?display:\s*none/.test(css), "Mobile case menu should be hidden by default on desktop.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu-desktop-shell\s*{[\s\S]*?display:\s*none/.test(css), "Desktop case menu should be hidden on mobile.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu-mobile\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*32px minmax\(0,\s*1fr\) 32px[\s\S]*?width:\s*min\(100% - 32px,\s*340px\)/.test(css), "Mobile case controls should be one compact grid: previous arrow, two tabs, next arrow.");
+const mobileCaseMenuBlock = css.slice(css.indexOf(".case-menu-mobile {", css.indexOf("@media (max-width: 1024px)")), css.indexOf(".case-mobile-arrow", css.indexOf("@media (max-width: 1024px)")));
+assert(mobileCaseMenuBlock.includes("grid-template-columns: 32px minmax(0, 1fr) 32px"), "Mobile case menu should own its arrow-and-tabs layout without inheriting desktop spacing.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-inner\s*{[\s\S]*?width:\s*min\(100%,\s*430px\)[\s\S]*?max-width:\s*430px[\s\S]*?margin:\s*0 auto[\s\S]*?display:\s*flex[\s\S]*?flex-direction:\s*column/.test(css), "Mobile case section should use its own centered max-width card layout.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu-shell\s*{[\s\S]*?position:\s*relative[\s\S]*?width:\s*calc\(100% - 32px\)[\s\S]*?max-width:\s*340px[\s\S]*?margin:\s*0 auto[\s\S]*?padding:\s*0 34px/.test(css), "Mobile case carousel should use a compact centered shell with internal arrow rails.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu-arrow\s*{[\s\S]*?position:\s*absolute[\s\S]*?display:\s*inline-flex/.test(css), "Mobile case carousel arrows should be visible without consuming tab width.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu li\s*{[\s\S]*?flex:\s*0 0 calc\(\(100% - 10px\) \/ 2\)[\s\S]*?scroll-snap-align:\s*start/.test(css), "Mobile case carousel should show exactly two tabs at a time.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu li\s*{[\s\S]*?height:\s*56px[\s\S]*?display:\s*flex/.test(css) && /@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab\s*{[\s\S]*?height:\s*100%[\s\S]*?min-height:\s*0/.test(css), "Mobile case carousel tabs should keep equal compact height even when labels wrap to two lines.");
-assert(/@media \(max-width:\s*640px\)[\s\S]*?\.case-menu-arrow\s*{[\s\S]*?width:\s*28px[\s\S]*?min-height:\s*48px[\s\S]*?font-size:\s*18px/.test(css) && /@media \(max-width:\s*640px\)[\s\S]*?\.case-menu li\s*{[\s\S]*?height:\s*48px/.test(css) && /@media \(max-width:\s*640px\)[\s\S]*?\.case-tab\s*{[\s\S]*?font-size:\s*12px/.test(css), "Narrow mobile case carousel controls should use shorter buttons and smaller text.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab\s*{[\s\S]*?white-space:\s*normal[\s\S]*?word-break:\s*keep-all/.test(css), "Mobile case carousel tabs should allow long Korean labels such as 압류·추심 대응 to wrap without clipping.");
-assert(indexHtml.includes("centerActiveCaseMenu") && indexHtml.includes('centerActiveCaseMenu("auto")'), "Mobile case carousel should initially center the active tab instead of leaving it off screen.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-mobile-arrow\s*{[\s\S]*?position:\s*relative[\s\S]*?display:\s*inline-flex/.test(css), "Mobile case arrows should stay in the same grid row as the mobile menu.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-mobile-menu-list\s*{[\s\S]*?display:\s*grid[\s\S]*?grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)[\s\S]*?overflow:\s*hidden/.test(css), "Mobile case menu should use two fixed slots instead of a native scroll track.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-mobile-menu-list li\s*{[\s\S]*?display:\s*none[\s\S]*?height:\s*56px/.test(css) && /@media \(max-width:\s*1024px\)[\s\S]*?\.case-mobile-menu-list li\.is-case-mobile-visible\s*{[\s\S]*?display:\s*flex/.test(css), "Mobile case menu should hide all topics except the two currently visible fixed slots.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab-mobile\s*{[\s\S]*?height:\s*100%[\s\S]*?min-height:\s*0/.test(css), "Mobile case tabs should keep equal compact height even when labels wrap to two lines.");
+assert(/@media \(max-width:\s*640px\)[\s\S]*?\.case-mobile-arrow\s*{[\s\S]*?width:\s*28px[\s\S]*?height:\s*48px[\s\S]*?font-size:\s*18px/.test(css) && /@media \(max-width:\s*640px\)[\s\S]*?\.case-mobile-menu-list li\s*{[\s\S]*?height:\s*48px/.test(css) && /@media \(max-width:\s*640px\)[\s\S]*?\.case-tab-mobile\s*{[\s\S]*?font-size:\s*10px/.test(css), "Narrow mobile case controls should use shorter buttons and smaller text.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab-mobile\s*{[\s\S]*?white-space:\s*normal[\s\S]*?word-break:\s*keep-all/.test(css), "Mobile case tabs should allow long Korean labels such as 압류·추심 대응 to wrap without clipping.");
+assert(indexHtml.includes("desktopCaseMenuItems") && indexHtml.includes("mobileCaseMenuItems") && indexHtml.includes("updateCaseMobileVisiblePage") && indexHtml.includes("caseMobilePages") && indexHtml.includes("is-case-mobile-visible"), "Case menu JS should keep desktop and mobile menus separate while syncing active state.");
+assert(/\[\s*"correction",\s*"recovery"\s*\]/.test(indexHtml), "Mobile case menu should wrap the final odd topic with the first topic so no endpoint ever appears alone.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-right\s*{[\s\S]*?order:\s*1[\s\S]*?display:\s*block[\s\S]*?padding:\s*0/.test(css) && /@media \(max-width:\s*1024px\)[\s\S]*?\.case-left\s*{[\s\S]*?order:\s*2[\s\S]*?background:\s*#fff[\s\S]*?padding:\s*16px 0 20px/.test(css), "Mobile case content and tabs should be separate blocks inside the card, with tabs anchored below the list.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-left::before,\s*\.case-left::after,\s*\.case-menu::before,\s*\.case-menu::after\s*{[\s\S]*?display:\s*none/.test(css), "Mobile case tabs should remove the desktop dark grid and timeline treatment.");
-assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab\s*{[\s\S]*?background:\s*#fff[\s\S]*?border:\s*1px solid #d9e1eb[\s\S]*?color:\s*#10233e/.test(css), "Mobile case tabs should use the white subpage card language instead of dark inactive buttons.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-left::before,\s*\.case-left::after,\s*\.case-menu-desktop::before,\s*\.case-menu-desktop::after\s*{[\s\S]*?display:\s*none/.test(css), "Mobile case area should remove the desktop dark grid and timeline treatment.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab-mobile\s*{[\s\S]*?background:\s*#fff[\s\S]*?border:\s*1px solid #d9e1eb[\s\S]*?color:\s*#10233e/.test(css), "Mobile case tabs should use the white subpage card language instead of dark inactive buttons.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-list-window\s*{[\s\S]*?margin-top:\s*0[\s\S]*?padding:\s*20px 26px 24px/.test(css), "Mobile case rows should sit above the bottom tabs without extra top margin.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-list-window\s*{[\s\S]*?height:\s*calc\(\(var\(--case-row-h\) \* var\(--case-visible-rows\)\) \+ 44px\)/.test(css), "Mobile case list window height should include its vertical padding so the last visible row does not collide with the divider.");
 assert(/@media \(max-width:\s*640px\)[\s\S]*?\.case-list-window\s*{[\s\S]*?height:\s*calc\(\(var\(--case-row-h\) \* var\(--case-visible-rows\)\) \+ 36px\)/.test(css), "Narrow mobile case list window height should include its reduced vertical padding.");
-const caseCenterBlock = indexHtml.slice(indexHtml.indexOf("const centerCaseMenuItem"), indexHtml.indexOf("const centerActiveCaseMenu"));
-assert(!caseCenterBlock.includes("scrollIntoView"), "Mobile case carousel centering should not use scrollIntoView because it can move the page vertically on mobile.");
-assert(caseCenterBlock.includes("targetLeft") && caseCenterBlock.includes("item.offsetLeft") && caseCenterBlock.includes("caseMenu.clientWidth") && caseCenterBlock.includes("caseMenu.scrollTo") && indexHtml.includes("scrollCaseMenuByPage"), "Clicking a mobile case carousel item should center the active tab with horizontal scroll only and arrows should page the carousel.");
-const caseResizeBlock = indexHtml.slice(indexHtml.indexOf("let markerTicking = false;"), indexHtml.indexOf("const snapSections"));
-assert(!caseResizeBlock.includes('centerActiveCaseMenu("auto")'), "Mobile viewport resize should not auto-center case tabs because address-bar changes can jump the page.");
-assert(indexHtml.includes("maxScrollLeft") && indexHtml.includes("wrapTolerance") && /direction > 0[\s\S]*?caseMenu\.scrollLeft >= maxScrollLeft - wrapTolerance[\s\S]*?caseMenu\.scrollTo\(\{[\s\S]*?left:\s*0/.test(indexHtml) && /direction < 0[\s\S]*?caseMenu\.scrollLeft <= wrapTolerance[\s\S]*?caseMenu\.scrollTo\(\{[\s\S]*?left:\s*maxScrollLeft/.test(indexHtml), "Mobile case carousel arrows should wrap from end to start and from start to end.");
+const casePageBlock = indexHtml.slice(indexHtml.indexOf("const caseMobilePages"), indexHtml.indexOf("const createCaseStatusRow"));
+assert(!casePageBlock.includes("scrollIntoView"), "Mobile case carousel paging should not use scrollIntoView because it can move the page vertically on mobile.");
+assert(!casePageBlock.includes("(caseMenu.clientWidth - item.offsetWidth) / 2"), "Mobile case menu should not center one tab because that creates single-tab edge states.");
+assert(!casePageBlock.includes("scrollTo") && !casePageBlock.includes("scrollLeft") && !mobileCaseMenuBlock.includes("overflow-x: auto") && !mobileCaseMenuBlock.includes("scroll-snap-type: x mandatory"), "Mobile case menu should not depend on horizontal scroll positions.");
+const caseResizeStart = indexHtml.indexOf("let markerTicking = false;");
+const caseResizeBlock = indexHtml.slice(caseResizeStart, indexHtml.indexOf("})();", caseResizeStart));
+assert(!caseResizeBlock.includes("updateCaseMobileVisiblePage"), "Mobile viewport resize should not reshuffle case tabs because address-bar changes can jump the page.");
+assert(indexHtml.includes("showCaseMobileTopicPage") && indexHtml.includes("showCaseMobilePageByOffset") && !indexHtml.includes("caseMenu.scrollBy"), "Mobile case menu arrows should wrap through explicit page slots instead of raw scroll distance.");
 assert(!/\.case-list li::(before|after)/.test(css), "Main case rows should not show left-side line or circle timeline decorations.");
+const finalTypographyBlock = css.slice(css.lastIndexOf(".page :is("));
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab-mobile\s*{[\s\S]*?font-size:\s*11px/.test(finalTypographyBlock) && /@media \(max-width:\s*640px\)[\s\S]*?\.case-tab-mobile\s*{[\s\S]*?font-size:\s*10px/.test(finalTypographyBlock), "Mobile case button text should be reasserted after shared typography rules.");
 const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
 assert(!/(일자|상태|상담중|진행중|2026\.06\.\d{2})/.test(mainCaseSection), "Main case section should remove progress dates and status labels.");
 assert(mainCaseSection.includes("대표 사례") && mainCaseSection.includes("쟁점") && mainCaseSection.includes("확인 포인트"), "Main case section should present representative cases and consultation points.");
@@ -240,7 +258,7 @@ assert(consultHtml.includes("layout.js?v=") && layoutJs.includes("initConsultPag
 assert(layoutJs.includes("initConsultPageSnap") && layoutJs.includes(".consult-page") && layoutJs.includes(".consult-reference-section, .footer"), "Consult page should keep desktop-only snap targets between the consultation section and footer.");
 assert(layoutJs.includes('window.addEventListener("wheel"') && layoutJs.includes('window.addEventListener("keydown"') && layoutJs.includes('window.addEventListener("touchend"'), "Consult page snap should support wheel, keyboard, and touch navigation.");
 assert(layoutJs.includes("targetSectionIndex") && layoutJs.includes("snapTolerance") && layoutJs.includes("sectionTop(snapSections[index]) > scrollTop + snapTolerance"), "Consult page snap should choose the next section by scroll direction so partial positions still snap one section at a time.");
-assert(indexHtml.includes("isMobileSnapDisabled") && /const shouldUseSnap\s*=\s*\(\)\s*=>\s*!\s*isMobileSnapDisabled\(\)\s*&&\s*window\.matchMedia\("\(min-width:\s*1025px\)"\)\.matches/.test(indexHtml), "Main page section snap should explicitly disable itself on the 768px mobile layout.");
+assert(!indexHtml.includes("isMobileSnapDisabled") && !indexHtml.includes("snapToSection"), "Main page should not install a section snap controller.");
 assert(layoutJs.includes("isMobileSnapDisabled") && /const shouldUseSnap\s*=\s*\(\)\s*=>\s*\([\s\S]*?!\s*isMobileSnapDisabled\(\)[\s\S]*?window\.matchMedia\("\(min-width:\s*1025px\)"\)\.matches/.test(layoutJs), "Consult page section snap should explicitly disable itself on the 768px mobile layout.");
 assert(/@media \(max-width:\s*768px\)[\s\S]*?\.knowledge-row\s*{[\s\S]*?max-width:\s*none[\s\S]*?padding-left:\s*0[\s\S]*?padding-right:\s*0[\s\S]*?\.knowledge-left,\s*\.knowledge-right\s*{[\s\S]*?width:\s*100%[\s\S]*?max-width:\s*none/.test(css), "Mobile knowledge section background should span the full viewport while inner widgets remain constrained.");
 assert(/window\.addEventListener\("wheel"[\s\S]*?if \(snapLocked\) \{[\s\S]*?event\.preventDefault\(\);[\s\S]*?return;[\s\S]*?\}/.test(layoutJs), "Consult page wheel snap should block native scrolling while a smooth snap is already in progress.");

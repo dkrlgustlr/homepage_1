@@ -180,7 +180,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260624-mobile28">
+  <link rel="stylesheet" href="style.css?v=20260625-mobile32">
 </head>
 <body>
   <div class="page">
@@ -223,18 +223,29 @@
         <div class="case-inner">
           <div class="case-left">
             <div class="line"></div>
-            <div class="case-menu-shell">
-              <button class="case-menu-arrow case-menu-arrow-prev" type="button" aria-label="이전 사례 메뉴" data-case-menu-prev>‹</button>
-              <ul class="case-menu">
-                <li data-case-target="recovery"><button class="case-tab" type="button" aria-pressed="false">개인회생</button></li>
-                <li data-case-target="bankruptcy"><button class="case-tab" type="button" aria-pressed="false">개인파산</button></li>
-                <li class="active" data-case-target="seizure"><button class="case-tab" type="button" aria-pressed="true">압류·추심 대응</button></li>
-                <li data-case-target="worker"><button class="case-tab" type="button" aria-pressed="false">직장인 채무</button></li>
-                <li data-case-target="business"><button class="case-tab" type="button" aria-pressed="false">자영업자 채무</button></li>
-                <li data-case-target="immunity"><button class="case-tab" type="button" aria-pressed="false">면책 검토</button></li>
-                <li data-case-target="correction"><button class="case-tab" type="button" aria-pressed="false">보정권고 대응</button></li>
+            <div class="case-menu-desktop-shell">
+              <ul class="case-menu-desktop" data-case-menu-desktop>
+                <li data-case-target="recovery"><button class="case-tab-desktop" type="button" aria-pressed="false">개인회생</button></li>
+                <li data-case-target="bankruptcy"><button class="case-tab-desktop" type="button" aria-pressed="false">개인파산</button></li>
+                <li class="active" data-case-target="seizure"><button class="case-tab-desktop" type="button" aria-pressed="true">압류·추심 대응</button></li>
+                <li data-case-target="worker"><button class="case-tab-desktop" type="button" aria-pressed="false">직장인 채무</button></li>
+                <li data-case-target="business"><button class="case-tab-desktop" type="button" aria-pressed="false">자영업자 채무</button></li>
+                <li data-case-target="immunity"><button class="case-tab-desktop" type="button" aria-pressed="false">면책 검토</button></li>
+                <li data-case-target="correction"><button class="case-tab-desktop" type="button" aria-pressed="false">보정권고 대응</button></li>
               </ul>
-              <button class="case-menu-arrow case-menu-arrow-next" type="button" aria-label="다음 사례 메뉴" data-case-menu-next>›</button>
+            </div>
+            <div class="case-menu-mobile" data-case-menu-mobile>
+              <button class="case-mobile-arrow case-mobile-arrow-prev" type="button" aria-label="이전 사례 메뉴" data-case-mobile-prev>‹</button>
+              <ul class="case-mobile-menu-list">
+                <li data-case-target="recovery"><button class="case-tab-mobile" type="button" aria-pressed="false">개인회생</button></li>
+                <li data-case-target="bankruptcy"><button class="case-tab-mobile" type="button" aria-pressed="false">개인파산</button></li>
+                <li class="active is-case-mobile-visible" data-case-target="seizure"><button class="case-tab-mobile" type="button" aria-pressed="true">압류·추심 대응</button></li>
+                <li class="is-case-mobile-visible" data-case-target="worker"><button class="case-tab-mobile" type="button" aria-pressed="false">직장인 채무</button></li>
+                <li data-case-target="business"><button class="case-tab-mobile" type="button" aria-pressed="false">자영업자 채무</button></li>
+                <li data-case-target="immunity"><button class="case-tab-mobile" type="button" aria-pressed="false">면책 검토</button></li>
+                <li data-case-target="correction"><button class="case-tab-mobile" type="button" aria-pressed="false">보정권고 대응</button></li>
+              </ul>
+              <button class="case-mobile-arrow case-mobile-arrow-next" type="button" aria-label="다음 사례 메뉴" data-case-mobile-next>›</button>
             </div>
           </div>
           <div class="case-right" data-case-status-panel>
@@ -387,7 +398,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260624-mobile28"></script>
+  <script src="layout.js?v=20260625-mobile32"></script>
   <script>
     (async () => {
       await window.__layoutReady;
@@ -475,7 +486,8 @@
         ".consult-reference-left",
         ".consult-reference-right",
         ".location-inner",
-        ".case-menu li",
+        ".case-menu-desktop li",
+        ".case-mobile-menu-list li",
         ".column-card",
         ".process-list li",
         ".consult-proof-grid div",
@@ -526,10 +538,12 @@
 
       updateScrollEffects();
 
-      const caseMenuItems = Array.from(document.querySelectorAll(".case-menu li[data-case-target]"));
-      const caseMenu = document.querySelector(".case-menu");
-      const caseMenuPrev = document.querySelector("[data-case-menu-prev]");
-      const caseMenuNext = document.querySelector("[data-case-menu-next]");
+      const desktopCaseMenuItems = Array.from(document.querySelectorAll(".case-menu-desktop li[data-case-target]"));
+      const mobileCaseMenuItems = Array.from(document.querySelectorAll(".case-mobile-menu-list li[data-case-target]"));
+      const caseMenuItems = [...desktopCaseMenuItems, ...mobileCaseMenuItems];
+      const caseMenuDesktop = document.querySelector(".case-menu-desktop");
+      const caseMobilePrev = document.querySelector("[data-case-mobile-prev]");
+      const caseMobileNext = document.querySelector("[data-case-mobile-next]");
       const casePanel = document.querySelector("[data-case-status-panel]");
       const caseTitle = document.querySelector("[data-case-status-title]");
       const caseDescription = document.querySelector("[data-case-status-description]");
@@ -615,52 +629,79 @@
         }
       };
 
-      const moveCaseMarker = (item) => {
-        if (!caseMenu || !item) return;
+      const moveCaseMarker = (target) => {
+        if (!caseMenuDesktop || !target) return;
+        const item = desktopCaseMenuItems.find((menuItem) => menuItem.dataset.caseTarget === target);
+        if (!item) return;
         const markerY = item.offsetTop + item.offsetHeight / 2;
-        caseMenu.style.setProperty("--marker-y", `${markerY}px`);
+        caseMenuDesktop.style.setProperty("--marker-y", `${markerY}px`);
       };
 
-      const scrollCaseMenuByPage = (direction) => {
-        if (!caseMenu) return;
-        const firstItem = caseMenu.querySelector("li[data-case-target]");
-        const styles = window.getComputedStyle(caseMenu);
-        const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
-        const itemWidth = firstItem ? firstItem.getBoundingClientRect().width : caseMenu.clientWidth / 2;
-        const maxScrollLeft = Math.max(0, caseMenu.scrollWidth - caseMenu.clientWidth);
-        const wrapTolerance = 2;
-        if (direction > 0 && caseMenu.scrollLeft >= maxScrollLeft - wrapTolerance) {
-          caseMenu.scrollTo({ left: 0, behavior: "smooth" });
+      const isCaseMobileMenu = () => window.matchMedia("(max-width: 1024px)").matches;
+
+      const caseMobilePages = [
+        ["recovery", "bankruptcy"],
+        ["seizure", "worker"],
+        ["business", "immunity"],
+        ["correction", "recovery"]
+      ];
+      let caseMobilePageIndex = 0;
+
+      const normalizeCaseMobilePageIndex = (pageIndex) => (
+        (pageIndex + caseMobilePages.length) % caseMobilePages.length
+      );
+
+      const updateCaseMobileVisiblePage = (pageIndex = caseMobilePageIndex) => {
+        if (mobileCaseMenuItems.length === 0) return;
+
+        if (!isCaseMobileMenu()) {
+          mobileCaseMenuItems.forEach((item) => {
+            item.classList.remove("is-case-mobile-visible");
+            item.style.removeProperty("order");
+          });
           return;
         }
-        if (direction < 0 && caseMenu.scrollLeft <= wrapTolerance) {
-          caseMenu.scrollTo({ left: maxScrollLeft, behavior: "smooth" });
-          return;
-        }
-        caseMenu.scrollBy({
-          left: direction * ((itemWidth + gap) * 2),
-          behavior: "smooth"
+
+        caseMobilePageIndex = normalizeCaseMobilePageIndex(pageIndex);
+        const visibleTargets = caseMobilePages[caseMobilePageIndex];
+        mobileCaseMenuItems.forEach((item) => {
+          const visibleIndex = visibleTargets.indexOf(item.dataset.caseTarget);
+          item.classList.toggle("is-case-mobile-visible", visibleIndex !== -1);
+          if (visibleIndex === -1) {
+            item.style.removeProperty("order");
+          } else {
+            item.style.order = String(visibleIndex + 1);
+          }
         });
       };
 
-      const isCaseMenuCarousel = () => window.matchMedia("(max-width: 1024px)").matches;
-
-      const centerCaseMenuItem = (item, behavior = "smooth") => {
-        if (!caseMenu || !item || !isCaseMenuCarousel()) return;
-        const targetLeft = Math.max(
-          0,
-          item.offsetLeft - (caseMenu.clientWidth - item.offsetWidth) / 2
-        );
-        const maxScrollLeft = Math.max(0, caseMenu.scrollWidth - caseMenu.clientWidth);
-        caseMenu.scrollTo({
-          left: Math.min(targetLeft, maxScrollLeft),
-          behavior
-        });
+      const showCaseMobilePageByOffset = (direction) => {
+        updateCaseMobileVisiblePage(caseMobilePageIndex + direction);
       };
 
-      const centerActiveCaseMenu = (behavior = "smooth") => {
-        const activeItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
-        centerCaseMenuItem(activeItem, behavior);
+      const caseMobilePageIndexForTarget = (target) => {
+        const currentPage = caseMobilePages[caseMobilePageIndex] || [];
+        if (currentPage.includes(target)) return caseMobilePageIndex;
+        const pageStartingWithTarget = caseMobilePages.findIndex((page) => page[0] === target);
+        if (pageStartingWithTarget !== -1) return pageStartingWithTarget;
+        return caseMobilePages.findIndex((page) => page.includes(target));
+      };
+
+      const showCaseMobileTopicPage = (target) => {
+        if (!target || !isCaseMobileMenu()) return;
+        const targetPageIndex = caseMobilePageIndexForTarget(target);
+        updateCaseMobileVisiblePage(targetPageIndex < 0 ? 0 : targetPageIndex);
+      };
+
+      const syncCaseMenuActiveState = (target) => {
+        if (!target) return;
+        caseMenuItems.forEach((menuItem) => {
+          const active = menuItem.dataset.caseTarget === target;
+          menuItem.classList.toggle("active", active);
+          menuItem.querySelector("button")?.setAttribute("aria-pressed", String(active));
+        });
+        moveCaseMarker(target);
+        showCaseMobileTopicPage(target);
       };
 
       const createCaseStatusRow = ([type, title, issue, point, href], index) => {
@@ -710,27 +751,21 @@
       };
 
       caseMenuItems.forEach((item) => {
-        const button = item.querySelector(".case-tab");
+        const button = item.querySelector("button");
         if (!button) return;
         button.addEventListener("click", () => {
           const target = item.dataset.caseTarget;
-          caseMenuItems.forEach((menuItem) => {
-            const active = menuItem === item;
-            menuItem.classList.toggle("active", active);
-            menuItem.querySelector(".case-tab")?.setAttribute("aria-pressed", String(active));
-          });
-          moveCaseMarker(item);
-          centerCaseMenuItem(item);
+          syncCaseMenuActiveState(target);
           renderCaseStatus(target, true);
         });
       });
 
-      caseMenuPrev?.addEventListener("click", () => scrollCaseMenuByPage(-1));
-      caseMenuNext?.addEventListener("click", () => scrollCaseMenuByPage(1));
+      caseMobilePrev?.addEventListener("click", () => showCaseMobilePageByOffset(-1));
+      caseMobileNext?.addEventListener("click", () => showCaseMobilePageByOffset(1));
 
       const syncCaseMarker = () => {
-        const activeItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
-        moveCaseMarker(activeItem);
+        const activeItem = desktopCaseMenuItems.find((item) => item.classList.contains("active")) || desktopCaseMenuItems[0];
+        moveCaseMarker(activeItem?.dataset.caseTarget);
       };
 
       const activeCaseItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
@@ -738,8 +773,7 @@
         renderCaseStatus(activeCaseItem.dataset.caseTarget, false);
       }
       requestAnimationFrame(() => {
-        syncCaseMarker();
-        centerActiveCaseMenu("auto");
+        syncCaseMenuActiveState(activeCaseItem?.dataset.caseTarget);
       });
 
       let markerTicking = false;
@@ -752,110 +786,6 @@
         });
       });
 
-      const snapSections = Array.from(document.querySelectorAll(
-        ".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer"
-      ));
-
-      let snapLocked = false;
-      let pointerStartY = null;
-      let pointerStartX = null;
-      let touchStartY = null;
-      let touchStartX = null;
-
-      const isMobileSnapDisabled = () => window.matchMedia("(max-width: 768px)").matches;
-      const shouldUseSnap = () => !isMobileSnapDisabled() && window.matchMedia("(min-width: 1025px)").matches;
-
-      const maxScrollTop = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-
-      const sectionTop = (section) => Math.min(section.offsetTop, maxScrollTop());
-
-      const currentSectionIndex = () => {
-        const viewportPoint = window.scrollY + usableViewportHeight() * 0.38;
-        let bestIndex = 0;
-        let bestDistance = Infinity;
-
-        snapSections.forEach((section, index) => {
-          const distance = Math.abs(section.offsetTop - viewportPoint);
-          if (distance < bestDistance) {
-            bestDistance = distance;
-            bestIndex = index;
-          }
-        });
-
-        return bestIndex;
-      };
-
-      const snapToSection = (direction) => {
-        if (!shouldUseSnap() || snapLocked || snapSections.length === 0) return;
-
-        const current = currentSectionIndex();
-        const next = Math.min(Math.max(current + direction, 0), snapSections.length - 1);
-        if (next === current) return;
-
-        snapLocked = true;
-        window.scrollTo({
-          top: sectionTop(snapSections[next]),
-          behavior: "smooth"
-        });
-
-        window.setTimeout(() => {
-          snapLocked = false;
-        }, 920);
-      };
-
-      window.addEventListener("wheel", (event) => {
-        if (!shouldUseSnap() || event.ctrlKey || Math.abs(event.deltaY) < 14) return;
-        event.preventDefault();
-        snapToSection(event.deltaY > 0 ? 1 : -1);
-      }, { passive: false });
-
-      window.addEventListener("keydown", (event) => {
-        if (!shouldUseSnap()) return;
-        const downKeys = ["ArrowDown", "PageDown", "Space"];
-        const upKeys = ["ArrowUp", "PageUp"];
-        if (![...downKeys, ...upKeys].includes(event.code)) return;
-        event.preventDefault();
-        snapToSection(downKeys.includes(event.code) ? 1 : -1);
-      });
-
-      window.addEventListener("pointerdown", (event) => {
-        if (!shouldUseSnap()) return;
-        if (event.pointerType === "mouse" && event.button !== 0) return;
-        pointerStartY = event.clientY;
-        pointerStartX = event.clientX;
-      });
-
-      window.addEventListener("pointerup", (event) => {
-        if (!shouldUseSnap()) return;
-        if (pointerStartY === null || pointerStartX === null) return;
-        const deltaY = pointerStartY - event.clientY;
-        const deltaX = pointerStartX - event.clientX;
-        pointerStartY = null;
-        pointerStartX = null;
-        if (Math.abs(deltaY) < 72 || Math.abs(deltaY) < Math.abs(deltaX) * 1.15) return;
-        snapToSection(deltaY > 0 ? 1 : -1);
-      });
-
-      window.addEventListener("touchstart", (event) => {
-        if (!shouldUseSnap()) return;
-        const touch = event.touches[0];
-        if (!touch) return;
-        touchStartY = touch.clientY;
-        touchStartX = touch.clientX;
-      }, { passive: true });
-
-      window.addEventListener("touchend", (event) => {
-        if (!shouldUseSnap()) return;
-        if (touchStartY === null || touchStartX === null) return;
-        const touch = event.changedTouches[0];
-        if (!touch) return;
-        const deltaY = touchStartY - touch.clientY;
-        const deltaX = touchStartX - touch.clientX;
-        touchStartY = null;
-        touchStartX = null;
-        if (Math.abs(deltaY) < 58 || Math.abs(deltaY) < Math.abs(deltaX) * 1.15) return;
-        snapToSection(deltaY > 0 ? 1 : -1);
-      }, { passive: true });
     })();
   </script>
 </body>
