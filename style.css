@@ -4268,14 +4268,14 @@
         padding: 0;
         border: 0;
         border-radius: 50%;
-        background: rgba(255,255,255,0.08);
+        background: #31353C;
         color: #fff;
         cursor: pointer;
       }
 
       .header.is-mobile-menu-open .mobile-menu-toggle {
-        background: #f1f5fb;
-        color: #10233e;
+        background: #31353C;
+        color: #fff;
       }
 
       .mobile-menu-toggle span {
