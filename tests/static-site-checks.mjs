@@ -274,6 +274,7 @@ assert(/\.knowledge-page \.sub-content > \.sub-section:first-child,\s*\.cases-pa
 assert(/\.about-page \.sub-table\s*{[\s\S]*?border-collapse:\s*collapse[\s\S]*?background:\s*rgba\(255,255,255,0\.9\)[\s\S]*?border:\s*1px solid #d8e0ea/.test(css), "About office information table should match the shared table surface instead of separate row panels.");
 assert(/\.about-page \.sub-table th\s*{[\s\S]*?width:\s*280px[\s\S]*?color:\s*#17243a[\s\S]*?background:\s*rgba\(240,244,249,0\.78\)/.test(css), "About office information labels should use the shared muted table label treatment.");
 assert(/\.about-page \.sub-table td\s*{[\s\S]*?background:\s*rgba\(255,255,255,0\.82\)/.test(css), "About office information values should stay inside one shared table surface.");
+assert(!aboutHtml.includes("<th>공개 가능 수치</th>"), "About office information table should not include the public metric row.");
 
 assert(indexHtml.includes("daumRoughmapContainer1782029506097"), "Main page should include the Kakao roughmap container.");
 assert(indexHtml.includes("daumRoughmapContainer1782035826357"), "Main page should include the mobile Kakao roughmap container.");
