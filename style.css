@@ -4609,18 +4609,24 @@
       .case-inner {
         height: auto;
         min-height: 0;
-        grid-template-columns: 1fr;
+        width: min(100%, 430px);
+        max-width: 430px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: none;
         background: #fff;
+        border: 1px solid #d9e1eb;
+        box-shadow: 0 24px 60px rgba(13, 35, 64, 0.14);
         translate: none;
       }
 
       .case-left {
-        order: 5;
+        order: 2;
         background: #fff;
-        padding: 0 0 24px;
-        border-right: 1px solid #d9e1eb;
-        border-bottom: 1px solid #d9e1eb;
-        border-left: 1px solid #d9e1eb;
+        padding: 16px 0 20px;
+        border: 0;
+        border-top: 1px solid #d9e1eb;
         display: block;
         overflow: hidden;
       }
@@ -4633,24 +4639,28 @@
       }
 
       .case-menu-shell {
-        display: grid;
-        grid-template-columns: 34px minmax(0, 1fr) 34px;
-        align-items: center;
+        position: relative;
+        display: block;
         gap: 10px;
-        width: calc(100% - 52px);
-        max-width: 420px;
+        width: calc(100% - 32px);
+        max-width: 340px;
         height: auto;
         margin: 0 auto;
-        padding: 0;
+        padding: 0 34px;
       }
 
       .case-menu-arrow {
         appearance: none;
+        position: absolute;
+        top: 0;
+        bottom: 0;
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        z-index: 2;
         width: 34px;
-        height: 42px;
+        height: auto;
+        min-height: 48px;
         border: 1px solid #d9e1eb;
         background: #fff;
         color: #10233e;
@@ -4660,6 +4670,14 @@
         line-height: 1;
         cursor: pointer;
         transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+      }
+
+      .case-menu-arrow-prev {
+        left: 0;
+      }
+
+      .case-menu-arrow-next {
+        right: 0;
       }
 
       .case-menu-arrow:hover,
@@ -4732,8 +4750,10 @@
 
       .case-right {
         --case-content-drop: 0px;
-        display: contents;
-        padding: 34px 26px 38px;
+        order: 1;
+        display: block;
+        padding: 0;
+        background: #fff;
         overflow: visible;
       }
 
@@ -4748,12 +4768,11 @@
       .case-list-window {
         --case-row-h: 116px;
         --case-visible-rows: 4;
-        order: 4;
         margin-top: 0;
         padding: 20px 26px 24px;
         background: #fff;
-        border-right: 1px solid #d9e1eb;
-        border-left: 1px solid #d9e1eb;
+        border-right: 0;
+        border-left: 0;
       }
 
       .case-list a {
@@ -5051,20 +5070,23 @@
       }
 
       .case-left {
-        padding: 0 0 18px;
+        padding: 14px 0 18px;
+      }
+
+      .case-inner {
+        width: min(100%, 380px);
+        max-width: 380px;
       }
 
       .case-menu-shell {
-        grid-template-columns: 32px minmax(0, 1fr) 32px;
-        gap: 10px;
-        width: calc(100% - 40px);
+        width: calc(100% - 24px);
         max-width: 320px;
-        padding: 0;
+        padding: 0 30px;
       }
 
       .case-menu-arrow {
-        width: 32px;
-        height: 40px;
+        width: 30px;
+        min-height: 44px;
         font-size: 20px;
       }
 
@@ -5091,7 +5113,7 @@
       }
 
       .case-list-window {
-        --case-row-h: 128px;
+        --case-row-h: 140px;
         --case-visible-rows: 3;
         padding: 16px 18px 20px;
       }
