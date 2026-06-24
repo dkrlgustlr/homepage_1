@@ -4602,10 +4602,11 @@
       }
 
       .case-left {
-        order: 2;
+        order: 5;
         background: #fff;
         padding: 0 0 24px;
         border-right: 1px solid #d9e1eb;
+        border-bottom: 1px solid #d9e1eb;
         border-left: 1px solid #d9e1eb;
         display: block;
         overflow: hidden;
@@ -4686,10 +4687,9 @@
         --case-visible-rows: 4;
         order: 4;
         margin-top: 0;
-        padding: 20px 26px 38px;
+        padding: 20px 26px 24px;
         background: #fff;
         border-right: 1px solid #d9e1eb;
-        border-bottom: 1px solid #d9e1eb;
         border-left: 1px solid #d9e1eb;
       }
 
@@ -5012,7 +5012,7 @@
       .case-list-window {
         --case-row-h: 128px;
         --case-visible-rows: 3;
-        padding: 16px 18px 30px;
+        padding: 16px 18px 20px;
       }
 
       .case-list a {
