@@ -180,7 +180,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260624-mobile19">
+  <link rel="stylesheet" href="style.css?v=20260624-mobile20">
 </head>
 <body>
   <div class="page">
@@ -387,7 +387,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260624-mobile19"></script>
+  <script src="layout.js?v=20260624-mobile20"></script>
   <script>
     (async () => {
       await window.__layoutReady;
@@ -745,7 +745,8 @@
       let touchStartY = null;
       let touchStartX = null;
 
-      const shouldUseSnap = () => window.matchMedia("(min-width: 1025px)").matches;
+      const isMobileSnapDisabled = () => window.matchMedia("(max-width: 768px)").matches;
+      const shouldUseSnap = () => !isMobileSnapDisabled() && window.matchMedia("(min-width: 1025px)").matches;
 
       const maxScrollTop = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
 

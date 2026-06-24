@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260624-mobile19";
+  const INCLUDE_VERSION = "20260624-mobile20";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -1059,7 +1059,9 @@
       return stickyBar ? Math.ceil(stickyBar.getBoundingClientRect().height) : 0;
     };
     const usableViewportHeight = () => Math.max(360, window.innerHeight - stickyConsultHeight());
+    const isMobileSnapDisabled = () => window.matchMedia("(max-width: 768px)").matches;
     const shouldUseSnap = () => (
+      !isMobileSnapDisabled() &&
       window.matchMedia("(min-width: 1025px)").matches &&
       !document.documentElement.classList.contains("privacy-modal-open") &&
       !document.documentElement.classList.contains("knowledge-modal-open")
