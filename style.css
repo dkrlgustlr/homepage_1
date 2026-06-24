@@ -1328,11 +1328,25 @@
       content: "";
       position: absolute;
       left: 0;
-      top: 20px;
-      bottom: 20px;
-      width: 3px;
-      background: transparent;
-      transition: background-color 0.35s ease;
+      top: 50%;
+      width: 16px;
+      height: 1px;
+      background: rgba(13, 35, 64, 0.18);
+      transition: width 0.35s ease, background-color 0.35s ease;
+    }
+
+    .case-list li::after {
+      content: "";
+      position: absolute;
+      left: 19px;
+      top: 50%;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      border: 1px solid rgba(13, 35, 64, 0.24);
+      background: #fff;
+      translate: 0 -50%;
+      transition: border-color 0.35s ease, box-shadow 0.35s ease;
     }
 
     .case-list li:first-child { border-top: 0; }
@@ -1345,7 +1359,7 @@
       align-items: center;
       column-gap: 0;
       font-size: var(--type-body);
-      padding: 0 clamp(20px, 2.2vw, 34px);
+      padding: 0 clamp(20px, 2.2vw, 34px) 0 clamp(46px, 3vw, 58px);
     }
 
     .case-list a > span {
@@ -1353,7 +1367,7 @@
     }
 
     .case-type {
-      color: var(--primary);
+      color: #25364c;
       font-size: var(--type-body);
       font-weight: 900;
       letter-spacing: -0.04em;
@@ -2899,19 +2913,57 @@
     .case-study-card {
       display: grid;
       grid-template-rows: auto auto 1fr auto;
+      position: relative;
       min-height: 360px;
       padding: 30px;
       background: rgba(255,255,255,0.92);
       border: 1px solid #d9e1eb;
       box-shadow: 0 18px 48px rgba(15, 35, 64, 0.08);
+      overflow: hidden;
+    }
+
+    .case-study-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), rgba(23,105,209,0.18) 34%, transparent 78%);
+    }
+
+    .case-study-card::after {
+      content: "";
+      position: absolute;
+      top: 22px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(23, 105, 209, 0.24);
+      box-shadow: inset 0 0 0 8px rgba(23,105,209,0.035);
+      pointer-events: none;
     }
 
     .case-study-category {
-      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #25364c;
       font-size: var(--type-body);
       font-weight: 900;
       letter-spacing: 0;
       margin-bottom: 18px;
+    }
+
+    .case-study-category::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 0 6px rgba(23,105,209,0.08);
+      flex: 0 0 auto;
     }
 
     .case-study-card h3 {
@@ -3922,6 +3974,7 @@
 
     .case-list li:hover::before {
       background: var(--primary);
+      width: 26px;
     }
 
     .case-list li.is-targeted {
@@ -3932,6 +3985,13 @@
 
     .case-list li.is-targeted::before {
       background: var(--primary);
+      width: 26px;
+    }
+
+    .case-list li:hover::after,
+    .case-list li.is-targeted::after {
+      border-color: rgba(23, 105, 209, 0.7);
+      box-shadow: 0 0 0 6px rgba(23,105,209,0.08);
     }
 
     .office-list li:hover {
@@ -4501,7 +4561,7 @@
           "title title"
           "issue issue";
         gap: 5px 12px;
-        padding: 14px 16px;
+        padding: 14px 16px 14px 44px;
         font-size: var(--type-body);
       }
 

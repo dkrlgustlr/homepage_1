@@ -111,6 +111,10 @@ assert(caseStudyCards.length === 6, "Cases page should show six representative c
 assert(casesHtml.includes("대표 사례") && casesHtml.includes("상황") && casesHtml.includes("쟁점") && casesHtml.includes("확인 포인트"), "Cases page should frame content as representative cases with situation, issue, and consultation points.");
 assert(!/<table class="sub-table">/.test(casesHtml) && !/(일자|상태|상담중|진행중|서류준비|2026\.06\.\d{2})/.test(casesHtml), "Cases page should remove progress-table dates and status wording.");
 assert(!casesHtml.includes("아래 내용은 개인정보를 제외한 상담 유형 예시입니다. 실제 진행 여부와 결과는 개별 상담에서 확인합니다."), "Case study section should not show the removed privacy/example notice.");
+const caseStudyCategoryBlock = getBlock(css, ".case-study-category");
+const mainCaseTypeBlock = getBlock(css, ".case-type");
+assert(!/color:\s*var\(--primary\)/.test(caseStudyCategoryBlock) && !/color:\s*var\(--primary\)/.test(mainCaseTypeBlock), "Case study labels should reduce blue text and use quieter typography.");
+assert(/\.case-study-card::before\s*{[\s\S]*?height:\s*2px[\s\S]*?background:\s*linear-gradient\(90deg,\s*var\(--primary\)/.test(css) && /\.case-study-card::after\s*{[\s\S]*?border:\s*1px solid rgba\(23,\s*105,\s*209/.test(css), "Case study cards should use subtle line and circle accents instead of large blue labels.");
 
 assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
 ["20", "2000", "95"].forEach((target) => {
