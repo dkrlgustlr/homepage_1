@@ -5286,9 +5286,11 @@
       }
 
       .footer-info li {
-        min-height: 58px;
         display: grid;
-        gap: 6px;
+        min-height: 76px;
+        padding: 14px 10px;
+        gap: 10px;
+        align-content: center;
         justify-content: start;
       }
 
@@ -5725,8 +5727,10 @@
 
       .footer-info li {
         display: grid;
-        min-height: 58px;
-        gap: 6px;
+        min-height: 76px;
+        padding: 14px 10px;
+        gap: 10px;
+        align-content: center;
         justify-content: start;
       }
 

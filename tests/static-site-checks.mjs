@@ -278,6 +278,7 @@ assert(!/예약|quick-icon naver|sideFloat/.test(footerHtml + layoutJs + css), "
 assert(footerHtml.includes("mockup_assets/icon-kakaotalk-talk-provided.png") && layoutJs.includes("mockup_assets/icon-kakaotalk-talk-provided.png"), "Floating side banner should use the user-provided TALK image.");
 assert(footerHtml.includes("mockup_assets/icon-phone-blue.png") && layoutJs.includes("mockup_assets/icon-phone-blue.png"), "Floating phone action should use the local blue phone icon.");
 assert(!/bottom-consult-phone[\s\S]*?phone-mark/.test(footerHtml) && !/bottom-consult-phone[\s\S]*?phone-mark/.test(layoutJs), "Bottom consultation phone label should not show an icon before the representative phone number.");
+assert(/\.footer-info li\s*{[\s\S]*?min-height:\s*76px[\s\S]*?padding:\s*14px 10px[\s\S]*?gap:\s*10px[\s\S]*?align-content:\s*center/.test(css), "Mobile footer business rows should keep enough vertical spacing between label and value.");
 assert(kakaoIconBytes.length > 1000, "Blue TALK icon asset should be present.");
 assert(phoneIconBytes.length > 500, "Blue phone icon asset should be present.");
 assert(/\.quick-icon\.kakao img\s*{[\s\S]*?object-fit:\s*contain/.test(css), "Kakao TALK icon should not be cropped.");
