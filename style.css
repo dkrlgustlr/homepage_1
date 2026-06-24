@@ -4850,6 +4850,7 @@
       .case-list-window {
         --case-row-h: 116px;
         --case-visible-rows: 4;
+        height: calc((var(--case-row-h) * var(--case-visible-rows)) + 44px);
         margin-top: 0;
         padding: 20px 26px 24px;
         background: #fff;
@@ -5197,6 +5198,7 @@
       .case-list-window {
         --case-row-h: 140px;
         --case-visible-rows: 3;
+        height: calc((var(--case-row-h) * var(--case-visible-rows)) + 36px);
         padding: 16px 18px 20px;
       }
 
