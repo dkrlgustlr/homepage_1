@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260625-mobile37";
+  const INCLUDE_VERSION = "20260625-mobile38";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -1039,11 +1039,22 @@
   };
 
   const initConsultPageSnap = () => {
-    const page = document.querySelector(".consult-page");
-    if (!page) return;
+    const pageConfigs = [
+      {
+        pageSelector: ".home-page",
+        sectionSelector: ".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer"
+      },
+      {
+        pageSelector: ".consult-page",
+        sectionSelector: ".consult-reference-section, .footer"
+      }
+    ];
+    const pageConfig = pageConfigs.find((config) => document.querySelector(config.pageSelector));
+    if (!pageConfig) return;
 
+    const page = document.querySelector(pageConfig.pageSelector);
     const snapSections = Array.from(page.children).filter((section) => (
-      section.matches(".consult-reference-section, .footer")
+      section.matches(pageConfig.sectionSelector)
     ));
     if (snapSections.length < 2) return;
 
@@ -1059,10 +1070,12 @@
       return stickyBar ? Math.ceil(stickyBar.getBoundingClientRect().height) : 0;
     };
     const usableViewportHeight = () => Math.max(360, window.innerHeight - stickyConsultHeight());
-    const isMobileSnapDisabled = () => window.matchMedia("(max-width: 768px)").matches;
+    const isMobileSnapDisabled = () => window.matchMedia("(max-width: 1024px)").matches;
+    const isSnapIgnoredTarget = (target) => Boolean(target?.closest("input, select, textarea, button, [contenteditable='true'], .custom-select-list"));
     const shouldUseSnap = () => (
       !isMobileSnapDisabled() &&
       window.matchMedia("(min-width: 1025px)").matches &&
+      !document.documentElement.classList.contains("mobile-nav-open") &&
       !document.documentElement.classList.contains("privacy-modal-open") &&
       !document.documentElement.classList.contains("knowledge-modal-open")
     );
@@ -1124,6 +1137,7 @@
 
     window.addEventListener("wheel", (event) => {
       if (!shouldUseSnap() || event.ctrlKey || Math.abs(event.deltaY) < 14) return;
+      if (isSnapIgnoredTarget(event.target)) return;
       if (snapLocked) {
         event.preventDefault();
         return;
@@ -1134,6 +1148,7 @@
 
     window.addEventListener("keydown", (event) => {
       if (!shouldUseSnap()) return;
+      if (isSnapIgnoredTarget(document.activeElement)) return;
       const downKeys = ["ArrowDown", "PageDown", "Space"];
       const upKeys = ["ArrowUp", "PageUp"];
       if (![...downKeys, ...upKeys].includes(event.code)) return;
@@ -1147,6 +1162,7 @@
 
     window.addEventListener("pointerdown", (event) => {
       if (!shouldUseSnap()) return;
+      if (isSnapIgnoredTarget(event.target)) return;
       if (event.pointerType === "mouse" && event.button !== 0) return;
       pointerStartY = event.clientY;
       pointerStartX = event.clientX;
@@ -1165,6 +1181,7 @@
 
     window.addEventListener("touchstart", (event) => {
       if (!shouldUseSnap()) return;
+      if (isSnapIgnoredTarget(event.target)) return;
       const touch = event.touches[0];
       if (!touch) return;
       touchStartY = touch.clientY;

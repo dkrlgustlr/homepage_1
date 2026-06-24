@@ -87,9 +87,10 @@ const siteText = [indexHtml, aboutHtml, casesHtml, knowledgeHtml, consultHtml, f
 
 assert((indexHtml.match(/<h1[\s>]/g) || []).length === 1, "index.html should have exactly one h1.");
 assert(
-  !indexHtml.includes(".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer") ||
-  !indexHtml.includes("snapToSection"),
-  "Index page should preserve natural scrolling instead of hijacking movement with full-page section snap."
+  /<main[^>]*class="[^"]*\bhome-page\b[^"]*"/.test(indexHtml) &&
+  layoutJs.includes(".home-page") &&
+  layoutJs.includes(".hero, .case-section, .knowledge-row, .consult-section, .location-section, .footer"),
+  "Index page should expose desktop-only section snap targets through the shared layout script."
 );
 pages.forEach(([file, html]) => {
   assert((html.match(/<h1[\s>]/g) || []).length === 1, `${file} should have exactly one h1.`);
@@ -270,8 +271,10 @@ assert(consultHtml.includes("layout.js?v=") && layoutJs.includes("initConsultPag
 assert(layoutJs.includes("initConsultPageSnap") && layoutJs.includes(".consult-page") && layoutJs.includes(".consult-reference-section, .footer"), "Consult page should keep desktop-only snap targets between the consultation section and footer.");
 assert(layoutJs.includes('window.addEventListener("wheel"') && layoutJs.includes('window.addEventListener("keydown"') && layoutJs.includes('window.addEventListener("touchend"'), "Consult page snap should support wheel, keyboard, and touch navigation.");
 assert(layoutJs.includes("targetSectionIndex") && layoutJs.includes("snapTolerance") && layoutJs.includes("sectionTop(snapSections[index]) > scrollTop + snapTolerance"), "Consult page snap should choose the next section by scroll direction so partial positions still snap one section at a time.");
-assert(!indexHtml.includes("isMobileSnapDisabled") && !indexHtml.includes("snapToSection"), "Main page should not install a section snap controller.");
-assert(layoutJs.includes("isMobileSnapDisabled") && /const shouldUseSnap\s*=\s*\(\)\s*=>\s*\([\s\S]*?!\s*isMobileSnapDisabled\(\)[\s\S]*?window\.matchMedia\("\(min-width:\s*1025px\)"\)\.matches/.test(layoutJs), "Consult page section snap should explicitly disable itself on the 768px mobile layout.");
+assert(!indexHtml.includes("snapToSection"), "Main page should use the shared layout snap controller instead of inline section snap code.");
+assert(layoutJs.includes("isMobileSnapDisabled") && /const isMobileSnapDisabled\s*=\s*\(\)\s*=>\s*window\.matchMedia\("\(max-width:\s*1024px\)"\)\.matches/.test(layoutJs), "Section snap should explicitly disable itself on tablet and mobile layouts.");
+assert(/const shouldUseSnap\s*=\s*\(\)\s*=>\s*\([\s\S]*?!\s*isMobileSnapDisabled\(\)[\s\S]*?window\.matchMedia\("\(min-width:\s*1025px\)"\)\.matches[\s\S]*?!document\.documentElement\.classList\.contains\("mobile-nav-open"\)/.test(layoutJs), "Section snap should run only on PC widths and stay inactive while overlays are open.");
+assert(layoutJs.includes("const isSnapIgnoredTarget") && layoutJs.includes("input, select, textarea, button, [contenteditable='true']"), "Section snap should ignore interactive controls so forms and menus stay usable.");
 assert(/@media \(max-width:\s*768px\)[\s\S]*?\.knowledge-row\s*{[\s\S]*?max-width:\s*none[\s\S]*?padding-left:\s*0[\s\S]*?padding-right:\s*0[\s\S]*?\.knowledge-left,\s*\.knowledge-right\s*{[\s\S]*?width:\s*100%[\s\S]*?max-width:\s*none/.test(css), "Mobile knowledge section background should span the full viewport while inner widgets remain constrained.");
 assert(/window\.addEventListener\("wheel"[\s\S]*?if \(snapLocked\) \{[\s\S]*?event\.preventDefault\(\);[\s\S]*?return;[\s\S]*?\}/.test(layoutJs), "Consult page wheel snap should block native scrolling while a smooth snap is already in progress.");
 assert(/window\.addEventListener\("keydown"[\s\S]*?if \(snapLocked\) \{[\s\S]*?event\.preventDefault\(\);[\s\S]*?return;[\s\S]*?\}/.test(layoutJs), "Consult page keyboard snap should block repeated key scrolling while a smooth snap is already in progress.");
