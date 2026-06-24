@@ -123,6 +123,12 @@ assert(indexHtml.includes("layout.js?v=") && layoutJs.includes("initMainKnowledg
 assert(layoutJs.includes("animateCards") && layoutJs.includes("is-topic-entering"), "Main knowledge tab changes should trigger the card rise animation class.");
 assert(/@keyframes knowledgeCardRise[\s\S]*?translateY\(30px\)[\s\S]*?translateY\(0\)/.test(css) && /\.column-grid\.is-topic-entering \.column-card/.test(css), "Main knowledge cards should rise in when a filter changes.");
 
+assert((indexHtml.match(/data-case-target="/g) || []).length === 7, "Main case menu should expose seven clickable status topics.");
+assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-case-status-description") && indexHtml.includes("data-case-status-list"), "Main case status panel should expose replaceable title, description, and list targets.");
+assert(indexHtml.includes("CASE_STATUS_DATA") && indexHtml.includes("renderCaseStatus") && indexHtml.includes("caseList.replaceChildren"), "Main case menu should replace the right-side status rows by selected topic.");
+assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S]*?translateY\(24px\)[\s\S]*?translateY\(0\)/.test(css), "Main case status changes should rise in with a dedicated animation.");
+assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
+
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(indexHtml), "Main page consultation form should require privacy consent.");

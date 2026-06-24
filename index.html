@@ -164,7 +164,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260624-location-no-grid1">
+  <link rel="stylesheet" href="style.css?v=20260624-case-tabs1">
 </head>
 <body>
   <div class="page">
@@ -208,20 +208,20 @@
           <div class="case-left">
             <div class="line"></div>
             <ul class="case-menu">
-              <li class="active" data-case-target="recovery"><button class="case-tab" type="button">개인회생</button></li>
-              <li data-case-target="bankruptcy"><button class="case-tab" type="button">개인파산</button></li>
-              <li data-case-target="seizure"><button class="case-tab" type="button">압류·추심 대응</button></li>
-              <li data-case-target="worker"><button class="case-tab" type="button">직장인 채무</button></li>
-              <li data-case-target="business"><button class="case-tab" type="button">자영업자 채무</button></li>
-              <li data-case-target="immunity"><button class="case-tab" type="button">면책 검토</button></li>
-              <li data-case-target="correction"><button class="case-tab" type="button">보정권고 대응</button></li>
+              <li data-case-target="recovery"><button class="case-tab" type="button" aria-pressed="false">개인회생</button></li>
+              <li data-case-target="bankruptcy"><button class="case-tab" type="button" aria-pressed="false">개인파산</button></li>
+              <li class="active" data-case-target="seizure"><button class="case-tab" type="button" aria-pressed="true">압류·추심 대응</button></li>
+              <li data-case-target="worker"><button class="case-tab" type="button" aria-pressed="false">직장인 채무</button></li>
+              <li data-case-target="business"><button class="case-tab" type="button" aria-pressed="false">자영업자 채무</button></li>
+              <li data-case-target="immunity"><button class="case-tab" type="button" aria-pressed="false">면책 검토</button></li>
+              <li data-case-target="correction"><button class="case-tab" type="button" aria-pressed="false">보정권고 대응</button></li>
             </ul>
           </div>
-          <div class="case-right">
+          <div class="case-right" data-case-status-panel>
             <div class="box-top">
               <div class="page-title">
-                <h2>상담·사건 진행 현황</h2>
-                <p class="section-headline">채권추심부터 통장압류까지<br><strong>현재 상황별로 정리하고 있습니다.</strong></p>
+                <h2 data-case-status-title>상담·사건 진행 현황</h2>
+                <p class="section-headline" data-case-status-description>채권추심부터 통장압류까지<br><strong>현재 상황별로 정리하고 있습니다.</strong></p>
               </div>
             </div>
             <div class="case-doc-meta">
@@ -231,8 +231,8 @@
               <span>일자</span>
               <span>상태</span>
             </div>
-            <div class="case-list-window" aria-label="상담 사건 진행 현황 자동 순환 목록">
-              <ul class="case-list">
+            <div class="case-list-window" aria-label="상담 사건 진행 현황 목록">
+              <ul class="case-list" data-case-status-list aria-live="polite">
                 <li data-case-key="recovery"><a><span class="case-type">개인회생</span><span class="case-title">급여압류 전 금지명령과 변제계획 상담</span><span class="case-step">신청요건 검토</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">상담중</span></a></li>
                 <li data-case-key="business"><a><span class="case-type">자영업자</span><span class="case-title">폐업 후 카드채무·대출채무 정리 문의</span><span class="case-step">채무자료 확인</span><span class="case-date">2026.06.19</span><span class="case-result status-wait">서류준비</span></a></li>
                 <li data-case-key="seizure"><a><span class="case-type">압류대응</span><span class="case-title">통장압류 예정 상태의 긴급 대응 상담</span><span class="case-step">압류 대응 안내</span><span class="case-date">2026.06.18</span><span class="case-result status-progress">진행중</span></a></li>
@@ -521,8 +521,91 @@
       updateScrollEffects();
 
       const caseMenuItems = Array.from(document.querySelectorAll(".case-menu li[data-case-target]"));
-      const caseListItems = Array.from(document.querySelectorAll(".case-list li[data-case-key]"));
       const caseMenu = document.querySelector(".case-menu");
+      const casePanel = document.querySelector("[data-case-status-panel]");
+      const caseTitle = document.querySelector("[data-case-status-title]");
+      const caseDescription = document.querySelector("[data-case-status-description]");
+      const caseList = document.querySelector("[data-case-status-list]");
+
+      const CASE_STATUS_DATA = {
+        recovery: {
+          title: "개인회생 진행 현황",
+          headline: ["소득과 채무 규모를 기준으로", "월 변제 가능성을 정리하고 있습니다."],
+          rows: [
+            ["개인회생", "급여압류 전 금지명령과 변제계획 상담", "신청요건 검토", "2026.06.19", "상담중", "status-wait"],
+            ["개인회생", "급여소득자의 카드·대출채무 변제계획 상담", "소득자료 확인", "2026.06.15", "진행중", "status-progress"],
+            ["개인회생", "변제계획 인가 후 월 납부 일정 안내", "인가 결정", "2026.06.09", "완료", "status-done"],
+            ["직장인 채무", "장기연체 후 월 변제금 조정 검토", "소득자료 정리", "2026.06.08", "진행중", "status-progress"],
+            ["보정권고", "누락 소득자료 보완 후 사건 재정리", "법원 제출 보완", "2026.06.06", "완료", "status-done"]
+          ]
+        },
+        bankruptcy: {
+          title: "개인파산 진행 현황",
+          headline: ["재산·소득·채무 발생 원인을 함께 보고", "면책 가능성을 단계별로 확인합니다."],
+          rows: [
+            ["개인파산", "고령·질병 사유가 있는 면책 가능성 검토", "면책요건 확인", "2026.06.17", "상담중", "status-wait"],
+            ["개인파산", "면책 결정 후 채무 정리 절차 안내", "면책 확정", "2026.06.10", "완료", "status-done"],
+            ["면책검토", "장기연체 채무자의 파산·면책 가능성 문의", "재산자료 정리", "2026.06.14", "상담중", "status-wait"],
+            ["개인파산", "소득 단절 이후 생활비와 채무자료 정리", "자료 취합", "2026.06.07", "서류준비", "status-wait"],
+            ["보정권고", "법원 보정권고 수령 후 제출자료 보완", "보완 제출", "2026.06.05", "완료", "status-done"]
+          ]
+        },
+        seizure: {
+          title: "압류·추심 대응 현황",
+          headline: ["채권추심부터 통장압류까지", "현재 상황별로 정리하고 있습니다."],
+          rows: [
+            ["압류대응", "통장압류 예정 상태의 긴급 대응 상담", "압류 대응 안내", "2026.06.18", "진행중", "status-progress"],
+            ["추심대응", "채권추심 연락이 계속되는 상황의 대응 안내", "금지명령 검토", "2026.06.13", "진행중", "status-progress"],
+            ["압류대응", "금지명령 인용 후 채권추심 중단 안내", "금지명령 인용", "2026.06.08", "완료", "status-done"],
+            ["통장압류", "압류 계좌에서 생활비 확보 가능성 검토", "압류범위 확인", "2026.06.07", "상담중", "status-wait"],
+            ["급여압류", "회사 송달 전 확인해야 할 지급일과 채권자", "송달 단계 확인", "2026.06.05", "서류준비", "status-wait"]
+          ]
+        },
+        worker: {
+          title: "직장인 채무 상담 현황",
+          headline: ["급여와 생활비 흐름을 기준으로", "압류 위험과 변제 여력을 함께 봅니다."],
+          rows: [
+            ["직장인 채무", "장기연체 후 월 변제금 조정 검토", "소득자료 정리", "2026.06.18", "진행중", "status-progress"],
+            ["급여압류", "회사로 급여압류가 송달되기 전 확인할 점", "송달 단계 확인", "2026.06.16", "상담중", "status-wait"],
+            ["개인회생", "급여소득자의 카드·대출채무 변제계획 상담", "소득자료 확인", "2026.06.15", "진행중", "status-progress"],
+            ["추심대응", "퇴근 후 반복되는 추심 연락 대응 안내", "연락 내역 정리", "2026.06.11", "완료", "status-done"],
+            ["보정권고", "급여명세와 입금내역 차이 보완", "소득자료 보완", "2026.06.09", "완료", "status-done"]
+          ]
+        },
+        business: {
+          title: "자영업자 채무 상담 현황",
+          headline: ["매출·비용·보증채무를 나누어", "폐업 전후 정리 방향을 잡습니다."],
+          rows: [
+            ["자영업자", "폐업 후 카드채무·대출채무 정리 문의", "채무자료 확인", "2026.06.19", "서류준비", "status-wait"],
+            ["자영업자", "매장 폐업 후 남은 보증채무 정리 상담", "채무내역 취합", "2026.06.12", "서류준비", "status-wait"],
+            ["개인회생", "사업소득 변동이 큰 상황의 변제계획 검토", "매출자료 확인", "2026.06.10", "진행중", "status-progress"],
+            ["압류대응", "사업자 계좌 압류 예정 통지 후 대응 상담", "계좌내역 정리", "2026.06.08", "상담중", "status-wait"],
+            ["면책검토", "폐업 이후 남은 대출채무 면책 가능성 검토", "재산자료 정리", "2026.06.06", "진행중", "status-progress"]
+          ]
+        },
+        immunity: {
+          title: "면책 검토 진행 현황",
+          headline: ["채무 발생 원인과 재산 변동을 확인해", "남은 채무 책임 정리 가능성을 검토합니다."],
+          rows: [
+            ["면책검토", "장기연체 채무자의 파산·면책 가능성 문의", "재산자료 정리", "2026.06.14", "상담중", "status-wait"],
+            ["개인파산", "고령·질병 사유가 있는 면책 가능성 검토", "면책요건 확인", "2026.06.17", "상담중", "status-wait"],
+            ["개인파산", "면책 결정 후 채무 정리 절차 안내", "면책 확정", "2026.06.10", "완료", "status-done"],
+            ["면책검토", "최근 거래와 재산처분 내역 사전 점검", "거래내역 확인", "2026.06.09", "진행중", "status-progress"],
+            ["보정권고", "면책 관련 소명자료 보완 후 제출", "소명자료 보완", "2026.06.07", "완료", "status-done"]
+          ]
+        },
+        correction: {
+          title: "보정권고 대응 현황",
+          headline: ["법원 요청사항과 제출기한을 기준으로", "누락 자료를 빠르게 보완합니다."],
+          rows: [
+            ["보정권고", "누락 소득자료 보완 후 사건 재정리", "법원 제출 보완", "2026.06.16", "완료", "status-done"],
+            ["보정권고", "법원 보정권고 수령 후 제출자료 보완", "보완 제출", "2026.06.11", "완료", "status-done"],
+            ["개인회생", "변제계획 산정 근거 보완 상담", "산정자료 보완", "2026.06.09", "진행중", "status-progress"],
+            ["개인파산", "재산목록 누락 항목 확인 후 보정", "재산자료 확인", "2026.06.07", "상담중", "status-wait"],
+            ["면책검토", "채무 발생 경위 소명자료 정리", "소명자료 정리", "2026.06.05", "서류준비", "status-wait"]
+          ]
+        }
+      };
 
       const moveCaseMarker = (item) => {
         if (!caseMenu || !item) return;
@@ -530,25 +613,65 @@
         caseMenu.style.setProperty("--marker-y", `${markerY}px`);
       };
 
-      const activateCaseMenu = (item) => {
-        const target = item.dataset.caseTarget;
-        caseMenuItems.forEach((menuItem) => menuItem.classList.toggle("active", menuItem === item));
-        moveCaseMarker(item);
-        caseListItems.forEach((caseItem) => caseItem.classList.remove("is-targeted"));
+      const createCaseStatusRow = ([type, title, step, date, status, statusClass], index) => {
+        const item = document.createElement("li");
+        item.dataset.caseKey = type;
+        if (index === 0) item.classList.add("is-targeted");
 
-        const targetCase = caseListItems.find((caseItem) => {
-          const keys = (caseItem.dataset.caseKey || "").split(/\s+/);
-          return keys.includes(target);
+        const link = document.createElement("a");
+        [
+          ["case-type", type],
+          ["case-title", title],
+          ["case-step", step],
+          ["case-date", date],
+          [`case-result ${statusClass}`, status]
+        ].forEach(([className, text]) => {
+          const span = document.createElement("span");
+          span.className = className;
+          span.textContent = text;
+          link.append(span);
         });
 
-        if (!targetCase) return;
-        targetCase.classList.add("is-targeted");
+        item.append(link);
+        return item;
+      };
+
+      const animateCaseStatus = () => {
+        if (!casePanel) return;
+        casePanel.classList.remove("is-case-changing");
+        void casePanel.offsetWidth;
+        casePanel.classList.add("is-case-changing");
+        window.setTimeout(() => {
+          casePanel.classList.remove("is-case-changing");
+        }, 620);
+      };
+
+      const renderCaseStatus = (target, animate = true) => {
+        if (!caseTitle || !caseDescription || !caseList) return;
+        const topic = CASE_STATUS_DATA[target] || CASE_STATUS_DATA.seizure;
+        caseTitle.textContent = topic.title;
+        caseDescription.replaceChildren(
+          document.createTextNode(topic.headline[0]),
+          document.createElement("br"),
+          Object.assign(document.createElement("strong"), { textContent: topic.headline[1] })
+        );
+        caseList.replaceChildren(...topic.rows.map(createCaseStatusRow));
+        if (animate) animateCaseStatus();
       };
 
       caseMenuItems.forEach((item) => {
         const button = item.querySelector(".case-tab");
         if (!button) return;
-        button.addEventListener("click", () => activateCaseMenu(item));
+        button.addEventListener("click", () => {
+          const target = item.dataset.caseTarget;
+          caseMenuItems.forEach((menuItem) => {
+            const active = menuItem === item;
+            menuItem.classList.toggle("active", active);
+            menuItem.querySelector(".case-tab")?.setAttribute("aria-pressed", String(active));
+          });
+          moveCaseMarker(item);
+          renderCaseStatus(target, true);
+        });
       });
 
       const syncCaseMarker = () => {
@@ -556,6 +679,10 @@
         moveCaseMarker(activeItem);
       };
 
+      const activeCaseItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
+      if (activeCaseItem) {
+        renderCaseStatus(activeCaseItem.dataset.caseTarget, false);
+      }
       requestAnimationFrame(syncCaseMarker);
 
       let markerTicking = false;
