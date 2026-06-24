@@ -84,7 +84,7 @@
     </div>
   </div>
   <div class="footer-contact">
-    <div class="call">1588-5986<span>FAX. 1588-5986</span></div>
+    <div class="call">1588-5986<span>FAX. 0504-470-9628</span></div>
     <ul class="footer-info">
       <li><strong>대표 법무사</strong><span>권선기</span></li>
       <li><strong>사업자등록번호</strong><span>577-53-00864</span></li>
