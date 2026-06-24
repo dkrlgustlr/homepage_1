@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 date_default_timezone_set('Asia/Seoul');
 
-const OFFICE_EMAIL = 'kkkk9628@nate.com';
+const OFFICE_EMAIL = 'hyeonsik1234@naver.com';
 
 function jsonResponse(bool $ok, string $message, int $statusCode = 200): void
 {
