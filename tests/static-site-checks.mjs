@@ -183,6 +183,8 @@ assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S
 assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu\s*{[\s\S]*?display:\s*flex[\s\S]*?overflow-x:\s*auto[\s\S]*?scroll-snap-type:\s*x mandatory/.test(css), "Mobile case menu should become a horizontal swipe carousel.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu li\s*{[\s\S]*?flex:\s*0 0 clamp\(156px,\s*42vw,\s*220px\)[\s\S]*?scroll-snap-align:\s*start/.test(css), "Mobile case carousel items should have stable snap widths.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-left\s*{[\s\S]*?background:\s*#fff[\s\S]*?padding:\s*52px 0 20px/.test(css) && /@media \(max-width:\s*1024px\)[\s\S]*?\.case-left::before,\s*\.case-left::after,\s*\.case-menu::before,\s*\.case-menu::after\s*{[\s\S]*?display:\s*none/.test(css), "Mobile case tabs should sit lower on a clean white panel without the desktop dark grid treatment.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-tab\s*{[\s\S]*?background:\s*#fff[\s\S]*?border:\s*1px solid #d9e1eb[\s\S]*?color:\s*#10233e/.test(css), "Mobile case tabs should use the white subpage card language instead of dark inactive buttons.");
 assert(indexHtml.includes("scrollIntoView") && indexHtml.includes("inline: \"center\""), "Clicking a mobile case carousel item should center the active tab.");
 assert(!/\.case-list li::(before|after)/.test(css), "Main case rows should not show left-side line or circle timeline decorations.");
 const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
