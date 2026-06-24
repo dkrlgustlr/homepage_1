@@ -106,10 +106,11 @@ assert(!/(031-211-5230|031-211-5233|0312115230|01065509628|\+82-31-211)/.test(si
 assert(indexHtml.includes("영업시간") && indexHtml.includes("월-금 09:30 - 18:00") && indexHtml.includes("토·일 정기휴무"), "Location section should show office hours instead of the building row.");
 assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자</small>"), "Location section should not show the old building row.");
 
-const caseProgressTypes = [...casesHtml.matchAll(/<tr><td class="accent">([^<]+)<\/td><td>[\s\S]*?<\/tr>/g)].map((match) => match[1]);
-const uniqueCaseProgressTypes = [...new Set(caseProgressTypes)];
-assert(uniqueCaseProgressTypes.length === 3 && ["개인회생", "개인파산", "압류대응"].every((type) => uniqueCaseProgressTypes.includes(type)), "Case progress business types should be grouped into 개인회생, 개인파산, 압류대응.");
-assert(!casesHtml.includes("아래 내용은 개인정보를 제외한 상담 유형 예시입니다. 실제 진행 여부와 결과는 개별 상담에서 확인합니다."), "Case progress section should not show the removed privacy/example notice.");
+const caseStudyCards = casesHtml.match(/<article class="case-study-card"/g) || [];
+assert(caseStudyCards.length === 6, "Cases page should show six representative case-study cards instead of a progress table.");
+assert(casesHtml.includes("대표 사례") && casesHtml.includes("상황") && casesHtml.includes("쟁점") && casesHtml.includes("확인 포인트"), "Cases page should frame content as representative cases with situation, issue, and consultation points.");
+assert(!/<table class="sub-table">/.test(casesHtml) && !/(일자|상태|상담중|진행중|서류준비|2026\.06\.\d{2})/.test(casesHtml), "Cases page should remove progress-table dates and status wording.");
+assert(!casesHtml.includes("아래 내용은 개인정보를 제외한 상담 유형 예시입니다. 실제 진행 여부와 결과는 개별 상담에서 확인합니다."), "Case study section should not show the removed privacy/example notice.");
 
 assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
 ["20", "2000", "95"].forEach((target) => {
@@ -168,6 +169,9 @@ assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-
 assert(indexHtml.includes("CASE_STATUS_DATA") && indexHtml.includes("renderCaseStatus") && indexHtml.includes("caseList.replaceChildren"), "Main case menu should replace the right-side status rows by selected topic.");
 assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S]*?translateY\(24px\)[\s\S]*?translateY\(0\)/.test(css), "Main case status changes should rise in with a dedicated animation.");
 assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
+const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
+assert(!/(일자|상태|상담중|진행중|2026\.06\.\d{2})/.test(mainCaseSection), "Main case section should remove progress dates and status labels.");
+assert(mainCaseSection.includes("대표 사례") && mainCaseSection.includes("쟁점") && mainCaseSection.includes("확인 포인트"), "Main case section should present representative cases and consultation points.");
 const caseStatusDataSource = indexHtml.slice(indexHtml.indexOf("const CASE_STATUS_DATA"), indexHtml.indexOf("const moveCaseMarker"));
 Object.entries({
   recovery: "개인회생",
@@ -181,6 +185,7 @@ Object.entries({
   const topicBlock = getObjectBlock(caseStatusDataSource, topic);
   const rowTypes = [...topicBlock.matchAll(/\n\s*\["([^"]+)"/g)].map((match) => match[1]);
   assert(rowTypes.length === 5 && rowTypes.every((type) => type === label), `Main case tab ${topic} should show only ${label} rows.`);
+  assert(!/2026\.06\.\d{2}|상담중|진행중|status-/.test(topicBlock), `Main case tab ${topic} should not use progress dates or status labels.`);
 });
 
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");

@@ -1146,7 +1146,7 @@
     }
 
     .case-right {
-      --case-table-cols: minmax(104px, 140px) minmax(0, 1fr) minmax(92px, 122px) minmax(58px, 82px);
+      --case-table-cols: minmax(112px, 152px) minmax(0, 1fr) minmax(112px, 150px) minmax(150px, 190px);
       --case-frame-bottom: clamp(10px, 1.6vh, 16px);
       --case-content-drop: 30px;
       position: relative;
@@ -1386,7 +1386,7 @@
       white-space: nowrap;
     }
 
-    .case-date {
+    .case-issue {
       justify-self: stretch;
       display: flex;
       align-items: center;
@@ -1399,7 +1399,7 @@
       white-space: nowrap;
     }
 
-    .case-result {
+    .case-point {
       justify-self: stretch;
       display: flex;
       align-items: center;
@@ -1413,7 +1413,7 @@
       font-size: var(--type-body);
       font-weight: 900;
       text-align: center;
-      white-space: nowrap;
+      line-height: 1.35;
     }
 
     .case-result.status-wait {
@@ -2888,6 +2888,80 @@
     .sub-card ul {
       margin: 0;
       padding: 0;
+    }
+
+    .case-study-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .case-study-card {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      min-height: 360px;
+      padding: 30px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid #d9e1eb;
+      box-shadow: 0 18px 48px rgba(15, 35, 64, 0.08);
+    }
+
+    .case-study-category {
+      color: var(--primary);
+      font-size: var(--type-body);
+      font-weight: 900;
+      letter-spacing: 0;
+      margin-bottom: 18px;
+    }
+
+    .case-study-card h3 {
+      margin: 0 0 18px;
+      color: #1f2328;
+      font-size: var(--type-subtitle);
+      line-height: var(--leading-subtitle);
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .case-study-card > p {
+      margin: 0 0 24px;
+      color: #5b6674;
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      font-weight: 650;
+    }
+
+    .case-study-card dl {
+      margin: 0;
+      display: grid;
+      gap: 0;
+      border-top: 1px solid #d8e0ea;
+    }
+
+    .case-study-card dl > div {
+      display: grid;
+      grid-template-columns: 92px minmax(0, 1fr);
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid #d8e0ea;
+    }
+
+    .case-study-card dt,
+    .case-study-card dd {
+      margin: 0;
+      font-size: var(--type-body);
+      line-height: 1.6;
+      letter-spacing: 0;
+    }
+
+    .case-study-card dt {
+      color: #17243a;
+      font-weight: 900;
+    }
+
+    .case-study-card dd {
+      color: #526072;
+      font-weight: 700;
     }
 
     .sub-table {
@@ -4423,9 +4497,9 @@
       .case-list a {
         grid-template-columns: 1fr auto;
         grid-template-areas:
-          "type date"
+          "type point"
           "title title"
-          "step result";
+          "issue issue";
         gap: 5px 12px;
         padding: 14px 16px;
         font-size: var(--type-body);
@@ -4437,9 +4511,8 @@
 
       .case-type { grid-area: type; }
       .case-title { grid-area: title; display: block; justify-self: start; text-align: left; }
-      .case-step { grid-area: step; display: block; justify-self: start; text-align: left; }
-      .case-date { grid-area: date; display: block; justify-self: end; text-align: right; }
-      .case-result { grid-area: result; display: block; align-self: center; justify-self: end; text-align: right; }
+      .case-issue { grid-area: issue; display: block; justify-self: start; text-align: left; }
+      .case-point { grid-area: point; display: block; align-self: center; justify-self: end; text-align: right; }
 
       .box-top {
         gap: 24px;
@@ -4690,14 +4763,13 @@
         grid-template-areas:
           "type"
           "title"
-          "step"
-          "date"
-          "result";
+          "issue"
+          "point";
         align-content: center;
       }
 
-      .case-date,
-      .case-result {
+      .case-issue,
+      .case-point {
         justify-self: start;
       }
 
@@ -4966,6 +5038,7 @@
       }
 
       .sub-grid,
+      .case-study-grid,
       .service-area-grid,
       .faq-list,
       .article-list {
@@ -5004,6 +5077,7 @@
       }
 
       .sub-grid,
+      .case-study-grid,
       .service-area-grid,
       .faq-list,
       .article-list {
@@ -5015,6 +5089,7 @@
       }
 
       .sub-card,
+      .case-study-card,
       .service-area-card,
       .faq-item,
       .sub-consult-panel,
