@@ -71,6 +71,7 @@ const footerHtml = read("footer.html");
 const headerHtml = read("header.html");
 const css = read("style.css");
 const layoutJs = read("layout.js");
+const sitemapXml = read("sitemap.xml");
 const kakaoIconBytes = readFileSync(resolve(root, "mockup_assets/icon-kakaotalk-talk-provided.png"));
 const phoneIconBytes = readFileSync(resolve(root, "mockup_assets/icon-phone-blue.png"));
 const pages = [
@@ -93,10 +94,11 @@ pages.forEach(([file, html]) => {
 });
 
 assert(siteText.includes("1588-5986"), "The site should display the unified representative phone number.");
+assert(siteText.includes("카드대금") && siteText.includes("카드값"), "The site should include both the formal 카드대금 term and the colloquial 카드값 search term.");
 assert(siteText.includes("20년 경력"), "The site should mention the provided 20-year experience claim.");
 assert(siteText.includes("2천 건 이상 상담·처리 경험"), "The site should mention the provided 2,000+ consultation/handling experience claim.");
 assert(siteText.includes("95% 승률"), "The site should include the provided 95% win-rate claim.");
-assert(/채권추심/.test(siteText) && /카드값 연체/.test(siteText) && /통장압류/.test(siteText), "The site should reflect the priority emergency debt situations.");
+assert(/채권추심/.test(siteText) && /카드대금\(카드값\) 연체/.test(siteText) && /통장압류/.test(siteText), "The site should reflect the priority emergency debt situations.");
 assert(/직장인/.test(siteText) && /자영업자/.test(siteText) && /프리랜서/.test(siteText) && /일용직/.test(siteText), "The site should reflect the supported customer work types.");
 assert(/주식·코인·도박 채무 상담/.test(siteText), "The site should reflect stock, crypto, and gambling debt consultation wording.");
 assert(/전화상담 후 방문 상담/.test(siteText), "The site should state the phone-first visit consultation flow.");
@@ -315,7 +317,19 @@ const knowledgeItemList = knowledgeGraph.find((node) => node["@id"] === "https:/
 const knowledgeArticles = knowledgeItemList?.itemListElement?.map((entry) => entry.item) || [];
 assert(knowledgeArticles.length === 15, "Knowledge structured data should describe the fifteen active knowledge cards.");
 assert(knowledgeArticles.every((article) => article.headline && article.description && article.image && article.keywords && article.about && article.mentions && article.mainEntityOfPage && article.datePublished && article.dateModified), "Each knowledge Article should include headline, description, image, keywords, entities, canonical page reference, and dates.");
+assert(knowledgeArticles.every((article) => article.articleBody && article.articleBody.length >= 250), "Each knowledge Article should expose its modal body text through articleBody for search and answer engines.");
 assert(knowledgeArticles.some((article) => /급여압류 통장압류/.test(article.keywords)) && knowledgeArticles.some((article) => /지급명령 이의신청/.test(article.keywords)) && knowledgeArticles.some((article) => /압류통장 생활비/.test(article.keywords)), "Knowledge Article keywords should target practical search and answer queries.");
+
+pages.forEach(([file, html]) => {
+  const structuredData = getStructuredData(html);
+  const legalService = structuredData?.["@graph"]?.find((node) => node["@id"] === "https://dkrlgustlr.github.io/homepage_1/#legalservice");
+  const areaNames = legalService?.areaServed?.map((area) => area.name) || [];
+  ["수원시", "용인시", "화성시", "오산시", "평택시", "의왕시", "안양시", "군포시"].forEach((city) => {
+    assert(areaNames.includes(city), `${file} structured data should include the visible service-area city ${city}.`);
+  });
+  assert(html.includes('"dateModified": "2026-06-24"'), `${file} structured data should use the latest 2026-06-24 modified date.`);
+});
+assert((sitemapXml.match(/<lastmod>2026-06-24<\/lastmod>/g) || []).length === 5, "Sitemap lastmod values should match the latest 2026-06-24 update date.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 ["수원시", "용인시", "화성시", "오산시", "평택시", "의왕시", "안양시", "군포시"].forEach((city) => {

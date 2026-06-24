@@ -311,7 +311,7 @@
         title: "상담 전 체크사항",
         headline: ["현재 상황을", "짧은 기준으로 점검합니다."],
         cards: [
-          ["채무현황", "채무 규모와 연체 기간을 먼저 정리해야 합니다", "카드값, 대출, 보증채무, 사채 여부를 나누어 상담 방향을 잡습니다.", "mockup_assets/knowledge_thumb_1_v2.png", "채무현황 체크", "knowledge.html#debt-status-check"],
+          ["채무현황", "채무 규모와 연체 기간을 먼저 정리해야 합니다", "카드대금(카드값), 대출, 보증채무, 사채 여부를 나누어 상담 방향을 잡습니다.", "mockup_assets/knowledge_thumb_1_v2.png", "채무현황 체크", "knowledge.html#debt-status-check"],
           ["긴급상황", "압류·추심·지급명령 여부를 확인합니다", "법원 서류를 받았는지, 계좌나 급여 압류가 시작됐는지 먼저 봅니다.", "mockup_assets/knowledge_thumb_2_v2.png", "긴급 채무 상황 확인", "knowledge.html#urgent-legal-check"],
           ["절차선택", "개인회생과 개인파산 중 어떤 절차가 맞을까요?", "소득 유지 가능성과 재산·부양가족·면책 사유를 함께 검토합니다.", "mockup_assets/knowledge_thumb_3_v2.png", "개인회생 개인파산 절차 선택", "knowledge.html#procedure-choice"]
         ]
