@@ -179,6 +179,7 @@ assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-
 assert(indexHtml.includes("CASE_STATUS_DATA") && indexHtml.includes("renderCaseStatus") && indexHtml.includes("caseList.replaceChildren"), "Main case menu should replace the right-side status rows by selected topic.");
 assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S]*?translateY\(24px\)[\s\S]*?translateY\(0\)/.test(css), "Main case status changes should rise in with a dedicated animation.");
 assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
+assert(!/\.case-list li::(before|after)/.test(css), "Main case rows should not show left-side line or circle timeline decorations.");
 const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
 assert(!/(일자|상태|상담중|진행중|2026\.06\.\d{2})/.test(mainCaseSection), "Main case section should remove progress dates and status labels.");
 assert(mainCaseSection.includes("대표 사례") && mainCaseSection.includes("쟁점") && mainCaseSection.includes("확인 포인트"), "Main case section should present representative cases and consultation points.");
