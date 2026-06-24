@@ -180,7 +180,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260624-mobile13">
+  <link rel="stylesheet" href="style.css?v=20260624-mobile14">
 </head>
 <body>
   <div class="page">
@@ -223,15 +223,19 @@
         <div class="case-inner">
           <div class="case-left">
             <div class="line"></div>
-            <ul class="case-menu">
-              <li data-case-target="recovery"><button class="case-tab" type="button" aria-pressed="false">개인회생</button></li>
-              <li data-case-target="bankruptcy"><button class="case-tab" type="button" aria-pressed="false">개인파산</button></li>
-              <li class="active" data-case-target="seizure"><button class="case-tab" type="button" aria-pressed="true">압류·추심 대응</button></li>
-              <li data-case-target="worker"><button class="case-tab" type="button" aria-pressed="false">직장인 채무</button></li>
-              <li data-case-target="business"><button class="case-tab" type="button" aria-pressed="false">자영업자 채무</button></li>
-              <li data-case-target="immunity"><button class="case-tab" type="button" aria-pressed="false">면책 검토</button></li>
-              <li data-case-target="correction"><button class="case-tab" type="button" aria-pressed="false">보정권고 대응</button></li>
-            </ul>
+            <div class="case-menu-shell">
+              <button class="case-menu-arrow case-menu-arrow-prev" type="button" aria-label="이전 사례 메뉴" data-case-menu-prev>‹</button>
+              <ul class="case-menu">
+                <li data-case-target="recovery"><button class="case-tab" type="button" aria-pressed="false">개인회생</button></li>
+                <li data-case-target="bankruptcy"><button class="case-tab" type="button" aria-pressed="false">개인파산</button></li>
+                <li class="active" data-case-target="seizure"><button class="case-tab" type="button" aria-pressed="true">압류·추심 대응</button></li>
+                <li data-case-target="worker"><button class="case-tab" type="button" aria-pressed="false">직장인 채무</button></li>
+                <li data-case-target="business"><button class="case-tab" type="button" aria-pressed="false">자영업자 채무</button></li>
+                <li data-case-target="immunity"><button class="case-tab" type="button" aria-pressed="false">면책 검토</button></li>
+                <li data-case-target="correction"><button class="case-tab" type="button" aria-pressed="false">보정권고 대응</button></li>
+              </ul>
+              <button class="case-menu-arrow case-menu-arrow-next" type="button" aria-label="다음 사례 메뉴" data-case-menu-next>›</button>
+            </div>
           </div>
           <div class="case-right" data-case-status-panel>
             <div class="box-top">
@@ -383,7 +387,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260624-mobile13"></script>
+  <script src="layout.js?v=20260624-mobile14"></script>
   <script>
     (async () => {
       await window.__layoutReady;
@@ -524,6 +528,8 @@
 
       const caseMenuItems = Array.from(document.querySelectorAll(".case-menu li[data-case-target]"));
       const caseMenu = document.querySelector(".case-menu");
+      const caseMenuPrev = document.querySelector("[data-case-menu-prev]");
+      const caseMenuNext = document.querySelector("[data-case-menu-next]");
       const casePanel = document.querySelector("[data-case-status-panel]");
       const caseTitle = document.querySelector("[data-case-status-title]");
       const caseDescription = document.querySelector("[data-case-status-description]");
@@ -615,6 +621,18 @@
         caseMenu.style.setProperty("--marker-y", `${markerY}px`);
       };
 
+      const scrollCaseMenuByPage = (direction) => {
+        if (!caseMenu) return;
+        const firstItem = caseMenu.querySelector("li[data-case-target]");
+        const styles = window.getComputedStyle(caseMenu);
+        const gap = Number.parseFloat(styles.columnGap || styles.gap || "0") || 0;
+        const itemWidth = firstItem ? firstItem.getBoundingClientRect().width : caseMenu.clientWidth / 2;
+        caseMenu.scrollBy({
+          left: direction * ((itemWidth + gap) * 2),
+          behavior: "smooth"
+        });
+      };
+
       const createCaseStatusRow = ([type, title, issue, point, href], index) => {
         const item = document.createElement("li");
         item.dataset.caseKey = type;
@@ -676,6 +694,9 @@
           renderCaseStatus(target, true);
         });
       });
+
+      caseMenuPrev?.addEventListener("click", () => scrollCaseMenuByPage(-1));
+      caseMenuNext?.addEventListener("click", () => scrollCaseMenuByPage(1));
 
       const syncCaseMarker = () => {
         const activeItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
