@@ -108,13 +108,15 @@ assert(!indexHtml.includes("<span>건물</span><small>반월동, 현대프라자
 
 const caseStudyCards = casesHtml.match(/<article class="case-study-card"/g) || [];
 assert(caseStudyCards.length === 6, "Cases page should show six representative case-study cards instead of a progress table.");
+assert(casesHtml.includes("data-case-study-list") && casesHtml.includes("data-case-study-pagination"), "Cases page should paginate representative case-study cards.");
+assert(layoutJs.includes("initCaseStudyPagination") && layoutJs.includes("const perPage = 2") && layoutJs.includes('button.setAttribute("aria-label", `실제사례 ${page}페이지 보기`)'), "Case study pagination should show two cards per page and create accessible page number buttons.");
 assert(casesHtml.includes("대표 사례") && casesHtml.includes("상황") && casesHtml.includes("쟁점") && casesHtml.includes("확인 포인트"), "Cases page should frame content as representative cases with situation, issue, and consultation points.");
 assert(!/<table class="sub-table">/.test(casesHtml) && !/(일자|상태|상담중|진행중|서류준비|2026\.06\.\d{2})/.test(casesHtml), "Cases page should remove progress-table dates and status wording.");
 assert(!casesHtml.includes("아래 내용은 개인정보를 제외한 상담 유형 예시입니다. 실제 진행 여부와 결과는 개별 상담에서 확인합니다."), "Case study section should not show the removed privacy/example notice.");
 const caseStudyCategoryBlock = getBlock(css, ".case-study-category");
 const mainCaseTypeBlock = getBlock(css, ".case-type");
 assert(!/color:\s*var\(--primary\)/.test(caseStudyCategoryBlock) && !/color:\s*var\(--primary\)/.test(mainCaseTypeBlock), "Case study labels should reduce blue text and use quieter typography.");
-assert(/\.case-study-card::before\s*{[\s\S]*?height:\s*2px[\s\S]*?background:\s*linear-gradient\(90deg,\s*var\(--primary\)/.test(css) && /\.case-study-card::after\s*{[\s\S]*?border:\s*1px solid rgba\(23,\s*105,\s*209/.test(css), "Case study cards should use subtle line and circle accents instead of large blue labels.");
+assert(/\.case-study-card::before\s*{[\s\S]*?height:\s*2px[\s\S]*?background:\s*linear-gradient\(90deg,\s*var\(--primary\)/.test(css) && !css.includes(".case-study-card::after"), "Case study cards should keep a subtle top line accent without the top-right circle decoration.");
 
 assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
 ["20", "2000", "95"].forEach((target) => {
@@ -176,6 +178,7 @@ assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case me
 const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
 assert(!/(일자|상태|상담중|진행중|2026\.06\.\d{2})/.test(mainCaseSection), "Main case section should remove progress dates and status labels.");
 assert(mainCaseSection.includes("대표 사례") && mainCaseSection.includes("쟁점") && mainCaseSection.includes("확인 포인트"), "Main case section should present representative cases and consultation points.");
+assert((mainCaseSection.match(/href="cases\.html#case-/g) || []).length >= 5 && indexHtml.includes("link.href = href"), "Main case rows should link to the matching case study on the cases page.");
 const caseStatusDataSource = indexHtml.slice(indexHtml.indexOf("const CASE_STATUS_DATA"), indexHtml.indexOf("const moveCaseMarker"));
 Object.entries({
   recovery: "개인회생",
