@@ -647,7 +647,15 @@
 
       const centerCaseMenuItem = (item, behavior = "smooth") => {
         if (!caseMenu || !item || !isCaseMenuCarousel()) return;
-        item.scrollIntoView({ behavior, block: "nearest", inline: "center" });
+        const targetLeft = Math.max(
+          0,
+          item.offsetLeft - (caseMenu.clientWidth - item.offsetWidth) / 2
+        );
+        const maxScrollLeft = Math.max(0, caseMenu.scrollWidth - caseMenu.clientWidth);
+        caseMenu.scrollTo({
+          left: Math.min(targetLeft, maxScrollLeft),
+          behavior
+        });
       };
 
       const centerActiveCaseMenu = (behavior = "smooth") => {
@@ -740,7 +748,6 @@
         markerTicking = true;
         requestAnimationFrame(() => {
           syncCaseMarker();
-          centerActiveCaseMenu("auto");
           markerTicking = false;
         });
       });
