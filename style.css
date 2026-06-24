@@ -5609,12 +5609,16 @@
 
       .knowledge-row {
         min-height: 980px;
+        max-width: none;
+        padding-left: 0;
+        padding-right: 0;
       }
 
       .knowledge-left,
       .knowledge-right {
-        max-width: var(--mobile-page-max);
-        margin-inline: auto;
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
       }
 
       .knowledge-left {
