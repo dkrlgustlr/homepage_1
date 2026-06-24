@@ -865,6 +865,7 @@
     if (snapSections.length < 2) return;
 
     let snapLocked = false;
+    const snapTolerance = 8;
     let pointerStartY = null;
     let pointerStartX = null;
     let touchStartY = null;
@@ -899,16 +900,33 @@
       return bestIndex;
     };
 
+    const targetSectionIndex = (direction) => {
+      const scrollTop = window.scrollY;
+
+      if (direction > 0) {
+        const nextIndex = snapSections.findIndex((section, index) => (
+          index > 0 && sectionTop(snapSections[index]) > scrollTop + snapTolerance
+        ));
+        return nextIndex === -1 ? snapSections.length - 1 : nextIndex;
+      }
+
+      for (let index = snapSections.length - 2; index >= 0; index -= 1) {
+        if (sectionTop(snapSections[index]) < scrollTop - snapTolerance) return index;
+      }
+
+      return 0;
+    };
+
     const snapToSection = (direction) => {
       if (!shouldUseSnap() || snapLocked || snapSections.length === 0) return false;
 
-      const current = currentSectionIndex();
-      const next = Math.min(Math.max(current + direction, 0), snapSections.length - 1);
-      if (next === current) return false;
+      const next = targetSectionIndex(direction);
+      const targetTop = sectionTop(snapSections[next]);
+      if (Math.abs(targetTop - window.scrollY) <= snapTolerance) return false;
 
       snapLocked = true;
       window.scrollTo({
-        top: sectionTop(snapSections[next]),
+        top: targetTop,
         behavior: "smooth"
       });
 
@@ -921,6 +939,10 @@
 
     window.addEventListener("wheel", (event) => {
       if (!shouldUseSnap() || event.ctrlKey || Math.abs(event.deltaY) < 14) return;
+      if (snapLocked) {
+        event.preventDefault();
+        return;
+      }
       if (!snapToSection(event.deltaY > 0 ? 1 : -1)) return;
       event.preventDefault();
     }, { passive: false });
@@ -930,6 +952,10 @@
       const downKeys = ["ArrowDown", "PageDown", "Space"];
       const upKeys = ["ArrowUp", "PageUp"];
       if (![...downKeys, ...upKeys].includes(event.code)) return;
+      if (snapLocked) {
+        event.preventDefault();
+        return;
+      }
       if (!snapToSection(downKeys.includes(event.code) ? 1 : -1)) return;
       event.preventDefault();
     });
