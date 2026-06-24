@@ -2358,11 +2358,8 @@
     }
 
     .location-section::after {
-      background:
-        linear-gradient(90deg, rgba(23,105,209,0.055) 0 1px, transparent 1px 100%),
-        linear-gradient(180deg, rgba(23,105,209,0.04) 0 1px, transparent 1px 100%),
-        linear-gradient(118deg, transparent 0 63%, rgba(23,105,209,0.08) 63.1% 63.35%, transparent 63.45% 100%);
-      background-size: 54px 54px, 54px 54px, 100% 100%;
+      background: linear-gradient(118deg, transparent 0 63%, rgba(23,105,209,0.08) 63.1% 63.35%, transparent 63.45% 100%);
+      background-size: 100% 100%;
       opacity: 0.72;
     }
 
