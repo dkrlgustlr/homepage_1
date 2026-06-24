@@ -180,7 +180,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260624-mobile14">
+  <link rel="stylesheet" href="style.css?v=20260624-mobile15">
 </head>
 <body>
   <div class="page">
@@ -387,7 +387,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260624-mobile14"></script>
+  <script src="layout.js?v=20260624-mobile15"></script>
   <script>
     (async () => {
       await window.__layoutReady;
@@ -633,6 +633,18 @@
         });
       };
 
+      const isCaseMenuCarousel = () => window.matchMedia("(max-width: 1024px)").matches;
+
+      const centerCaseMenuItem = (item, behavior = "smooth") => {
+        if (!caseMenu || !item || !isCaseMenuCarousel()) return;
+        item.scrollIntoView({ behavior, block: "nearest", inline: "center" });
+      };
+
+      const centerActiveCaseMenu = (behavior = "smooth") => {
+        const activeItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
+        centerCaseMenuItem(activeItem, behavior);
+      };
+
       const createCaseStatusRow = ([type, title, issue, point, href], index) => {
         const item = document.createElement("li");
         item.dataset.caseKey = type;
@@ -690,7 +702,7 @@
             menuItem.querySelector(".case-tab")?.setAttribute("aria-pressed", String(active));
           });
           moveCaseMarker(item);
-          item.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+          centerCaseMenuItem(item);
           renderCaseStatus(target, true);
         });
       });
@@ -707,7 +719,10 @@
       if (activeCaseItem) {
         renderCaseStatus(activeCaseItem.dataset.caseTarget, false);
       }
-      requestAnimationFrame(syncCaseMarker);
+      requestAnimationFrame(() => {
+        syncCaseMarker();
+        centerActiveCaseMenu("auto");
+      });
 
       let markerTicking = false;
       window.addEventListener("resize", () => {
@@ -715,6 +730,7 @@
         markerTicking = true;
         requestAnimationFrame(() => {
           syncCaseMarker();
+          centerActiveCaseMenu("auto");
           markerTicking = false;
         });
       });

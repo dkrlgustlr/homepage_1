@@ -4697,15 +4697,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 46px;
-        padding: 0 18px;
+        min-height: 48px;
+        padding: 7px 12px;
         background: #fff;
         border: 1px solid #d9e1eb;
         color: #10233e;
         font-size: var(--type-body);
         font-weight: 800;
         text-align: center;
-        white-space: nowrap;
+        line-height: 1.25;
+        white-space: normal;
+        word-break: keep-all;
       }
 
       .case-tab:hover,
@@ -5071,7 +5073,8 @@
       }
 
       .case-tab {
-        min-height: 42px;
+        min-height: 44px;
+        padding: 6px 10px;
         font-size: var(--type-body);
       }
 
