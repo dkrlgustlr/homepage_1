@@ -217,7 +217,9 @@ assert(!casePageBlock.includes("(caseMenu.clientWidth - item.offsetWidth) / 2"),
 assert(!casePageBlock.includes("scrollTo") && !casePageBlock.includes("scrollLeft") && !mobileCaseMenuBlock.includes("overflow-x: auto") && !mobileCaseMenuBlock.includes("scroll-snap-type: x mandatory"), "Mobile case menu should not depend on horizontal scroll positions.");
 const caseResizeStart = indexHtml.indexOf("let markerTicking = false;");
 const caseResizeBlock = indexHtml.slice(caseResizeStart, indexHtml.indexOf("})();", caseResizeStart));
-assert(!caseResizeBlock.includes("updateCaseMobileVisiblePage"), "Mobile viewport resize should not reshuffle case tabs because address-bar changes can jump the page.");
+assert(indexHtml.includes("let wasCaseMobileMenu = isCaseMobileMenu();") && indexHtml.includes("syncCaseMobileLayoutState") && indexHtml.includes("isMobile && !wasCaseMobileMenu"), "Mobile case menu should detect desktop-to-mobile viewport transitions.");
+assert(caseResizeBlock.includes("syncCaseMobileLayoutState()"), "Mobile viewport resize should resync the case page index when entering mobile layout.");
+assert(!caseResizeBlock.includes("scrollIntoView") && !caseResizeBlock.includes("scrollTo") && !caseResizeBlock.includes("scrollLeft"), "Mobile viewport resize should not use scroll positioning that can jump the page.");
 assert(indexHtml.includes("showCaseMobileTopicPage") && indexHtml.includes("showCaseMobilePageByOffset") && !indexHtml.includes("caseMenu.scrollBy"), "Mobile case menu arrows should wrap through explicit page slots instead of raw scroll distance.");
 assert(!/\.case-list li::(before|after)/.test(css), "Main case rows should not show left-side line or circle timeline decorations.");
 const finalTypographyBlock = css.slice(css.lastIndexOf(".page :is("));

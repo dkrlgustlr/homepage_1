@@ -180,7 +180,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260625-mobile33">
+  <link rel="stylesheet" href="style.css?v=20260625-mobile34">
 </head>
 <body>
   <div class="page">
@@ -398,7 +398,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260625-mobile33"></script>
+  <script src="layout.js?v=20260625-mobile34"></script>
   <script>
     (async () => {
       await window.__layoutReady;
@@ -768,6 +768,22 @@
         moveCaseMarker(activeItem?.dataset.caseTarget);
       };
 
+      const getActiveCaseTarget = () => (
+        caseMenuItems.find((item) => item.classList.contains("active"))?.dataset.caseTarget
+        || caseMenuItems[0]?.dataset.caseTarget
+      );
+
+      let wasCaseMobileMenu = isCaseMobileMenu();
+      const syncCaseMobileLayoutState = () => {
+        const isMobile = isCaseMobileMenu();
+        if (isMobile && !wasCaseMobileMenu) {
+          showCaseMobileTopicPage(getActiveCaseTarget());
+        } else if (!isMobile) {
+          updateCaseMobileVisiblePage(caseMobilePageIndex);
+        }
+        wasCaseMobileMenu = isMobile;
+      };
+
       const activeCaseItem = caseMenuItems.find((item) => item.classList.contains("active")) || caseMenuItems[0];
       if (activeCaseItem) {
         renderCaseStatus(activeCaseItem.dataset.caseTarget, false);
@@ -782,6 +798,7 @@
         markerTicking = true;
         requestAnimationFrame(() => {
           syncCaseMarker();
+          syncCaseMobileLayoutState();
           markerTicking = false;
         });
       });
