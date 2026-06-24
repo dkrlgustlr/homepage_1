@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260624-mobile1";
+  const INCLUDE_VERSION = "20260624-mobile2";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -27,25 +27,6 @@
       </nav>
     </div>
   </div>
-  <div class="mobile-header">
-    <a class="mobile-brand" href="index.html" aria-label="법무사 권선기 사무소 홈">
-      <span>법무사 권선기</span>
-      <strong>1588-5986</strong>
-    </a>
-    <button class="mobile-menu-button" type="button" aria-controls="mobile-nav-panel" aria-expanded="false" aria-label="메뉴 열기" data-mobile-menu-toggle>
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
-  <nav class="mobile-nav-panel" id="mobile-nav-panel" aria-label="모바일 메뉴" hidden data-mobile-nav>
-    <a href="index.html">메인</a>
-    <a href="about.html">법무사소개</a>
-    <a href="cases.html">실제사례</a>
-    <a href="knowledge.html">지식센터</a>
-    <a href="consult.html">상담신청</a>
-    <a class="mobile-nav-call" href="tel:15885986">전화상담 1588-5986</a>
-  </nav>
 </header>`;
   const FOOTER_FALLBACK_HTML = `
 <aside class="fixed-side">
@@ -137,42 +118,10 @@
 
   const markActiveNav = () => {
     const current = window.location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll(".top-nav a, .mobile-nav-panel a").forEach((link) => {
+    document.querySelectorAll(".top-nav a").forEach((link) => {
       const href = link.getAttribute("href") || "";
       link.classList.toggle("is-active", href === current);
     });
-  };
-
-  const initMobileHeader = () => {
-    const toggle = document.querySelector("[data-mobile-menu-toggle]");
-    const panel = document.querySelector("[data-mobile-nav]");
-    if (!toggle || !panel) return;
-
-    const setOpen = (open) => {
-      toggle.classList.toggle("is-open", open);
-      toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
-      panel.hidden = !open;
-      document.documentElement.classList.toggle("mobile-menu-open", open);
-    };
-
-    toggle.addEventListener("click", () => {
-      setOpen(toggle.getAttribute("aria-expanded") !== "true");
-    });
-
-    panel.querySelectorAll("a").forEach((link) => {
-      link.addEventListener("click", () => setOpen(false));
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setOpen(false);
-    });
-
-    window.addEventListener("resize", () => {
-      if (window.matchMedia("(min-width: 1025px)").matches) setOpen(false);
-    });
-
-    setOpen(false);
   };
 
   const initFloatingContrast = () => {
@@ -1196,7 +1145,6 @@
 
   window.__layoutReady = Promise.all(includes.map(loadInclude)).then(() => {
     markActiveNav();
-    initMobileHeader();
     initFloatingContrast();
     initSubpageAnimations();
     initCountUpStats();
