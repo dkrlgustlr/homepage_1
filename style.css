@@ -4479,13 +4479,16 @@
         height: auto;
         min-height: 0;
         grid-template-columns: 1fr;
+        background: #fff;
         translate: none;
       }
 
       .case-left {
+        order: 2;
         background: #fff;
-        padding: 52px 0 20px;
-        border-bottom: 1px solid #d9e1eb;
+        padding: 0 0 24px;
+        border-right: 1px solid #d9e1eb;
+        border-left: 1px solid #d9e1eb;
         display: block;
         overflow: hidden;
       }
@@ -4499,7 +4502,7 @@
 
       .case-menu {
         --item-h: auto;
-        --case-carousel-pad: var(--side-pad);
+        --case-carousel-pad: 26px;
         padding: 0 var(--case-carousel-pad);
         height: auto;
         display: flex;
@@ -4547,12 +4550,13 @@
 
       .case-right {
         --case-content-drop: 0px;
+        display: contents;
         padding: 34px 26px 38px;
         overflow: visible;
       }
 
       .case-right::before {
-        inset: 18px;
+        display: none;
       }
 
       .case-doc-meta {
@@ -4562,7 +4566,13 @@
       .case-list-window {
         --case-row-h: 116px;
         --case-visible-rows: 4;
-        margin-top: 24px;
+        order: 4;
+        margin-top: 0;
+        padding: 20px 26px 38px;
+        background: #fff;
+        border-right: 1px solid #d9e1eb;
+        border-bottom: 1px solid #d9e1eb;
+        border-left: 1px solid #d9e1eb;
       }
 
       .case-list a {
@@ -4590,8 +4600,14 @@
       }
 
       .case-right .box-top {
+        order: 1;
         grid-template-columns: 1fr;
         gap: 18px;
+        margin: 0;
+        padding: 34px 26px 18px;
+        background: #fff;
+        border: 1px solid #d9e1eb;
+        border-bottom: 0;
       }
 
       .case-right .page-title h2,
@@ -4841,11 +4857,11 @@
       }
 
       .case-left {
-        padding: 42px 0 18px;
+        padding: 0 0 18px;
       }
 
       .case-menu {
-        --case-carousel-pad: var(--side-pad);
+        --case-carousel-pad: 18px;
         gap: 8px;
       }
 
@@ -4858,9 +4874,14 @@
         padding: 28px 18px 30px;
       }
 
+      .case-right .box-top {
+        padding: 28px 18px 16px;
+      }
+
       .case-list-window {
         --case-row-h: 128px;
         --case-visible-rows: 3;
+        padding: 16px 18px 30px;
       }
 
       .case-list a {
