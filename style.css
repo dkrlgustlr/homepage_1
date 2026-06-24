@@ -4694,6 +4694,7 @@
         height: auto;
         display: flex;
         flex-direction: row;
+        align-items: stretch;
         gap: 10px;
         overflow-x: auto;
         overflow-y: hidden;
@@ -4708,8 +4709,9 @@
       }
 
       .case-menu li {
-        height: auto;
+        height: 64px;
         flex: 0 0 calc((100% - 10px) / 2);
+        display: flex;
         scroll-snap-align: start;
       }
 
@@ -4717,7 +4719,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 48px;
+        height: 100%;
+        min-height: 0;
         padding: 7px 12px;
         background: #fff;
         border: 1px solid #d9e1eb;
@@ -5086,7 +5089,7 @@
 
       .case-menu-arrow {
         width: 30px;
-        min-height: 44px;
+        min-height: 58px;
         font-size: 20px;
       }
 
@@ -5095,11 +5098,11 @@
       }
 
       .case-menu li {
+        height: 58px;
         flex-basis: calc((100% - 8px) / 2);
       }
 
       .case-tab {
-        min-height: 44px;
         padding: 6px 10px;
         font-size: var(--type-body);
       }
