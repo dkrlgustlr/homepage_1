@@ -112,6 +112,7 @@ const casesGraph = JSON.parse(casesHtml.match(/<script type="application\/ld\+js
 const caseItemList = casesGraph.find((node) => node["@id"] === "https://dkrlgustlr.github.io/homepage_1/cases.html#case-list");
 assert(caseItemList?.itemListElement?.length === 30, "Cases structured data should expose all thirty representative case studies.");
 assert(casesHtml.includes("data-case-study-list") && casesHtml.includes("data-case-study-pagination"), "Cases page should paginate representative case-study cards.");
+assert(casesHtml.includes('id="representative-cases"'), "Cases page should expose a representative case section anchor for main-table navigation.");
 assert(layoutJs.includes("initCaseStudyPagination") && layoutJs.includes("const perPage = 6") && layoutJs.includes("getPageFromHash") && layoutJs.includes('button.setAttribute("aria-label", `실제사례 ${page}페이지 보기`)'), "Case study pagination should show six cards per page, open the page for hash links, and create accessible page number buttons.");
 assert(casesHtml.includes("대표 사례") && casesHtml.includes("상황") && casesHtml.includes("쟁점") && casesHtml.includes("확인 포인트"), "Cases page should frame content as representative cases with situation, issue, and consultation points.");
 assert(!/<table class="sub-table">/.test(casesHtml) && !/(일자|상태|상담중|진행중|서류준비|2026\.06\.\d{2})/.test(casesHtml), "Cases page should remove progress-table dates and status wording.");
@@ -181,9 +182,9 @@ assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case me
 const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
 assert(!/(일자|상태|상담중|진행중|2026\.06\.\d{2})/.test(mainCaseSection), "Main case section should remove progress dates and status labels.");
 assert(mainCaseSection.includes("대표 사례") && mainCaseSection.includes("쟁점") && mainCaseSection.includes("확인 포인트"), "Main case section should present representative cases and consultation points.");
-assert((mainCaseSection.match(/href="cases\.html#case-/g) || []).length >= 5 && indexHtml.includes("link.href = href"), "Main case rows should link to the matching case study on the cases page.");
+assert((mainCaseSection.match(/href="cases\.html#representative-cases"/g) || []).length >= 5 && indexHtml.includes("link.href = href"), "Main case rows should link to the representative case section instead of scrolling into an individual card.");
 const caseStatusDataSource = indexHtml.slice(indexHtml.indexOf("const CASE_STATUS_DATA"), indexHtml.indexOf("const moveCaseMarker"));
-assert((caseStatusDataSource.match(/cases\.html#case-/g) || []).length === 35, "All main case tab rows should carry a case-study anchor link.");
+assert((caseStatusDataSource.match(/cases\.html#representative-cases/g) || []).length === 35, "All main case tab rows should carry the representative case section anchor link.");
 Object.entries({
   recovery: "개인회생",
   bankruptcy: "개인파산",

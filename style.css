@@ -2799,6 +2799,10 @@
       background-size: 54px 54px, 100% 100%;
     }
 
+    #representative-cases {
+      scroll-margin-top: 96px;
+    }
+
     .sub-section {
       max-width: 1240px;
       margin: 0 auto;
