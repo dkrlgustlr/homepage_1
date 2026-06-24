@@ -3972,19 +3972,7 @@
       width: 26px;
     }
 
-    .case-list li.is-targeted {
-      transform: translateX(8px);
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: 0 14px 34px rgba(13, 35, 64, 0.06);
-    }
-
-    .case-list li.is-targeted::before {
-      background: var(--primary);
-      width: 26px;
-    }
-
-    .case-list li:hover::after,
-    .case-list li.is-targeted::after {
+    .case-list li:hover::after {
       border-color: rgba(23, 105, 209, 0.7);
       box-shadow: 0 0 0 6px rgba(23,105,209,0.08);
     }

@@ -180,7 +180,7 @@
   ]
 }
   </script>
-  <link rel="stylesheet" href="style.css?v=20260624-case-section1">
+  <link rel="stylesheet" href="style.css?v=20260624-case-hover1">
 </head>
 <body>
   <div class="page">
@@ -383,7 +383,7 @@
     </main>
   </div>
   <script charset="UTF-8" class="daum_roughmap_loader_script" src="https://ssl.daumcdn.net/dmaps/map_js_init/roughmapLoader.js"></script>
-  <script src="layout.js?v=20260624-case-section1"></script>
+  <script src="layout.js?v=20260624-case-hover1"></script>
   <script>
     (async () => {
       await window.__layoutReady;
@@ -618,7 +618,6 @@
       const createCaseStatusRow = ([type, title, issue, point, href], index) => {
         const item = document.createElement("li");
         item.dataset.caseKey = type;
-        if (index === 0) item.classList.add("is-targeted");
 
         const link = document.createElement("a");
         link.href = href || "cases.html";
