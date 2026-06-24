@@ -1381,7 +1381,7 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      color: #7b8490;
+      color: var(--primary);
       font-size: var(--type-body);
       font-weight: 800;
       letter-spacing: 0;
