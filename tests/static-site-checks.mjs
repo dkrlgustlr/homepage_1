@@ -37,6 +37,20 @@ const getBlock = (css, selector) => {
   return "";
 };
 
+const getObjectBlock = (source, key) => {
+  const start = source.indexOf(`${key}: {`);
+  if (start === -1) return "";
+  const open = source.indexOf("{", start);
+  if (open === -1) return "";
+  let depth = 0;
+  for (let i = open; i < source.length; i += 1) {
+    if (source[i] === "{") depth += 1;
+    if (source[i] === "}") depth -= 1;
+    if (depth === 0) return source.slice(open + 1, i);
+  }
+  return "";
+};
+
 const getStructuredData = (html) => {
   const match = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
   if (!match) return null;
@@ -128,6 +142,20 @@ assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-
 assert(indexHtml.includes("CASE_STATUS_DATA") && indexHtml.includes("renderCaseStatus") && indexHtml.includes("caseList.replaceChildren"), "Main case menu should replace the right-side status rows by selected topic.");
 assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S]*?translateY\(24px\)[\s\S]*?translateY\(0\)/.test(css), "Main case status changes should rise in with a dedicated animation.");
 assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
+const caseStatusDataSource = indexHtml.slice(indexHtml.indexOf("const CASE_STATUS_DATA"), indexHtml.indexOf("const moveCaseMarker"));
+Object.entries({
+  recovery: "개인회생",
+  bankruptcy: "개인파산",
+  seizure: "압류·추심 대응",
+  worker: "직장인 채무",
+  business: "자영업자 채무",
+  immunity: "면책 검토",
+  correction: "보정권고 대응"
+}).forEach(([topic, label]) => {
+  const topicBlock = getObjectBlock(caseStatusDataSource, topic);
+  const rowTypes = [...topicBlock.matchAll(/\n\s*\["([^"]+)"/g)].map((match) => match[1]);
+  assert(rowTypes.length === 5 && rowTypes.every((type) => type === label), `Main case tab ${topic} should show only ${label} rows.`);
+});
 
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
