@@ -4287,8 +4287,18 @@
       }
 
       .header.is-mobile-menu-open .mobile-menu-toggle {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 56px;
+        height: 56px;
+        flex-basis: 56px;
+        border-radius: 0 0 0 16px;
+        border-left: 1px solid rgba(255,255,255,0.16);
+        border-bottom: 1px solid rgba(255,255,255,0.16);
         background: #31353C;
         color: #fff;
+        box-shadow: -14px 14px 30px rgba(0,0,0,0.24);
       }
 
       .mobile-menu-toggle span {
@@ -4306,6 +4316,11 @@
 
       .mobile-menu-toggle span:nth-child(3) {
         transform: translateY(7px);
+      }
+
+      .header.is-mobile-menu-open .mobile-menu-toggle span {
+        width: 24px;
+        height: 2px;
       }
 
       .header.is-mobile-menu-open .mobile-menu-toggle span:nth-child(1) {
