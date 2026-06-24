@@ -4636,10 +4636,12 @@
         display: grid;
         grid-template-columns: 34px minmax(0, 1fr) 34px;
         align-items: center;
-        gap: 8px;
-        width: 100%;
+        gap: 10px;
+        width: calc(100% - 52px);
+        max-width: 420px;
         height: auto;
-        padding: 0 26px;
+        margin: 0 auto;
+        padding: 0;
       }
 
       .case-menu-arrow {
@@ -5053,13 +5055,15 @@
       }
 
       .case-menu-shell {
-        grid-template-columns: 30px minmax(0, 1fr) 30px;
-        gap: 6px;
-        padding: 0 18px;
+        grid-template-columns: 32px minmax(0, 1fr) 32px;
+        gap: 10px;
+        width: calc(100% - 40px);
+        max-width: 320px;
+        padding: 0;
       }
 
       .case-menu-arrow {
-        width: 30px;
+        width: 32px;
         height: 40px;
         font-size: 20px;
       }
