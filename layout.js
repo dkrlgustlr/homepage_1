@@ -39,7 +39,7 @@
   </div>
 </aside>
 
-<form class="bottom-consult" aria-label="하단 상담 신청" data-consult-form>
+<form class="bottom-consult" aria-label="하단 상담 신청" action="send-consult.php" method="post" data-consult-form>
   <a class="bottom-consult-phone" href="tel:15885986">
     <span>대표전화</span>
     <strong>1588-5986</strong>
@@ -539,9 +539,57 @@
     });
   };
 
+  const resetConsultForm = (form) => {
+    form.reset();
+    form.querySelectorAll("select[data-custom-select]").forEach((select) => {
+      select.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  };
+
+  const submitConsultFormToServer = async (form) => {
+    const action = form.getAttribute("action");
+    if (!action || !window.fetch || !window.FormData) return false;
+
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalText = submitButton?.textContent;
+
+    try {
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = "접수 중...";
+      }
+
+      const formData = new FormData(form);
+      formData.set("page_url", window.location.href);
+
+      const response = await fetch(action, {
+        method: form.getAttribute("method") || "POST",
+        body: formData,
+        headers: { Accept: "application/json" }
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.message || "Consult form server submit failed");
+      }
+
+      alert(result.message || "상담 신청이 접수되었습니다. 확인 후 연락드리겠습니다.");
+      resetConsultForm(form);
+      return true;
+    } catch (error) {
+      console.warn("Consult form server submit failed", error);
+      return false;
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = originalText;
+      }
+    }
+  };
+
   const initConsultForms = () => {
     document.querySelectorAll("[data-consult-form]").forEach((form) => {
-      form.addEventListener("submit", (event) => {
+      form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         const caseType = getFieldValue(form, "case_type") || "상담 분야 미선택";
@@ -576,6 +624,8 @@
         const subject = encodeURIComponent("홈페이지 상담 신청");
         const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
         const smsSeparator = /iPhone|iPad|iPod/i.test(navigator.userAgent) ? "&" : "?";
+        const serverSubmitted = await submitConsultFormToServer(form);
+        if (serverSubmitted) return;
 
         window.location.href = isMobile
           ? `sms:${OFFICE_SMS}${smsSeparator}body=${body}`

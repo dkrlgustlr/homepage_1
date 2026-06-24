@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -72,6 +72,8 @@ const headerHtml = read("header.html");
 const css = read("style.css");
 const layoutJs = read("layout.js");
 const sitemapXml = read("sitemap.xml");
+const submitPhpPath = resolve(root, "send-consult.php");
+const submitPhp = existsSync(submitPhpPath) ? read("send-consult.php") : "";
 const kakaoIconBytes = readFileSync(resolve(root, "mockup_assets/icon-kakaotalk-talk-provided.png"));
 const phoneIconBytes = readFileSync(resolve(root, "mockup_assets/icon-phone-blue.png"));
 const pages = [
@@ -202,11 +204,13 @@ Object.entries({
 });
 
 assert(/<form[^>]*class="consult-form"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form needs data-consult-form.");
+assert(/<form[^>]*class="consult-form"[^>]*action="send-consult\.php"[^>]*method="post"[^>]*data-consult-form/.test(indexHtml), "Main page consultation form should post to the Cafe24 email endpoint.");
 assert(/<button[^>]*class="form-button"[^>]*type="submit"/.test(indexHtml), "Main page consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(indexHtml), "Main page consultation form should require privacy consent.");
 assert(indexHtml.includes("data-privacy-modal-open") && indexHtml.includes("privacy-consent-trigger"), "Main page consultation form should open the shared privacy modal from the consent text.");
 
 assert(/<form[^>]*class="sub-consult-form"[^>]*id="consult-form"[^>]*data-consult-form/.test(consultHtml), "Consult page form needs id and data-consult-form.");
+assert(/<form[^>]*class="sub-consult-form"[^>]*id="consult-form"[^>]*action="send-consult\.php"[^>]*method="post"[^>]*data-consult-form/.test(consultHtml), "Consult page form should post to the Cafe24 email endpoint.");
 assert(/<button[^>]*class="sub-submit"[^>]*type="submit"/.test(consultHtml), "Consult page submit button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(consultHtml), "Consult page form should require privacy consent.");
 assert(consultHtml.includes("data-privacy-modal-open") && consultHtml.includes("privacy-consent-trigger"), "Consult page form should open the shared privacy modal from the consent text.");
@@ -220,6 +224,7 @@ assert(/\.consult-reference-left\s*{[\s\S]*?--consult-left-content-shift:\s*-30p
 assert(/@media \(max-width:\s*1180px\)[\s\S]*?\.consult-reference-left\s*{[\s\S]*?--consult-left-content-shift:\s*0px/.test(css), "Stacked consult reference layouts should reset the left content lift.");
 
 assert(/<form[^>]*class="bottom-consult"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form needs data-consult-form.");
+assert(/<form[^>]*class="bottom-consult"[^>]*action="send-consult\.php"[^>]*method="post"[^>]*data-consult-form/.test(footerHtml), "Bottom consultation form should post to the Cafe24 email endpoint.");
 assert(/<button[^>]*class="bottom-consult-submit"[^>]*type="submit"/.test(footerHtml), "Bottom consultation button should submit.");
 assert(/name="privacy_consent"[^>]*required/.test(footerHtml), "Bottom consultation form should require privacy consent.");
 assert(!footerHtml.includes("사건 영역") && !layoutJs.includes("사건 영역"), "Bottom consultation form should use 상담 분야 instead of 사건 영역.");
@@ -237,10 +242,12 @@ assert(!/(주요 업무|대응 분야|상담 권역|<strong>상호<\/strong>|<st
 assert(!/site-intro|introLogoRise|is-finished|animationend/.test(indexHtml + css), "Main page should load directly without an intro overlay.");
 
 assert(layoutJs.includes("initConsultForms"), "layout.js should initialize consultation forms.");
+assert(layoutJs.includes("submitConsultFormToServer") && layoutJs.includes("fetch(action") && layoutJs.includes("FormData(form)"), "Consultation submit should try the Cafe24 email endpoint before fallback.");
 assert(layoutJs.includes("initCustomSelects") && layoutJs.includes("custom-select-option") && layoutJs.includes("aria-expanded"), "layout.js should replace marked native selects with accessible custom dropdowns.");
 assert(layoutJs.includes("initPrivacyModal") && layoutJs.includes("privacy-consent-modal"), "layout.js should initialize the shared privacy consent modal.");
 assert(layoutJs.includes("mailto:") && layoutJs.includes("sms:"), "Consultation submit should support mailto and sms fallbacks.");
 assert(layoutJs.includes("privacy_consent") && layoutJs.includes("개인정보 수집 및 이용에 동의해주세요."), "Consultation submit should validate privacy consent before opening mail or sms.");
+assert(submitPhp.includes("mail(") && submitPhp.includes("kkkk9628@nate.com") && submitPhp.includes("jsonResponse") && submitPhp.includes("privacy_consent"), "Cafe24 email endpoint should send consultation details to the office email and return JSON.");
 assert(layoutJs.includes("HEADER_FALLBACK_HTML") && layoutJs.includes("FOOTER_FALLBACK_HTML"), "layout.js should provide fallback HTML when shared includes cannot be fetched.");
 assert(layoutJs.includes("insertAdjacentHTML"), "layout.js fallback should inject shared layout when fetch fails.");
 assert(layoutJs.includes("initFloatingContrast"), "layout.js should initialize floating contrast on every page.");
