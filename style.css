@@ -1146,7 +1146,7 @@
     }
 
     .case-right {
-      --case-table-cols: minmax(112px, 152px) minmax(0, 1fr) minmax(112px, 150px) minmax(150px, 190px);
+      --case-table-cols: minmax(112px, 148px) minmax(0, 0.9fr) minmax(108px, 144px) minmax(210px, 260px);
       --case-frame-bottom: clamp(10px, 1.6vh, 16px);
       --case-content-drop: 30px;
       position: relative;
@@ -1403,6 +1403,9 @@
       font-weight: 900;
       text-align: center;
       line-height: 1.35;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .case-result.status-wait {
