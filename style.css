@@ -1229,6 +1229,7 @@
       color: var(--primary);
       font-size: var(--type-subtitle);
       font-weight: 700;
+      text-decoration: none;
       cursor: pointer;
     }
 
@@ -1657,6 +1658,7 @@
       text-align: left;
       font-family: inherit;
       color: #fff;
+      text-decoration: none;
       min-height: 0;
       background: #111;
       border: 0;

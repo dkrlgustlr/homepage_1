@@ -136,6 +136,30 @@ assert(layoutJs.includes("압류·추심 대응") && layoutJs.includes("압류�
 assert(indexHtml.includes("layout.js?v=") && layoutJs.includes("initMainKnowledgeTabs"), "Main page should load the knowledge tab interaction assets.");
 assert(layoutJs.includes("animateCards") && layoutJs.includes("is-topic-entering"), "Main knowledge tab changes should trigger the card rise animation class.");
 assert(/@keyframes knowledgeCardRise[\s\S]*?translateY\(30px\)[\s\S]*?translateY\(0\)/.test(css) && /\.column-grid\.is-topic-entering \.column-card/.test(css), "Main knowledge cards should rise in when a filter changes.");
+assert(!/<button class="column-card"/.test(indexHtml) && (indexHtml.match(/<a class="column-card" href="knowledge\.html#[^"]+"/g) || []).length === 6, "Main knowledge cards should be real links to knowledge articles.");
+assert(layoutJs.includes('document.createElement("a")') && layoutJs.includes("cardHref") && layoutJs.includes("openArticleFromHash"), "Main knowledge tab cards should render as article links and knowledge hashes should open the article modal.");
+assert(/<a class="more" href="knowledge\.html">[\s\S]*<span>more<\/span>[\s\S]*<\/a>/.test(indexHtml), "Main knowledge more control should link to the knowledge center.");
+
+assert(footerHtml.includes('href="index.html#location"') && layoutJs.includes('href="index.html#location"') && !footerHtml.includes('href="about.html#office"') && !layoutJs.includes('href="about.html#office"'), "Footer directions link should point to the map/location section.");
+const approvedCaseOptions = [
+  '<option value="">상담 분야</option>',
+  '<option>개인회생</option>',
+  '<option>개인파산</option>',
+  '<option>압류·추심 대응</option>',
+  '<option>직장인 채무</option>',
+  '<option>자영업자 채무</option>',
+  '<option>면책 검토</option>',
+  '<option>보정권고 대응</option>'
+];
+[indexHtml, consultHtml, footerHtml, layoutJs].forEach((source, index) => {
+  approvedCaseOptions.forEach((option) => {
+    assert(source.includes(option), `Consult case select ${index} should include unified option ${option}.`);
+  });
+  assert(!/<option>[^<]*(압류대응|압류 · 추심 대응|채권추심·통장압류 대응|카드값 연체 상담|주식·코인·도박 채무 상담)/.test(source), `Consult case select ${index} should not include old or divergent case options.`);
+});
+assert(!/<(div|strong) class="cat">압류대응/.test(indexHtml) && !indexHtml.includes("<div class=\"cat\">서류준비</div>") && !indexHtml.includes("<div class=\"cat\">보정권고</div>"), "Main knowledge visible category labels should use unified spacing and response wording.");
+assert(!knowledgeHtml.includes("<strong>압류대응</strong>") && !knowledgeHtml.includes("<strong>추심대응</strong>") && !knowledgeHtml.includes("<strong>보정권고</strong>"), "Knowledge card category labels should avoid shortened inconsistent response terms.");
+assert(!/>서류준비</.test(indexHtml) && !indexHtml.includes('"서류준비"'), "Visible case status labels should use 서류 준비 with spacing.");
 
 assert((indexHtml.match(/data-case-target="/g) || []).length === 7, "Main case menu should expose seven clickable status topics.");
 assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-case-status-description") && indexHtml.includes("data-case-status-list"), "Main case status panel should expose replaceable title, description, and list targets.");
