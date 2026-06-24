@@ -4737,14 +4737,14 @@
         align-items: center;
         justify-content: center;
         z-index: 2;
-        width: 34px;
+        width: 32px;
         height: auto;
-        min-height: 48px;
+        min-height: 44px;
         border: 1px solid #d9e1eb;
         background: #fff;
         color: #10233e;
         font-family: inherit;
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 900;
         line-height: 1;
         cursor: pointer;
@@ -4788,7 +4788,7 @@
       }
 
       .case-menu li {
-        height: 64px;
+        height: 56px;
         flex: 0 0 calc((100% - 10px) / 2);
         display: flex;
         scroll-snap-align: start;
@@ -4800,14 +4800,14 @@
         justify-content: center;
         height: 100%;
         min-height: 0;
-        padding: 7px 12px;
+        padding: 5px 10px;
         background: #fff;
         border: 1px solid #d9e1eb;
         color: #10233e;
-        font-size: var(--type-body);
+        font-size: 13px;
         font-weight: 800;
         text-align: center;
-        line-height: 1.25;
+        line-height: 1.18;
         white-space: normal;
         word-break: keep-all;
       }
@@ -5163,13 +5163,13 @@
       .case-menu-shell {
         width: calc(100% - 24px);
         max-width: 320px;
-        padding: 0 30px;
+        padding: 0 28px;
       }
 
       .case-menu-arrow {
-        width: 30px;
-        min-height: 58px;
-        font-size: 20px;
+        width: 28px;
+        min-height: 48px;
+        font-size: 18px;
       }
 
       .case-menu {
@@ -5177,13 +5177,13 @@
       }
 
       .case-menu li {
-        height: 58px;
+        height: 48px;
         flex-basis: calc((100% - 8px) / 2);
       }
 
       .case-tab {
-        padding: 6px 10px;
-        font-size: var(--type-body);
+        padding: 4px 8px;
+        font-size: 13px;
       }
 
       .case-right {
