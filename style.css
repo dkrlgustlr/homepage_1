@@ -4213,9 +4213,10 @@
       .header-bar {
         display: block;
         top: 16px;
-        left: 18px;
+        left: auto;
         right: 18px;
-        width: auto;
+        width: max-content;
+        max-width: calc(100vw - 36px);
         height: 44px;
         translate: none;
         transform: none;
@@ -4228,15 +4229,16 @@
       }
 
       .header-bar-inner {
-        justify-content: space-between;
+        justify-content: flex-start;
         min-width: 0;
-        width: 100%;
+        width: auto;
       }
 
       .consult-btn {
         width: auto;
         flex: 0 0 auto;
         min-width: 0;
+        max-width: calc(100vw - 80px);
         justify-content: flex-start;
         gap: 9px;
         padding: 0 18px;
@@ -4866,12 +4868,14 @@
 
       .header-bar {
         top: 12px;
-        left: 10px;
+        left: auto;
         right: 10px;
+        max-width: calc(100vw - 20px);
         height: 40px;
       }
 
       .consult-btn {
+        max-width: calc(100vw - 60px);
         font-size: 13px;
         letter-spacing: -0.05em;
         padding: 0 13px;
