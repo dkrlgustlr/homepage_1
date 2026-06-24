@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260624-mobile18";
+  const INCLUDE_VERSION = "20260624-mobile19";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
