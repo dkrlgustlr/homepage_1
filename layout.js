@@ -742,7 +742,7 @@
     if (!list || !pagination) return;
 
     const cards = Array.from(list.children).filter((element) => element.classList.contains("case-study-card"));
-    const perPage = 2;
+    const perPage = 6;
     const pageCount = Math.ceil(cards.length / perPage);
 
     if (pageCount <= 1) {
@@ -758,6 +758,13 @@
       list.classList.remove("is-page-changing");
       void list.offsetWidth;
       list.classList.add("is-page-changing");
+    };
+
+    const getPageFromHash = () => {
+      const targetId = window.location.hash.slice(1);
+      if (!targetId) return 1;
+      const targetIndex = cards.findIndex((card) => card.id === targetId);
+      return targetIndex >= 0 ? Math.floor(targetIndex / perPage) + 1 : 1;
     };
 
     const showPage = (page, focusButton = false) => {
@@ -804,7 +811,8 @@
 
     pagination.replaceChildren(...buttons);
     pagination.hidden = false;
-    showPage(1);
+    showPage(getPageFromHash());
+    window.addEventListener("hashchange", () => showPage(getPageFromHash()));
   };
 
   const initKnowledgeModal = () => {
