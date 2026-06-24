@@ -5305,10 +5305,19 @@
       }
 
       .consult-reference-right {
+        width: 100vw;
+        min-height: 720px;
+        align-items: stretch;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
         padding: 0;
+        background-color: #071523;
       }
 
       .consult-reference-right .sub-consult-form {
+        width: 100%;
+        max-width: none;
+        min-height: 100%;
         padding: 44px var(--side-pad) 56px;
       }
 
