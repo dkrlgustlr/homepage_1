@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260624-mobile8";
+  const INCLUDE_VERSION = "20260624-mobile9";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -14,7 +14,12 @@
         <span class="pointer"></span>
         <span>법무사 상담 접수 1588-5986</span>
       </a>
-      <nav class="top-nav" aria-label="주요 메뉴">
+      <button class="mobile-menu-toggle" type="button" aria-controls="mobile-nav-panel" aria-expanded="false" aria-label="메뉴 열기" data-mobile-menu-toggle>
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <nav class="top-nav" id="mobile-nav-panel" aria-label="주요 메뉴">
         <a href="index.html">메인</a>
         <span class="divider">|</span>
         <a href="about.html">법무사소개</a>
@@ -25,6 +30,7 @@
         <span class="divider">|</span>
         <a href="consult.html">상담신청</a>
       </nav>
+      <button class="mobile-nav-backdrop" type="button" aria-label="메뉴 닫기" data-mobile-menu-close></button>
     </div>
   </div>
 </header>`;
@@ -122,6 +128,40 @@
       const href = link.getAttribute("href") || "";
       link.classList.toggle("is-active", href === current);
     });
+  };
+
+  const initMobileNav = () => {
+    const header = document.querySelector(".header");
+    const toggle = document.querySelector("[data-mobile-menu-toggle]");
+    const panel = document.getElementById(toggle?.getAttribute("aria-controls") || "");
+    if (!header || !toggle || !panel) return;
+
+    const setOpen = (open) => {
+      header.classList.toggle("is-mobile-menu-open", open);
+      document.documentElement.classList.toggle("mobile-nav-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+    };
+
+    const closeMenu = () => setOpen(false);
+
+    toggle.addEventListener("click", () => {
+      setOpen(toggle.getAttribute("aria-expanded") !== "true");
+    });
+
+    document.querySelectorAll("[data-mobile-menu-close]").forEach((button) => {
+      button.addEventListener("click", closeMenu);
+    });
+
+    panel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeMenu();
+    });
+
+    window.matchMedia("(min-width: 1025px)").addEventListener("change", closeMenu);
   };
 
   const initFloatingContrast = () => {
@@ -1145,6 +1185,7 @@
 
   window.__layoutReady = Promise.all(includes.map(loadInclude)).then(() => {
     markActiveNav();
+    initMobileNav();
     initFloatingContrast();
     initSubpageAnimations();
     initCountUpStats();
