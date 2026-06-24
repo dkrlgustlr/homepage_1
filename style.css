@@ -4483,8 +4483,9 @@
       }
 
       .case-left {
-        padding: 30px;
+        padding: 30px 0;
         display: block;
+        overflow: hidden;
       }
 
       .case-left::after,
@@ -4495,25 +4496,41 @@
 
       .case-menu {
         --item-h: auto;
-        padding-left: 0;
+        --case-carousel-pad: var(--side-pad);
+        padding: 0 var(--case-carousel-pad);
         height: auto;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        display: flex;
+        flex-direction: row;
         gap: 10px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: var(--case-carousel-pad);
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .case-menu::-webkit-scrollbar {
+        display: none;
       }
 
       .case-menu li {
         height: auto;
-        flex-basis: auto;
+        flex: 0 0 clamp(156px, 42vw, 220px);
+        scroll-snap-align: start;
       }
 
       .case-tab {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         min-height: 46px;
-        padding: 0 14px;
+        padding: 0 18px;
         border: 1px solid rgba(255,255,255,0.18);
         color: rgba(255,255,255,0.66);
         font-size: var(--type-body);
         text-align: center;
+        white-space: nowrap;
       }
 
       .case-menu li.active .case-tab {
@@ -4818,11 +4835,11 @@
       }
 
       .case-left {
-        padding: 22px;
+        padding: 22px 0;
       }
 
       .case-menu {
-        grid-template-columns: 1fr;
+        --case-carousel-pad: var(--side-pad);
         gap: 8px;
       }
 

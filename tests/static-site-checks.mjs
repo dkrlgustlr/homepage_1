@@ -181,6 +181,9 @@ assert(indexHtml.includes("data-case-status-title") && indexHtml.includes("data-
 assert(indexHtml.includes("CASE_STATUS_DATA") && indexHtml.includes("renderCaseStatus") && indexHtml.includes("caseList.replaceChildren"), "Main case menu should replace the right-side status rows by selected topic.");
 assert(indexHtml.includes("is-case-changing") && /@keyframes caseStatusRise[\s\S]*?translateY\(24px\)[\s\S]*?translateY\(0\)/.test(css), "Main case status changes should rise in with a dedicated animation.");
 assert(/class="case-tab"[^>]*aria-pressed="true"/.test(indexHtml), "Main case menu should initialize with accessible pressed state.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu\s*{[\s\S]*?display:\s*flex[\s\S]*?overflow-x:\s*auto[\s\S]*?scroll-snap-type:\s*x mandatory/.test(css), "Mobile case menu should become a horizontal swipe carousel.");
+assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-menu li\s*{[\s\S]*?flex:\s*0 0 clamp\(156px,\s*42vw,\s*220px\)[\s\S]*?scroll-snap-align:\s*start/.test(css), "Mobile case carousel items should have stable snap widths.");
+assert(indexHtml.includes("scrollIntoView") && indexHtml.includes("inline: \"center\""), "Clicking a mobile case carousel item should center the active tab.");
 assert(!/\.case-list li::(before|after)/.test(css), "Main case rows should not show left-side line or circle timeline decorations.");
 const mainCaseSection = indexHtml.slice(indexHtml.indexOf('<section class="case-section"'), indexHtml.indexOf('<section class="knowledge-row"'));
 assert(!/(일자|상태|상담중|진행중|2026\.06\.\d{2})/.test(mainCaseSection), "Main case section should remove progress dates and status labels.");
