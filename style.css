@@ -4807,7 +4807,7 @@
         font-size: 13px;
         font-weight: 800;
         text-align: center;
-        line-height: 1.18;
+        line-height: 1.14;
         white-space: normal;
         word-break: keep-all;
       }
@@ -5184,7 +5184,7 @@
 
       .case-tab {
         padding: 4px 8px;
-        font-size: 13px;
+        font-size: 12px;
       }
 
       .case-right {
