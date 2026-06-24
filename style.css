@@ -5468,11 +5468,13 @@
         background-color: #071523;
       }
 
+      .consult-reference-right .consult-form,
       .consult-reference-right .sub-consult-form {
-        width: 100%;
-        max-width: none;
-        min-height: 100%;
-        padding: 44px var(--side-pad) 56px;
+        width: min(520px, calc(100% - (var(--side-pad) * 2)));
+        max-width: 520px;
+        margin: 0 auto;
+        min-height: auto;
+        padding: 44px 0 56px;
       }
 
       .consult-reference-right .consult-form .form-row,
