@@ -3278,6 +3278,16 @@
       word-break: keep-all;
     }
 
+    .service-area-note {
+      margin: 0 0 22px;
+      color: #4d5b6c;
+      font-size: var(--type-body);
+      line-height: var(--leading-body);
+      font-weight: 700;
+      letter-spacing: 0;
+      word-break: keep-all;
+    }
+
     .service-area-list {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));

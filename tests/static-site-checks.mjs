@@ -412,14 +412,17 @@ pages.forEach(([file, html]) => {
   const structuredData = getStructuredData(html);
   const legalService = structuredData?.["@graph"]?.find((node) => node["@id"] === "https://dkrlgustlr.github.io/homepage_1/#legalservice");
   const areaNames = legalService?.areaServed?.map((area) => area.name) || [];
+  assert(areaNames.includes("대한민국 전역"), `${file} structured data should state nationwide consultation coverage.`);
   ["수원시", "용인시", "화성시", "오산시", "평택시", "의왕시", "안양시", "군포시"].forEach((city) => {
     assert(areaNames.includes(city), `${file} structured data should include the visible service-area city ${city}.`);
   });
-  assert(html.includes('"dateModified": "2026-06-24"'), `${file} structured data should use the latest 2026-06-24 modified date.`);
+  assert(html.includes('"dateModified": "2026-06-25"'), `${file} structured data should use the latest 2026-06-25 modified date.`);
 });
-assert((sitemapXml.match(/<lastmod>2026-06-24<\/lastmod>/g) || []).length === 5, "Sitemap lastmod values should match the latest 2026-06-24 update date.");
+assert((sitemapXml.match(/<lastmod>2026-06-25<\/lastmod>/g) || []).length === 5, "Sitemap lastmod values should match the latest 2026-06-25 update date.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
+assert(aboutHtml.includes('<p class="service-area-note">전국 상담이 가능하며, 아래 지역은 중점 안내 지역입니다.</p>'), "About page service-area section should clarify nationwide consultation with focused target regions.");
+assert(aboutHtml.includes('aria-label="주요 타겟 상담 지역"'), "About page service-area list should label the cities as target regions rather than the full coverage limit.");
 ["수원시", "용인시", "화성시", "오산시", "평택시", "의왕시", "안양시", "군포시"].forEach((city) => {
   assert(aboutHtml.includes(`<li>${city}</li>`), `About page service-area list should include ${city}.`);
 });
