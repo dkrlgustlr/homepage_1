@@ -325,6 +325,8 @@ assert(phoneIconBytes.length > 500, "Blue phone icon asset should be present.");
 assert(/\.quick-icon\.kakao img\s*{[\s\S]*?object-fit:\s*contain/.test(css), "Kakao TALK icon should not be cropped.");
 assert(/\.quick-icon\.kakao\s*{[\s\S]*?width:\s*46px[\s\S]*?height:\s*46px[\s\S]*?border-radius:\s*0[\s\S]*?overflow:\s*visible/.test(css), "Kakao TALK icon should show the provided image at the requested 46px size without forced circular cropping.");
 assert(footerHtml.includes("quick-label\">TOP") && layoutJs.includes("quick-label\">TOP"), "Floating side banner should include a TOP label.");
+assert(/<button class="quick-item" type="button" data-scroll-top/.test(footerHtml) && /<button class="quick-item" type="button" data-scroll-top/.test(layoutJs), "Floating side banner TOP control should be a real button in both shared footer and fallback markup.");
+assert(layoutJs.includes("initFloatingActions") && layoutJs.includes("[data-scroll-top]") && /window\.scrollTo\(\{[\s\S]*?top:\s*0[\s\S]*?behavior:\s*"smooth"/.test(layoutJs), "Floating side banner TOP button should scroll smoothly to the top.");
 assert(/\.quick-item\s*{[\s\S]*?height:\s*92px[\s\S]*?gap:\s*12px/.test(css), "Floating side banner should keep wider icon and label spacing.");
 assert(!/☎|>K<\/div>/.test(footerHtml + layoutJs), "Floating and bottom phone/Kakao actions should not use text placeholder icons.");
 assert(/\.footer-action:hover,\s*[\s\S]*?\.footer-action:focus-visible\s*{[\s\S]*?background:\s*var\(--primary\)[\s\S]*?color:\s*#fff/.test(css), "Footer outline CTA should turn primary blue on hover and keyboard focus.");

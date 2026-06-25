@@ -1,5 +1,5 @@
 (() => {
-  const INCLUDE_VERSION = "20260625-mobile38";
+  const INCLUDE_VERSION = "20260625-mobile39";
   const includes = [
     ["[data-include='header']", `header.html?v=${INCLUDE_VERSION}`],
     ["[data-include='footer']", `footer.html?v=${INCLUDE_VERSION}`]
@@ -41,7 +41,7 @@
     <div class="quick-title">Menu</div>
     <div class="quick-item"><div class="quick-icon kakao"><img src="mockup_assets/icon-kakaotalk-talk-provided.png" alt="" aria-hidden="true"></div><div class="quick-label">카카오톡</div></div>
     <div class="quick-item"><div class="quick-icon phone"><img src="mockup_assets/icon-phone-blue.png" alt="" aria-hidden="true"></div><div class="quick-label">전화상담</div></div>
-    <div class="quick-item"><div class="quick-icon red">↑</div><div class="quick-label">TOP</div></div>
+    <button class="quick-item" type="button" data-scroll-top aria-label="맨 위로 이동"><div class="quick-icon red">↑</div><div class="quick-label">TOP</div></button>
   </div>
 </aside>
 
@@ -199,6 +199,17 @@
     updateFloatingContrast();
     window.addEventListener("scroll", requestUpdate, { passive: true });
     window.addEventListener("resize", requestUpdate);
+  };
+
+  const initFloatingActions = () => {
+    document.querySelectorAll("[data-scroll-top]").forEach((button) => {
+      button.addEventListener("click", () => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      });
+    });
   };
 
   const initSubpageAnimations = () => {
@@ -1206,6 +1217,7 @@
     markActiveNav();
     initMobileNav();
     initFloatingContrast();
+    initFloatingActions();
     initSubpageAnimations();
     initCountUpStats();
     initMainKnowledgeTabs();
