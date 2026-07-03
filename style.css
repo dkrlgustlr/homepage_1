@@ -2960,16 +2960,6 @@
       margin-bottom: 18px;
     }
 
-    .case-study-category::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 0 6px rgba(23,105,209,0.08);
-      flex: 0 0 auto;
-    }
-
     .case-study-card h3 {
       margin: 0 0 18px;
       color: #1f2328;

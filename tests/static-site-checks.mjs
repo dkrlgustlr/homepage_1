@@ -135,6 +135,7 @@ assert(!casesHtml.includes("아래 내용은 개인정보를 제외한 상담 �
 const caseStudyCategoryBlock = getBlock(css, ".case-study-category");
 const mainCaseTypeBlock = getBlock(css, ".case-type");
 assert(!/color:\s*var\(--primary\)/.test(caseStudyCategoryBlock) && !/color:\s*var\(--primary\)/.test(mainCaseTypeBlock), "Case study labels should reduce blue text and use quieter typography.");
+assert(!css.includes(".case-study-category::before"), "Case study category labels should not show blue dot decorations.");
 assert(/\.case-study-card::before\s*{[\s\S]*?height:\s*2px[\s\S]*?background:\s*linear-gradient\(90deg,\s*var\(--primary\)/.test(css) && !css.includes(".case-study-card::after"), "Case study cards should keep a subtle top line accent without the top-right circle decoration.");
 
 assert(/data-count-to="2000"[^>]*>2000<\/span>건\+/.test(indexHtml) && /data-count-to="2000"[^>]*>2000<\/span>건\+/.test(consultHtml), "Consult proof cards should display 2000건+ instead of 2천 건+.");
