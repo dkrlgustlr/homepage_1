@@ -751,6 +751,8 @@
       height: 2px;
       width: 100%;
       background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left center;
     }
 
     .main-label {
@@ -3824,8 +3826,10 @@
     }
 
     @keyframes lineGrow {
-      from { transform: scaleX(0); transform-origin: left center; }
-      to { transform: scaleX(1); transform-origin: left center; }
+      0% { transform: scaleX(0); transform-origin: left center; }
+      72% { transform: scaleX(1); transform-origin: left center; }
+      86% { transform: scaleX(1); transform-origin: left center; }
+      100% { transform: scaleX(0); transform-origin: left center; }
     }
 
     @keyframes scrollHint {
@@ -3883,7 +3887,7 @@
       animation-iteration-count: 1, infinite;
     }
 
-    .progress-bar::before { animation: lineGrow 1.2s 0.55s cubic-bezier(.16, 1, .3, 1) both; }
+    .progress-bar::before { animation: lineGrow 4.2s 0.55s cubic-bezier(.16, 1, .3, 1) infinite; }
     .fixed-side { animation: none; }
     .scroll-down { animation: scrollHint 2.4s ease-in-out infinite; }
 

@@ -90,6 +90,9 @@ assert(indexHtml.includes('<div class="kicker">KWON SEONKI JUDICIAL SCRIVENER OF
 assert(indexHtml.includes("<h1>파산·면책·개인회생<br><strong>20년 경력의 채무 상담</strong></h1>"), "Main hero headline should focus on bankruptcy, discharge, personal rehabilitation, and 20-year debt consultation experience.");
 assert(!indexHtml.includes('<strong>법무사 권선기 사무소</strong><span class="light">입니다</span>'), "Main hero headline should remove the old office-is sentence.");
 assert(/width:\s*100%/.test(getBlock(css, ".progress-bar::before")), "Main hero 01-to-Main progress gauge should fill the full bar instead of stopping partway.");
+assert(/transform:\s*scaleX\(0\)/.test(getBlock(css, ".progress-bar::before")), "Main hero progress gauge should start from empty before filling.");
+assert(/\.progress-bar::before\s*\{[\s\S]*?animation:\s*lineGrow\s*4\.2s\s*0\.55s[\s\S]*?infinite/.test(css), "Main hero progress gauge should slowly repeat after filling.");
+assert(/@keyframes lineGrow\s*\{[\s\S]*?0%\s*\{[\s\S]*?scaleX\(0\)[\s\S]*?72%\s*\{[\s\S]*?scaleX\(1\)[\s\S]*?86%\s*\{[\s\S]*?scaleX\(1\)[\s\S]*?100%\s*\{[\s\S]*?scaleX\(0\)/.test(css), "Main hero progress gauge animation should fill, hold, reset, and restart.");
 assert(
   /<main[^>]*class="[^"]*\bhome-page\b[^"]*"/.test(indexHtml) &&
   layoutJs.includes(".home-page") &&
