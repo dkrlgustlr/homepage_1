@@ -519,7 +519,7 @@ assert(/\.custom-select-option\s*{[\s\S]*?padding:\s*10px 18px[\s\S]*?min-height
 assert(/\.custom-select--bottom \.custom-select-list\s*{[\s\S]*?padding:\s*0/.test(css), "Bottom consultation dropdown should not leave empty padding above or below the options.");
 assert(/\.footer-contact\s*{[\s\S]*?border-top:\s*1px solid rgba\(255,255,255,0\.22\)[\s\S]*?border-bottom:\s*1px solid rgba\(255,255,255,0\.22\)/.test(css), "Footer contact frame should draw matching top and bottom divider lines.");
 assert(/\.footer-info li:last-child\s*{[\s\S]*?border-bottom:\s*0/.test(css), "Footer info should not draw a final bottom divider line.");
-assert(/\.footer-contact\s*{[\s\S]*?--footer-contact-bottom-pad:\s*34px[\s\S]*?padding:\s*34px 0 0/.test(css) && /\.footer-info li:last-child\s*{[\s\S]*?min-height:\s*calc\(62px \+ var\(--footer-contact-bottom-pad\)\)/.test(css), "Footer address row should absorb the bottom padding so the address stays vertically centered.");
+assert(/\.footer-contact\s*{[\s\S]*?padding:\s*34px 0 0/.test(css) && !css.includes("--footer-contact-bottom-pad") && !/\.footer-info li:last-child\s*{[\s\S]*?min-height:\s*calc\(/.test(css), "Footer address row should keep the same desktop height as the other business rows.");
 const caseInnerBlock = getBlock(css, ".case-inner");
 assert(/--case-inner-lift:\s*-30px/.test(caseInnerBlock) && /translate:\s*0\s+var\(--case-inner-lift\)/.test(caseInnerBlock), "Desktop case section content should be lifted by 30px.");
 assert(/@media \(max-width:\s*1024px\)[\s\S]*?\.case-inner\s*{[\s\S]*?translate:\s*none/.test(css), "Stacked case layout should reset the desktop 30px lift on tablet/mobile.");

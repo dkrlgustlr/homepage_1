@@ -2679,7 +2679,6 @@
     }
 
     .footer-contact {
-      --footer-contact-bottom-pad: 34px;
       border-top: 1px solid rgba(255,255,255,0.22);
       border-bottom: 1px solid rgba(255,255,255,0.22);
       padding: 34px 0 0;
@@ -2725,7 +2724,6 @@
 
     .footer-info li:last-child {
       border-bottom: 0;
-      min-height: calc(62px + var(--footer-contact-bottom-pad));
     }
 
     .footer-info strong {
