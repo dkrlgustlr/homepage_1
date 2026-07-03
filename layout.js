@@ -1091,7 +1091,12 @@
       !document.documentElement.classList.contains("knowledge-modal-open")
     );
     const maxScrollTop = () => Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    const sectionTop = (section) => Math.min(section.offsetTop, maxScrollTop());
+    const sectionOverflowOffset = (section) => (
+      section.matches(".consult-reference-section")
+        ? Math.max(0, section.offsetHeight - usableViewportHeight())
+        : 0
+    );
+    const sectionTop = (section) => Math.min(section.offsetTop + sectionOverflowOffset(section), maxScrollTop());
 
     const currentSectionIndex = () => {
       const viewportPoint = window.scrollY + usableViewportHeight() * 0.38;
