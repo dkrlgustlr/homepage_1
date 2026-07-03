@@ -86,6 +86,10 @@ const pages = [
 const siteText = [indexHtml, aboutHtml, casesHtml, knowledgeHtml, consultHtml, footerHtml, headerHtml, layoutJs].join("\n");
 
 assert((indexHtml.match(/<h1[\s>]/g) || []).length === 1, "index.html should have exactly one h1.");
+assert(indexHtml.includes('<div class="kicker">KWON SEONKI JUDICIAL SCRIVENER OFFICE</div>'), "Main hero eyebrow should use the office name in English instead of location wording.");
+assert(indexHtml.includes("<h1>파산·면책·개인회생<br><strong>20년 경력의 채무 상담</strong></h1>"), "Main hero headline should focus on bankruptcy, discharge, personal rehabilitation, and 20-year debt consultation experience.");
+assert(!indexHtml.includes('<strong>법무사 권선기 사무소</strong><span class="light">입니다</span>'), "Main hero headline should remove the old office-is sentence.");
+assert(/width:\s*100%/.test(getBlock(css, ".progress-bar::before")), "Main hero 01-to-Main progress gauge should fill the full bar instead of stopping partway.");
 assert(
   /<main[^>]*class="[^"]*\bhome-page\b[^"]*"/.test(indexHtml) &&
   layoutJs.includes(".home-page") &&
@@ -416,9 +420,9 @@ pages.forEach(([file, html]) => {
   ["수원시", "용인시", "화성시", "오산시", "평택시", "의왕시", "안양시", "군포시"].forEach((city) => {
     assert(areaNames.includes(city), `${file} structured data should include the visible service-area city ${city}.`);
   });
-  assert(html.includes('"dateModified": "2026-06-25"'), `${file} structured data should use the latest 2026-06-25 modified date.`);
+  assert(html.includes('"dateModified": "2026-07-03"'), `${file} structured data should use the latest 2026-07-03 modified date.`);
 });
-assert((sitemapXml.match(/<lastmod>2026-06-25<\/lastmod>/g) || []).length === 5, "Sitemap lastmod values should match the latest 2026-06-25 update date.");
+assert((sitemapXml.match(/<lastmod>2026-07-03<\/lastmod>/g) || []).length === 5, "Sitemap lastmod values should match the latest 2026-07-03 update date.");
 
 assert(/<section[^>]*class="[^"]*\bservice-area-section\b[^"]*"/.test(aboutHtml), "About page should include local service-area content.");
 assert(aboutHtml.includes('<p class="service-area-note">전국 상담이 가능하며, 아래 지역은 중점 안내 지역입니다.</p>'), "About page service-area section should clarify nationwide consultation with focused target regions.");
